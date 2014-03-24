@@ -1,0 +1,98 @@
+9
+
+dir
+0
+http://cvsmaster/ads_eval/mainline/ads/MXmlaBridge
+http://cvsmaster/ads_eval
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+87a8cd3b-14df-49c3-a01c-2a0988591acf
+
+.classpath
+file
+
+
+
+add
+
+build_for_public.xml
+file
+
+
+
+add
+
+VERSION.txt
+file
+
+
+
+add
+
+.project
+file
+
+
+
+add
+
+lib
+dir
+
+
+
+add
+
+ivy.xml
+file
+
+
+
+add
+
+src
+dir
+
+
+
+add
+
+ivysettings.xml
+file
+
+
+
+add
+
+makefile
+file
+
+
+
+add
+
+build.xml
+file
+
+
+
+add
+

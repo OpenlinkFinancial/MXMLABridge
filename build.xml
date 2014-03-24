@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Project name and default rule -->
+<project name="MXmlaBridge" default="all">
+
+	<description>MXmlaBridge</description>
+
+	<!-- Bring in environment variables. This must be located at the top of the build.xml file.  -->
+	<property environment="env"/>
+
+	<!-- All env variables are set by omake 
+		This is a little trick that will allows 
+		using ant directly bypassing omake 
+	-->
+	<condition property="env.WORK" value="../">
+		<not>
+			<isset property="env.WORK"/>
+		</not>
+	</condition>
+
+
+	<!-- Common targets and properties are defined in here -->
+	<import file="${env.WORK}/bin/global_common.xml"/>
+
+	<!-- point to your partial manifest file, version information is automatically added in the default preserve target -->
+	<property name="jar.manifest.file" value="${env.WORK}/bin//MANIFEST.MF"/>
+	<!-- 
+		The preserve step creates a jar file that follows the naming pattern:
+	  	${master.dist.dir}/${jar.dir}/${jar.name}.jar
+	-->
+	<property name="jar.dir" value="ads/lib/olap"/>
+	<property name="jar.name" value="mxmlaBridge"/>
+
+	<fileset id="fs.ads.mxmlaBridge" dir="${build.classes.dir}" />
+
+
+	<!-- ======================================================================= -->
+	<!-- Classpaths                                                              -->
+	<!-- ======================================================================= -->
+
+	<!-- 
+		All libs needed to compile this project. 
+		You can put a common build path in bin/global_common.xml
+		If you need to share a common build path accross multiple java modules. 
+	-->
+	<path id="compile.classpath">
+		<!--
+		<pathelement location="${product.build.dir}/classes" />
+	-->
+		<pathelement location="${build.classes.dir}"/>
+		<pathelement location="${mondrian.dir}\mondrian.jar"/>
+		<pathelement location="${mondrian.dir}\olap4j.jar"/>
+		<pathelement location="${mondrian.dir}\olap4j-xmla.jar"/>
+		<pathelement location="${mondrian.dir}\eigenbase-properties.jar"/>
+		<pathelement location="${mondrian.dir}\eigenbase-resgen.jar"/>
+		<pathelement location="${mondrian.dir}\eigenbase-xom.jar"/>
+		<pathelement location="${mondrian.dir}\servlet-api-3.0.jar"/>
+		<pathelement location="${mondrian.dir}\custom.mondrian.properties"/>
+		<path refid="master.compile.classpath" />
+	</path>
+
+	<!-- copy custom.mondrian.properties to ads_build -->
+	<target name="pre-preserve">
+		<mkdir dir="${master.dist.dir}/ads/templates/olap"/> 
+		<copy todir="${master.dist.dir}/ads/templates/olap" overwrite="yes">
+			<fileset dir="src">
+				<include name="*.properties" />
+			</fileset>
+		</copy>
+	</target>
+			
+	
+
+	<target name="preserve">
+
+		<mkdir dir="${master.dist.dir}/${jar.dir}"/>
+		<antcall target="pre-preserve"/>
+
+		<echo message="Creating the mxmlaBridge jar file..........." />
+		<antcall target="build.jar">
+			<param name="jar.name" value="${jar.name}"/>
+			<param name="fs" value="fs.ads.mxmlaBridge"/>
+			<param name="class.path" value="lib/olap/custom.mondrian.properties"/>
+		</antcall>
+
+		<antcall target="post-preserve"/>
+
+	</target>
+
+
+
+
+	<!-- ======================================================================= -->
+	<!-- Load the common targets                                                 -->
+	<!-- ======================================================================= -->
+
+	<!-- Note that if you want to ovveride these, you need to do it before       -->
+	<!-- this line. Ant will then ignore any target by the same name in the      -->
+	<!-- files below.                                                            -->
+
+	<import file="${env.WORK}/bin/global_targets.xml"/>
+
+</project>

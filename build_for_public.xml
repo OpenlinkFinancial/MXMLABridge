@@ -1,0 +1,94 @@
+<project name="MXmlaBridge" default = "all"  xmlns:ivy="antlib:org.apache.ivy.ant">
+
+
+	<property name="ivy.install.version" value="2.1.0-rc2" />
+	<condition property="ivy.home" value="${env.IVY_HOME}">
+		<isset property="env.IVY_HOME" />
+	</condition>
+	<property name="ivy.home" value="${user.home}/.ant"/>
+	<property name="ivy.jar.dir" value="${ivy.home}/lib"/>
+	<property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar"/>
+
+	<property name="project.name" value="mxmlabridge"/>
+	<property name="project.location" location="${basedir}"/>
+	<property name="lib.location" location="${project.location}\lib"/>
+	<property name="ivy.setting" value="${project.location}\ivysettings.xml"/>
+
+	<property name="build.src" value="${project.location}\src"/>
+	<property name="build.class" value="${project.location}\classes"/>
+
+
+	<path id="compile.classpath">
+		<pathelement location="${lib.location}\mondrian.jar"/>
+		<pathelement location="${lib.location}\servlet-api.jar"/>
+		<pathelement location="${lib.location}\eigenbase-properties.jar"/>
+		<pathelement location="${lib.location}\eigenbase-resgen.jar"/>
+		<pathelement location="${lib.location}\eigenbase-xom.jar"/>
+		<pathelement location="${lib.location}\eigenbase-resgen.jar"/>
+		<pathelement location="${lib.location}\olap4j.jar"/>
+		<pathelement location="${lib.location}\olap4j-xmla.jar"/>
+		<pathelement location="${lib.location}\log4j.jar"/>
+	</path>
+
+	<target name="all">
+		<antcall target="retrieve"/>
+		<antcall target="compile"/>
+	</target>
+
+	<target name="retrieve" depends="init-ivy" unless="skip">
+		<mkdir dir="${lib.location}\"/>
+		<ivy:resolve file="${project.location}/ivy.xml"/>
+		<ivy:retrieve type="jar,war" pattern="${lib.location}\/[module].[ext]"/>
+		<ivy:retrieve type="source,javadoc" pattern="${lib.location}\/[module]-[type].[ext]"/>
+	</target>
+
+	<target name="compile">
+
+		<mkdir dir="${build.class}"/>
+		<javac failonerror="true"
+		   srcdir="${build.src}" 
+		   destdir="${build.class}" >
+			<classpath refid="compile.classpath"/>
+		</javac>
+
+
+		<jar destfile="${lib.location}\${project.name}.jar" basedir="${build.class}\"/>
+		<echo message="Compiled project to ${build.class}\${project.name}"/>
+	</target>
+
+
+	<target name ="init-ivy" unless="ivy.installed" depends="ivy.is.installed">
+		<echo message="Dowloading lvy.jar to ${ivy.jar.file}"/>
+		<mkdir dir="${ivy.jar.dir}"/>
+		<!-- download Ivy from web site so that it can be used even without any special installation -->
+		<get src="http://repo2.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" 
+						dest="${ivy.jar.file}" usetimestamp="true"/>
+
+
+
+		<path id="ivy.lib.path">
+			<fileset dir="${ivy.jar.dir}" includes="*.jar"/>
+		</path>
+		<taskdef resource="org/apache/ivy/ant/antlib.xml"
+                 uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+
+	</target>
+
+	<!-- task to download the apache ivy artifacts -->
+	<target name="ivy.is.installed">
+
+		<condition property="ivy.installed">
+			<available file="${ivy.jar.file}" value="false"/>
+		</condition>
+
+	</target>
+
+
+	<target name="clean">
+		<echo message="Clean the build destination ${lib.location}\"/>
+		<delete dir="${build.class}" />
+	</target>
+
+
+
+</project>
