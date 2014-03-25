@@ -6,7 +6,7 @@
 //
 // Copyright (C) 2003-2005 Julian Hyde
 // Copyright (C) 2005-2011 Pentaho
-// Copyright (c) 2008-2013 Open Link Financial, Inc. All Rights Reserved.
+// Copyright (c) 2008-2014 Open Link Financial, Inc. All Rights Reserved.
  */
 package custom.mondrian.xmla.handler;
 

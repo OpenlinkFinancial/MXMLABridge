@@ -1,103 +1,106 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<project name="MXmlaBridge" default = "all"  xmlns:ivy="antlib:org.apache.ivy.ant">
 
-<!-- Project name and default rule -->
-<project name="MXmlaBridge" default="all">
 
-	<description>MXmlaBridge</description>
-
-	<!-- Bring in environment variables. This must be located at the top of the build.xml file.  -->
-	<property environment="env"/>
-
-	<!-- All env variables are set by omake 
-		This is a little trick that will allows 
-		using ant directly bypassing omake 
-	-->
-	<condition property="env.WORK" value="../">
-		<not>
-			<isset property="env.WORK"/>
-		</not>
+	<property name="ivy.install.version" value="2.1.0-rc2" />
+	<condition property="ivy.home" value="${env.IVY_HOME}">
+		<isset property="env.IVY_HOME" />
 	</condition>
+	<property name="ivy.home" value="${user.home}/.ant"/>
+	<property name="ivy.jar.dir" value="${ivy.home}/lib"/>
+	<property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar"/>
+
+	<property name="project.name" value="mxmlabridge"/>
+	<property name="project.location" location="${basedir}"/>
+	<property name="lib.location" location="${project.location}\lib"/>
+	<property name="ivy.setting" value="${project.location}\ivysettings.xml"/>
+
+	<property name="build.src" value="${project.location}\src"/>
+	<property name="build.class" value="${project.location}\classes"/>
 
 
-	<!-- Common targets and properties are defined in here -->
-	<import file="${env.WORK}/bin/global_common.xml"/>
-
-	<!-- point to your partial manifest file, version information is automatically added in the default preserve target -->
-	<property name="jar.manifest.file" value="${env.WORK}/bin//MANIFEST.MF"/>
-	<!-- 
-		The preserve step creates a jar file that follows the naming pattern:
-	  	${master.dist.dir}/${jar.dir}/${jar.name}.jar
-	-->
-	<property name="jar.dir" value="ads/lib/olap"/>
-	<property name="jar.name" value="mxmlaBridge"/>
-
-	<fileset id="fs.ads.mxmlaBridge" dir="${build.classes.dir}" />
-
-
-	<!-- ======================================================================= -->
-	<!-- Classpaths                                                              -->
-	<!-- ======================================================================= -->
-
-	<!-- 
-		All libs needed to compile this project. 
-		You can put a common build path in bin/global_common.xml
-		If you need to share a common build path accross multiple java modules. 
-	-->
 	<path id="compile.classpath">
-		<!--
-		<pathelement location="${product.build.dir}/classes" />
-	-->
-		<pathelement location="${build.classes.dir}"/>
-		<pathelement location="${mondrian.dir}\mondrian.jar"/>
-		<pathelement location="${mondrian.dir}\olap4j.jar"/>
-		<pathelement location="${mondrian.dir}\olap4j-xmla.jar"/>
-		<pathelement location="${mondrian.dir}\eigenbase-properties.jar"/>
-		<pathelement location="${mondrian.dir}\eigenbase-resgen.jar"/>
-		<pathelement location="${mondrian.dir}\eigenbase-xom.jar"/>
-		<pathelement location="${mondrian.dir}\servlet-api-3.0.jar"/>
-		<pathelement location="${mondrian.dir}\custom.mondrian.properties"/>
-		<path refid="master.compile.classpath" />
+		<pathelement location="${lib.location}\mondrian.jar"/>
+		<pathelement location="${lib.location}\servlet-api.jar"/>
+		<pathelement location="${lib.location}\eigenbase-properties.jar"/>
+		<pathelement location="${lib.location}\eigenbase-resgen.jar"/>
+		<pathelement location="${lib.location}\eigenbase-xom.jar"/>
+		<pathelement location="${lib.location}\eigenbase-resgen.jar"/>
+		<pathelement location="${lib.location}\olap4j.jar"/>
+		<pathelement location="${lib.location}\olap4j-xmla.jar"/>
+		<pathelement location="${lib.location}\log4j.jar"/>
 	</path>
 
-	<!-- copy custom.mondrian.properties to ads_build -->
-	<target name="pre-preserve">
-		<mkdir dir="${master.dist.dir}/ads/templates/olap"/> 
-		<copy todir="${master.dist.dir}/ads/templates/olap" overwrite="yes">
-			<fileset dir="src">
-				<include name="*.properties" />
-			</fileset>
-		</copy>
-	</target>
-			
-	
-
-	<target name="preserve">
-
-		<mkdir dir="${master.dist.dir}/${jar.dir}"/>
-		<antcall target="pre-preserve"/>
-
-		<echo message="Creating the mxmlaBridge jar file..........." />
-		<antcall target="build.jar">
-			<param name="jar.name" value="${jar.name}"/>
-			<param name="fs" value="fs.ads.mxmlaBridge"/>
-			<param name="class.path" value="lib/olap/custom.mondrian.properties"/>
-		</antcall>
-
-		<antcall target="post-preserve"/>
-
+	<target name="all">
+		<antcall target="retrieve"/>
+		<antcall target="compile"/>
 	</target>
 
+	<target name="retrieve" depends="init-ivy" unless="skip">
+		<mkdir dir="${lib.location}\"/>
+		<ivy:resolve file="${project.location}/ivy.xml"/>
+		<ivy:retrieve type="jar,war" pattern="${lib.location}\/[module].[ext]"/>
+		<ivy:retrieve type="source,javadoc" pattern="${lib.location}\/[module]-[type].[ext]"/>
+	</target>
+
+	<target name="compile">
+
+		<mkdir dir="${build.class}"/>
+		<javac failonerror="true"
+		   srcdir="${build.src}" 
+		   destdir="${build.class}" >
+			<classpath refid="compile.classpath"/>
+		</javac>
+
+		   <jar destfile="${lib.location}\${project.name}.jar" update="true">
+			  <fileset dir="${build.class}\" includes="**/*.*"/>
+			  <fileset dir="">
+				<include name = "LICENSE"/>	
+				<include name = "README.md"/>			
+				<include name = "VERSION.txt"/>			
+			  </fileset>
+			</jar>
+	    <!--
+		<manifest>
+			<attribute name="Main-Class" value="mondrian.tui.CmdRunner"/>
+			<attribute name="Built-By" value="${user.name}"/>
+		</manifest>
+		-->
+		<echo message="Compiled project to ${build.class}\${project.name}"/>
+	</target>
+
+
+	<target name ="init-ivy" unless="ivy.installed" depends="ivy.is.installed">
+		<echo message="Dowloading lvy.jar to ${ivy.jar.file}"/>
+		<mkdir dir="${ivy.jar.dir}"/>
+		<!-- download Ivy from web site so that it can be used even without any special installation -->
+		<get src="http://repo2.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar" 
+						dest="${ivy.jar.file}" usetimestamp="true"/>
 
 
 
-	<!-- ======================================================================= -->
-	<!-- Load the common targets                                                 -->
-	<!-- ======================================================================= -->
+		<path id="ivy.lib.path">
+			<fileset dir="${ivy.jar.dir}" includes="*.jar"/>
+		</path>
+		<taskdef resource="org/apache/ivy/ant/antlib.xml"
+                 uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
 
-	<!-- Note that if you want to ovveride these, you need to do it before       -->
-	<!-- this line. Ant will then ignore any target by the same name in the      -->
-	<!-- files below.                                                            -->
+	</target>
 
-	<import file="${env.WORK}/bin/global_targets.xml"/>
+	<!-- task to download the apache ivy artifacts -->
+	<target name="ivy.is.installed">
+
+		<condition property="ivy.installed">
+			<available file="${ivy.jar.file}" value="false"/>
+		</condition>
+
+	</target>
+
+
+	<target name="clean">
+		<echo message="Clean the build destination ${lib.location}\"/>
+		<delete dir="${build.class}" />
+	</target>
+
+
 
 </project>

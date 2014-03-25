@@ -5,7 +5,7 @@
 // You must accept the terms of that agreement to use this software.
 //
 // Copyright (C) 2006-2009 Pentaho and others
-// Copyright (c) 2008-2013 Open Link Financial, Inc. All Rights Reserved.
+// Copyright (c) 2008-2014 Open Link Financial, Inc. All Rights Reserved.
 */
 package custom.mondrian.xmla.exception;
 
