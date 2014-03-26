@@ -87,9 +87,12 @@ public class ExternalProperties {
          instance = new ExternalProperties();
          try {
         	instance.populateMondrianProps();
-            instance.populateCustomMondrianProps();
+        	//populate non-standard mondrian properties if custom.mondrian.properties exist
+        	if(new File(CustomMondrianProperties).exists())
+        		instance.populateCustomMondrianProps();
+        	
          } catch (IOException e) {
-            throw new XmlaException("0", "0", "Fail to load custom.mondrian.properties", e);
+            throw new XmlaException("0", "0", "Fail to load mondrian properties", e);
          }
       }
       return instance;
@@ -105,6 +108,7 @@ public class ExternalProperties {
          File file = new File(path);
          Properties properties = System.getProperties();
          properties.load(new FileInputStream(file));
+         adsProps.load(new FileInputStream(file));
         
       }  
    
