@@ -174,7 +174,7 @@ public enum PropertyDefinition {
         null,
         XmlaConstants.Access.Read,
        // MondrianServer.forId(null).getVersion().getVersionString(),
-        "10.0.1600.22",
+        "1.0",
         XmlaConstants.Method.DISCOVER,
         "The version of the Mondrian XMLA Provider"),
         
@@ -275,6 +275,7 @@ public enum PropertyDefinition {
              null,
              XmlaConstants.Access.Read,
              "1", //it's the only setting works for Mondrian + MSOLAP
+             //"31",
              XmlaConstants.Method.DISCOVER_AND_EXECUTE,
              ""),         
          MdxMissingMemberMode(
@@ -298,6 +299,7 @@ public enum PropertyDefinition {
               null, 
               XmlaConstants.Access.Read, 
               "0",
+              //"31", //default value
               XmlaConstants.Method.DISCOVER_AND_EXECUTE, 
                "(0x1): Create Cube is supported;  " +
                "(0x2). InsertInto is supported; " +

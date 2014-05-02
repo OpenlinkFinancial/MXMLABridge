@@ -25,13 +25,9 @@ import custom.mondrian.xmla.writer.DefaultSaxWriter;
 import custom.mondrian.xmla.writer.SaxWriter;
 
 import mondrian.olap.MondrianException;
-
-import org.olap4j.impl.Olap4jUtil;
-
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
@@ -55,7 +51,7 @@ public abstract class DefaultXmlaServlet extends XmlaServlet {
    private static final long serialVersionUID = 4347542470502737032L;
 
    protected static final String nl = System.getProperty("line.separator");
-
+   private static final String ANONYMOUS_USER_NAME = "anonymous";
    /**
     * Servlet config parameter that determines whether the xmla servlet requires
     * authenticated sessions.
@@ -285,7 +281,7 @@ public abstract class DefaultXmlaServlet extends XmlaServlet {
                }
 
                else {
-                  context.put(CONTEXT_XMLA_USERNAME, "anonymous");
+                  context.put(CONTEXT_XMLA_USERNAME, ANONYMOUS_USER_NAME);
                   context.put(CONTEXT_XMLA_PASSWORD, "");
                }
 
@@ -316,10 +312,11 @@ public abstract class DefaultXmlaServlet extends XmlaServlet {
             
             /* Authentication */
             if (authenticatedSession) {
-               if(LOGGER.isDebugEnabled())
-                  LOGGER.debug("New authenticated session; storing credentials [" + this.userPrincipal.getName() + "/********] for session id [" + sessionIdStr + "]");
-
+            
                saveSessionInfo(this.userPrincipal.getName(), sessionIdStr);
+               if(LOGGER.isDebugEnabled())
+                   LOGGER.debug("New authenticated session; storing credentials [" + this.username + "/********] for session id [" + sessionIdStr + "]");
+
             } else {
                if (beginSession && requireAuthenticatedSessions) {
                   throw new XmlaException(XmlaConstants.CLIENT_FAULT_FC, XmlaConstants.CHH_AUTHORIZATION_CODE, XmlaConstants.CHH_AUTHORIZATION_FAULT_FS, new Exception(
@@ -634,12 +631,12 @@ public abstract class DefaultXmlaServlet extends XmlaServlet {
       }
 
       if (sessionInfo == null) {
-         // LOGGER.error(
-         // "No login credentials for found for session ["+
-         // sessionId + "]");
-         if(LOGGER.isDebugEnabled())
-            LOGGER.debug("Use default ads credentials for session id [" + sessionId + "], username=ads, password = null");
          //pass user principal to session
+         if(this.userPrincipal == null){
+             if(LOGGER.isDebugEnabled())
+                 LOGGER.debug("Use the anonymous credentials for session id [" + sessionId + "], user " + ANONYMOUS_USER_NAME);
+        	 return saveSessionInfo(ANONYMOUS_USER_NAME, sessionId);
+         }
          return saveSessionInfo(this.userPrincipal.getName(), sessionId);
       } else {
          if(LOGGER.isDebugEnabled())
@@ -650,19 +647,13 @@ public abstract class DefaultXmlaServlet extends XmlaServlet {
 
    private SessionInfo saveSessionInfo(String principals, String sessionId) throws AuthenticateException {
       synchronized (sessionInfos) {
-         //convert user principlas to username and password pair
          //principals is in the format username: [name]; password: [password]
          SessionInfo sessionInfo = sessionInfos.get(sessionId);
 
-         if (sessionInfo != null && Olap4jUtil.equal(sessionInfo.user, username)) {
-            // Overwrite the password, but only if it is non-empty.
-            // (Sometimes Simba sends the creden'tials object again
-            // but without a password.)
-            if (password != null && password.length() > 0) {
-               sessionInfo = new SessionInfo(username, password);
-               sessionInfos.put(sessionId, sessionInfo);
-            }
-         } else {
+         if(sessionInfo == null && principals.equals(ANONYMOUS_USER_NAME)){
+        	 sessionInfo = new SessionInfo(principals, "");
+         }
+         else {
             if(username == null)
                parsePrincipals(principals);
             // A credentials object was stored against the provided session
@@ -670,7 +661,6 @@ public abstract class DefaultXmlaServlet extends XmlaServlet {
             sessionInfo = new SessionInfo(username, password);
             sessionInfos.put(sessionId, sessionInfo);
          }
-
          return sessionInfo;
       }
    }

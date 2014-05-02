@@ -391,7 +391,7 @@ public enum RowsetDefinition {
             MdschemaDimensionsRowset.DimensionCaption, MdschemaDimensionsRowset.DimensionOrdinal, MdschemaDimensionsRowset.DimensionType,
             MdschemaDimensionsRowset.DimensionCardinality, MdschemaDimensionsRowset.DefaultHierarchy, MdschemaDimensionsRowset.Description, MdschemaDimensionsRowset.IsVirtual,
             MdschemaDimensionsRowset.IsReadWrite, MdschemaDimensionsRowset.DimensionUniqueSettings, MdschemaDimensionsRowset.DimensionMasterUniqueName,
-            MdschemaDimensionsRowset.DimensionIsVisible, MdschemaDimensionsRowset.Hierarchies, MdschemaDimensionsRowset.CubeSource,
+            MdschemaDimensionsRowset.DimensionVisibility, MdschemaDimensionsRowset.Hierarchies, MdschemaDimensionsRowset.CubeSource,
 
    }, new Column[] { MdschemaDimensionsRowset.CatalogName, MdschemaDimensionsRowset.SchemaName, MdschemaDimensionsRowset.CubeName, MdschemaDimensionsRowset.DimensionName,
             MdschemaDimensionsRowset.CubeSource, }) {
@@ -2263,7 +2263,7 @@ public enum RowsetDefinition {
       private static final Column DimensionUniqueSettings = new Column("DIMENSION_UNIQUE_SETTINGS", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A bitmap that specifies which columns contain unique values " + "if the dimension contains only members with unique names.");
       private static final Column DimensionMasterUniqueName = new Column("DIMENSION_MASTER_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Always NULL.");
-      private static final Column DimensionIsVisible = new Column("DIMENSION_IS_VISIBLE", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Always TRUE.");
+      private static final Column DimensionVisibility = new Column("DIMENSION_VISIBILITY", Type.UnsignedInteger, null, Column.RESTRICTION, Column.REQUIRED, "Always TRUE.");
       private static final Column Hierarchies = new Column("HIERARCHIES", Type.Rowset, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Hierarchies in this dimension.");
 
       private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL,
@@ -2339,7 +2339,8 @@ public enum RowsetDefinition {
 
          row.set(DimensionUniqueSettings.name, 0);
          row.set(DimensionMasterUniqueName.name, dimension.getName());
-         row.set(DimensionIsVisible.name, dimension.isVisible());
+         row.set(DimensionVisibility.name, dimension.isVisible() ? 1:0);
+         
          if (deep) {
             row.set(Hierarchies.name,
                      new MdschemaHierarchiesRowset(wrapRequest(request, Olap4jUtil.mapOf(MdschemaHierarchiesRowset.CatalogName, catalog.getName(),
