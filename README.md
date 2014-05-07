@@ -5,6 +5,6 @@ MXmlaBridge (Mondrian XMLA Bridge) is a standards-based MSOLAP to Mondrian Bridg
 
 
 V1.1 update:
-Removed Obfuscate credentials in OLAP server log /n
-Supported for Unauthenticated mode /n
-Add SQLMode property to PropertyDefinition.java
+* Removed Obfuscate credentials in OLAP server log 
+* Supported for Unauthenticated mode 
+* Add SQLMode property to PropertyDefinition.java
