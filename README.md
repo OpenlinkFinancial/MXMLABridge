@@ -8,4 +8,4 @@ V1.1 update:
 * Removed Obfuscate credentials in OLAP server log 
 * Supported for Unauthenticated mode 
 * Add SQLMode property to PropertyDefinition.java
-* Add and implement Rowset Definitions enums, and make ensure values of rowsets the same as responded by SSAS
+
