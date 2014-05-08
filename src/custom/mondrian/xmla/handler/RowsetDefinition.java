@@ -76,6 +76,560 @@ public enum RowsetDefinition {
     * Not supported
     */
 
+   /**
+    * 
+    * 
+    * 
+    * restrictions
+    * 
+    * Not supported
+    */
+   DBSCHEMA_CATALOGS(6, "Identifies the physical attributes associated with catalogs " + "accessible from the provider.", new Column[] { DbschemaCatalogsRowset.CatalogName,
+            DbschemaCatalogsRowset.Description, DbschemaCatalogsRowset.Roles, DbschemaCatalogsRowset.DateModified, }, new Column[] { DbschemaCatalogsRowset.CatalogName, }) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DbschemaCatalogsRowset(request, handler);
+      }
+   },
+
+   /**
+    * http://msdn2.microsoft.com/en-us/library/ms126299(SQL.90).aspx
+    * 
+    * restrictions: TABLE_CATALOG Optional TABLE_SCHEMA Optional TABLE_NAME
+    * Optional TABLE_TYPE Optional TABLE_OLAP_TYPE Optional
+    * 
+    * Not supported
+    */
+   DBSCHEMA_TABLES(9, null, new Column[] { DbschemaTablesRowset.TableCatalog, DbschemaTablesRowset.TableSchema, DbschemaTablesRowset.TableName, DbschemaTablesRowset.TableType,
+            DbschemaTablesRowset.TableGuid, DbschemaTablesRowset.Description, DbschemaTablesRowset.TablePropId, DbschemaTablesRowset.DateCreated,
+            DbschemaTablesRowset.DateModified, DbschemaTablesRowset.TableOlapType, }, new Column[] { DbschemaTablesRowset.TableType, DbschemaTablesRowset.TableCatalog,
+            DbschemaTablesRowset.TableSchema, DbschemaTablesRowset.TableName, DbschemaTablesRowset.TableOlapType,
+
+   }) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DbschemaTablesRowset(request, handler);
+      }
+   },
+
+   /**
+    * 
+    * 
+    * 
+    * restrictions
+    * 
+    * Not supported COLUMN_OLAP_TYPE
+    */
+   DBSCHEMA_COLUMNS(7, null, new Column[] { DbschemaColumnsRowset.TableCatalog, DbschemaColumnsRowset.TableSchema, DbschemaColumnsRowset.TableName,
+            DbschemaColumnsRowset.ColumnName, DbschemaColumnsRowset.OrdinalPosition, DbschemaColumnsRowset.ColumnHasDefault, DbschemaColumnsRowset.ColumnFlags,
+            DbschemaColumnsRowset.IsNullable, DbschemaColumnsRowset.DataType, DbschemaColumnsRowset.CharacterMaximumLength, DbschemaColumnsRowset.CharacterOctetLength,
+            DbschemaColumnsRowset.NumericPrecision, DbschemaColumnsRowset.NumericScale, DbschemaColumnsRowset.ColumnOlapType }, new Column[] { DbschemaColumnsRowset.TableCatalog,
+            DbschemaColumnsRowset.TableSchema, DbschemaColumnsRowset.TableName, DbschemaColumnsRowset.ColumnOlapType }) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DbschemaColumnsRowset(request, handler);
+      }
+   },
+
+   /**
+    * 
+    * 
+    * 
+    * restrictions
+    * 
+    * Not supported
+    */
+   DBSCHEMA_PROVIDER_TYPES(8, null, new Column[] { DbschemaProviderTypesRowset.TypeName, DbschemaProviderTypesRowset.DataType, DbschemaProviderTypesRowset.ColumnSize,
+            DbschemaProviderTypesRowset.LiteralPrefix, DbschemaProviderTypesRowset.LiteralSuffix, DbschemaProviderTypesRowset.IsNullable,
+            DbschemaProviderTypesRowset.CaseSensitive, DbschemaProviderTypesRowset.Searchable, DbschemaProviderTypesRowset.UnsignedAttribute,
+            DbschemaProviderTypesRowset.FixedPrecScale, DbschemaProviderTypesRowset.AutoUniqueValue, DbschemaProviderTypesRowset.IsLong, DbschemaProviderTypesRowset.BestMatch, },
+            new Column[] { DbschemaProviderTypesRowset.DataType, }) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DbschemaProviderTypesRowset(request, handler);
+      }
+   },
+
+   /**
+    * http://msdn2.microsoft.com/en-us/library/ms126271(SQL.90).aspx
+    * 
+    * restrictions CATALOG_NAME Optional. SCHEMA_NAME Optional. CUBE_NAME
+    * Optional. CUBE_TYPE (Optional) A bitmap with one of these valid values: 1
+    * CUBE 2 DIMENSION Default restriction is a value of 1. BASE_CUBE_NAME
+    * Optional.
+    * 
+    * Not supported CREATED_ON LAST_SCHEMA_UPDATE SCHEMA_UPDATED_BY
+    * LAST_DATA_UPDATE DATA_UPDATED_BY ANNOTATIONS
+    */
+   MDSCHEMA_CUBES(12, null, new Column[] { MdschemaCubesRowset.CatalogName, MdschemaCubesRowset.SchemaName, MdschemaCubesRowset.CubeName, MdschemaCubesRowset.CubeType,
+            MdschemaCubesRowset.CubeGuid, MdschemaCubesRowset.CreatedOn, MdschemaCubesRowset.LastSchemaUpdate, MdschemaCubesRowset.SchemaUpdatedBy,
+            MdschemaCubesRowset.LastDataUpdate, MdschemaCubesRowset.DataUpdatedBy, MdschemaCubesRowset.IsDrillthroughEnabled, MdschemaCubesRowset.IsWriteEnabled,
+            MdschemaCubesRowset.IsLinkable, MdschemaCubesRowset.IsSqlEnabled, MdschemaCubesRowset.CubeCaption, MdschemaCubesRowset.CubeSource,MdschemaCubesRowset.BaseCubeName, 
+            MdschemaCubesRowset.PreferedQueryPatterns, MdschemaCubesRowset.Description, MdschemaCubesRowset.Dimensions, MdschemaCubesRowset.Sets, MdschemaCubesRowset.Measures },
+            new Column[] { MdschemaCubesRowset.CatalogName, MdschemaCubesRowset.SchemaName, MdschemaCubesRowset.CubeName, MdschemaCubesRowset.CubeSource,  MdschemaCubesRowset.BaseCubeName,
+                    MdschemaCubesRowset.PreferedQueryPatterns, }) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaCubesRowset(request, handler);
+      }
+   },
+
+   /**
+    * http://msdn2.microsoft.com/en-us/library/ms126180(SQL.90).aspx
+    * http://msdn2.microsoft.com/en-us/library/ms126180.aspx
+    * 
+    * restrictions CATALOG_NAME Optional. SCHEMA_NAME Optional. CUBE_NAME
+    * Optional. DIMENSION_NAME Optional. DIMENSION_UNIQUE_NAME Optional.
+    * CUBE_SOURCE (Optional) A bitmap with one of the following valid values: 1
+    * CUBE 2 DIMENSION Default restriction is a value of 1.
+    * 
+    * DIMENSION_VISIBILITY (Optional) A bitmap with one of the following valid
+    * values: 1 Visible 2 Not visible Default restriction is a value of 1.
+    */
+   MDSCHEMA_DIMENSIONS(13, null, new Column[] { MdschemaDimensionsRowset.CatalogName, MdschemaDimensionsRowset.SchemaName, MdschemaDimensionsRowset.CubeName,
+            MdschemaDimensionsRowset.DimensionName, MdschemaDimensionsRowset.DimensionUniqueName, MdschemaDimensionsRowset.DimensionGuid,
+            MdschemaDimensionsRowset.DimensionCaption, MdschemaDimensionsRowset.DimensionOrdinal, MdschemaDimensionsRowset.DimensionType,
+            MdschemaDimensionsRowset.DimensionCardinality, MdschemaDimensionsRowset.DefaultHierarchy, MdschemaDimensionsRowset.Description, MdschemaDimensionsRowset.IsVirtual,
+            MdschemaDimensionsRowset.IsReadWrite, MdschemaDimensionsRowset.DimensionUniqueSettings, MdschemaDimensionsRowset.DimensionMasterUniqueName, MdschemaDimensionsRowset.CubeSource,
+            MdschemaDimensionsRowset.DimensionVisibility, MdschemaDimensionsRowset.Hierarchies, 
+
+   }, new Column[] { MdschemaDimensionsRowset.CatalogName, MdschemaDimensionsRowset.SchemaName, MdschemaDimensionsRowset.CubeName, MdschemaDimensionsRowset.DimensionName,
+            MdschemaDimensionsRowset.CubeSource, }) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaDimensionsRowset(request, handler);
+      }
+   },
+
+   /**
+    * http://msdn2.microsoft.com/en-us/library/ms126062(SQL.90).aspx
+    * 
+    * restrictions CATALOG_NAME Optional. SCHEMA_NAME Optional. CUBE_NAME
+    * Optional. DIMENSION_UNIQUE_NAME Optional. HIERARCHY_NAME Optional.
+    * HIERARCHY_UNIQUE_NAME Optional. HIERARCHY_ORIGIN (Optional) A default
+    * restriction is in effect on MD_USER_DEFINED and MD_SYSTEM_ENABLED.
+    * CUBE_SOURCE (Optional) A bitmap with one of the following valid values: 1
+    * CUBE 2 DIMENSION Default restriction is a value of 1. HIERARCHY_VISIBILITY
+    * (Optional) A bitmap with one of the following valid values: 1 Visible 2
+    * Not visible Default restriction is a value of 1.
+    * 
+    * Not supported HIERARCHY_ORIGIN HIERARCHY_DISPLAY_FOLDER INSTANCE_SELECTION
+    */
+   MDSCHEMA_HIERARCHIES(15, null, new Column[] { MdschemaHierarchiesRowset.CatalogName, MdschemaHierarchiesRowset.SchemaName, MdschemaHierarchiesRowset.CubeName,
+            MdschemaHierarchiesRowset.DimensionUniqueName, MdschemaHierarchiesRowset.HierarchyName, MdschemaHierarchiesRowset.HierarchyUniqueName,
+            MdschemaHierarchiesRowset.HierarchyGuid, MdschemaHierarchiesRowset.HierarchyCaption, MdschemaHierarchiesRowset.DimensionType,
+            MdschemaHierarchiesRowset.HierarchyCardinality, MdschemaHierarchiesRowset.DefaultMember, MdschemaHierarchiesRowset.AllMember, MdschemaHierarchiesRowset.Description,
+            MdschemaHierarchiesRowset.Structure, MdschemaHierarchiesRowset.IsVirtual, MdschemaHierarchiesRowset.IsReadWrite, MdschemaHierarchiesRowset.DimensionUniqueSettings,
+            MdschemaHierarchiesRowset.DimensionMasterUniqueName, MdschemaHierarchiesRowset.DimensionIsVisible, MdschemaHierarchiesRowset.HierarchyOrdinal,
+            MdschemaHierarchiesRowset.DimensionIsShared, MdschemaHierarchiesRowset.HierarchyOrigin,
+            MdschemaHierarchiesRowset.CubeSource,MdschemaHierarchiesRowset.HierarchyIsVisible, MdschemaHierarchiesRowset.HierarchyVisibility,
+
+             MdschemaHierarchiesRowset.HierarchyDisplayFolder, MdschemaHierarchiesRowset.InstanceSelection,
+            MdschemaHierarchiesRowset.GroupingBehaviors, MdschemaHierarchiesRowset.StructureType, }, new Column[] { MdschemaHierarchiesRowset.CatalogName,
+            MdschemaHierarchiesRowset.SchemaName, MdschemaHierarchiesRowset.CubeName, MdschemaHierarchiesRowset.DimensionUniqueName, MdschemaHierarchiesRowset.HierarchyName,
+            MdschemaHierarchiesRowset.HierarchyVisibility, MdschemaHierarchiesRowset.CubeSource }) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaHierarchiesRowset(request, handler);
+      }
+   },
+
+   /**
+    * http://msdn2.microsoft.com/en-us/library/ms126038(SQL.90).aspx
+    * 
+    * restriction CATALOG_NAME Optional. SCHEMA_NAME Optional. CUBE_NAME
+    * Optional. DIMENSION_UNIQUE_NAME Optional. HIERARCHY_UNIQUE_NAME Optional.
+    * LEVEL_NAME Optional. LEVEL_UNIQUE_NAME Optional. LEVEL_ORIGIN (Optional) A
+    * default restriction is in effect on MD_USER_DEFINED and MD_SYSTEM_ENABLED
+    * CUBE_SOURCE (Optional) A bitmap with one of the following valid values: 1
+    * CUBE 2 DIMENSION Default restriction is a value of 1. LEVEL_VISIBILITY
+    * (Optional) A bitmap with one of the following values: 1 Visible 2 Not
+    * visible Default restriction is a value of 1.
+    * 
+    * Not supported CUSTOM_ROLLUP_SETTINGS LEVEL_UNIQUE_SETTINGS
+    * LEVEL_ORDERING_PROPERTY LEVEL_DBTYPE LEVEL_MASTER_UNIQUE_NAME
+    * LEVEL_NAME_SQL_COLUMN_NAME Customers:(All)!NAME LEVEL_KEY_SQL_COLUMN_NAME
+    * Customers:(All)!KEY LEVEL_UNIQUE_NAME_SQL_COLUMN_NAME
+    * Customers:(All)!UNIQUE_NAME LEVEL_ATTRIBUTE_HIERARCHY_NAME
+    * LEVEL_KEY_CARDINALITY LEVEL_ORIGIN
+    * 
+    */
+   MDSCHEMA_LEVELS(16, null, new Column[] { MdschemaLevelsRowset.CatalogName, MdschemaLevelsRowset.SchemaName, MdschemaLevelsRowset.CubeName,
+            MdschemaLevelsRowset.DimensionUniqueName, MdschemaLevelsRowset.HierarchyUniqueName, MdschemaLevelsRowset.LevelName, MdschemaLevelsRowset.LevelUniqueName,
+            MdschemaLevelsRowset.LevelOrigin, 
+            MdschemaLevelsRowset.LevelGuid, MdschemaLevelsRowset.LevelCaption, MdschemaLevelsRowset.LevelNumber, MdschemaLevelsRowset.LevelCardinality,
+            MdschemaLevelsRowset.LevelType, MdschemaLevelsRowset.CustomRollupSettings, MdschemaLevelsRowset.LevelUniqueSettings, 
+            MdschemaLevelsRowset.Description,MdschemaLevelsRowset.CubeSource,MdschemaLevelsRowset.LevelVisibility,
+
+            MdschemaLevelsRowset.LevelDbtype, MdschemaLevelsRowset.LevelKeyCardinality, MdschemaLevelsRowset.LevelNameSqlColumnName,
+            MdschemaLevelsRowset.LevelKeySqlColumnName, MdschemaLevelsRowset.LevelUniqueNameSqlColumnName, MdschemaLevelsRowset.LevelAttributeHierarchyName,
+            MdschemaLevelsRowset.LevelOrderingProperty, 
+
+   }, new Column[] { MdschemaLevelsRowset.CatalogName, MdschemaLevelsRowset.SchemaName, MdschemaLevelsRowset.CubeName, MdschemaLevelsRowset.DimensionUniqueName,
+            MdschemaLevelsRowset.HierarchyUniqueName, MdschemaLevelsRowset.LevelNumber, MdschemaLevelsRowset.CubeSource
+
+   // MdschemaLevelsRowset.LevelDbtype,
+   // MdschemaLevelsRowset.LevelKeyCardinality,
+   // MdschemaLevelsRowset.LevelOrigin,
+
+            }) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaLevelsRowset(request, handler);
+      }
+   },
+
+   /**
+    * http://msdn2.microsoft.com/en-us/library/ms126250(SQL.90).aspx
+    * 
+    * restrictions CATALOG_NAME Optional. SCHEMA_NAME Optional. CUBE_NAME
+    * Optional. MEASURE_NAME Optional. MEASURE_UNIQUE_NAME Optional. CUBE_SOURCE
+    * (Optional) A bitmap with one of the following valid values: 1 CUBE 2
+    * DIMENSION Default restriction is a value of 1. MEASURE_VISIBILITY
+    * (Optional) A bitmap with one of the following valid values: 1 Visible 2
+    * Not Visible Default restriction is a value of 1.
+    * 
+    * Not supported MEASURE_GUID NUMERIC_PRECISION NUMERIC_SCALE MEASURE_UNITS
+    * EXPRESSION MEASURE_NAME_SQL_COLUMN_NAME MEASURE_UNQUALIFIED_CAPTION
+    * MEASUREGROUP_NAME MEASURE_DISPLAY_FOLDER DEFAULT_FORMAT_STRING
+    */
+   MDSCHEMA_MEASURES(17, null, new Column[] { MdschemaMeasuresRowset.CatalogName, MdschemaMeasuresRowset.SchemaName, MdschemaMeasuresRowset.CubeName,
+            MdschemaMeasuresRowset.MeasureName, MdschemaMeasuresRowset.MeasureUniqueName, MdschemaMeasuresRowset.MeasureCaption, MdschemaMeasuresRowset.MeasureGuid,
+            MdschemaMeasuresRowset.MeasureAggregator, MdschemaMeasuresRowset.DataType, MdschemaMeasuresRowset.NumericPrecision, MdschemaMeasuresRowset.NumericScale,
+            MdschemaMeasuresRowset.MeasureUnits, MdschemaMeasuresRowset.Description, MdschemaMeasuresRowset.Expression, MdschemaMeasuresRowset.MeasureIsVisible,
+            MdschemaMeasuresRowset.LevelsList, MdschemaMeasuresRowset.MeasureNameSql, MdschemaMeasuresRowset.MeasureUnqualifiedCaption, MdschemaMeasuresRowset.MeasureGroupName,
+            MdschemaMeasuresRowset.MeasureDisplayFolder, MdschemaMeasuresRowset.FormatString, MdschemaMeasuresRowset.CubeSource, MdschemaMeasuresRowset.MeasureVisibility, },
+            new Column[] { MdschemaMeasuresRowset.CatalogName, MdschemaMeasuresRowset.SchemaName, MdschemaMeasuresRowset.CubeName, MdschemaMeasuresRowset.MeasureName,
+                     MdschemaMeasuresRowset.NumericScale, MdschemaMeasuresRowset.MeasureIsVisible, MdschemaMeasuresRowset.MeasureNameSql, MdschemaMeasuresRowset.MeasureGroupName,
+                     MdschemaMeasuresRowset.CubeSource, MdschemaMeasuresRowset.MeasureVisibility }) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaMeasuresRowset(request, handler);
+      }
+   },
+
+   /**
+    * http://msdn2.microsoft.com/en-us/library/ms126309(SQL.90).aspx
+    * 
+    * restrictions CATALOG_NAME Mandatory SCHEMA_NAME Optional CUBE_NAME
+    * Optional DIMENSION_UNIQUE_NAME Optional HIERARCHY_UNIQUE_NAME Optional
+    * LEVEL_UNIQUE_NAME Optional
+    * 
+    * MEMBER_UNIQUE_NAME Optional PROPERTY_NAME Optional PROPERTY_TYPE Optional
+    * PROPERTY_CONTENT_TYPE (Optional) A default restriction is in place on
+    * MDPROP_MEMBER OR MDPROP_CELL. PROPERTY_ORIGIN (Optional) A default
+    * restriction is in place on MD_USER_DEFINED OR MD_SYSTEM_ENABLED
+    * CUBE_SOURCE (Optional) A bitmap with one of the following valid values: 1
+    * CUBE 2 DIMENSION Default restriction is a value of 1. PROPERTY_VISIBILITY
+    * (Optional) A bitmap with one of the following valid values: 1 Visible 2
+    * Not visible Default restriction is a value of 1.
+    * 
+    * Not supported PROPERTY_ORIGIN CUBE_SOURCE PROPERTY_VISIBILITY
+    * CHARACTER_MAXIMUM_LENGTH CHARACTER_OCTET_LENGTH NUMERIC_PRECISION
+    * NUMERIC_SCALE DESCRIPTION SQL_COLUMN_NAME LANGUAGE
+    * PROPERTY_ATTRIBUTE_HIERARCHY_NAME PROPERTY_CARDINALITY MIME_TYPE
+    * PROPERTY_IS_VISIBLE
+    */
+   MDSCHEMA_PROPERTIES(19, null, new Column[] { 
+            MdschemaPropertiesRowset.CatalogName, 
+            MdschemaPropertiesRowset.SchemaName, 
+            MdschemaPropertiesRowset.CubeName,
+            MdschemaPropertiesRowset.DimensionUniqueName, 
+            MdschemaPropertiesRowset.HierarchyUniqueName, 
+            MdschemaPropertiesRowset.LevelUniqueName,
+            MdschemaPropertiesRowset.MemberUniqueName, 
+            MdschemaPropertiesRowset.PropertyName, 
+            MdschemaPropertiesRowset.PropertyType, 
+            MdschemaPropertiesRowset.PropertyContentType,
+            MdschemaPropertiesRowset.PropertyOrigin, 
+            MdschemaPropertiesRowset.CubeSource, 
+            MdschemaPropertiesRowset.PropertyVisibility, 
+            MdschemaPropertiesRowset.Description, 
+            MdschemaPropertiesRowset.PropertyCaption,
+            MdschemaPropertiesRowset.DataType, 
+            MdschemaPropertiesRowset.CharacterMaximumLength, // CHARACTER_MAXIMUM_LENGTH
+            MdschemaPropertiesRowset.CharacterOctetLength,// CHARACTER_OCTET_LENGTH
+            MdschemaPropertiesRowset.NumericPrecision,// NUMERIC_PRECISION
+            MdschemaPropertiesRowset.NumericScale,// NUMERIC_SCALE
+            MdschemaPropertiesRowset.SqlColumnName, // SQL_COLUMN_NAME
+            MdschemaPropertiesRowset.Language, MdschemaPropertiesRowset.PropertyAttributeHierarchyName,
+            // MdschemaPropertiesRowset.CubeSource,
+            MdschemaPropertiesRowset.PropertyCardinality, MdschemaPropertiesRowset.MimeType,
+
+   }, null /* not sorted */) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaPropertiesRowset(request, handler);
+      }
+   },
+
+   /**
+    * 
+    * http://msdn2.microsoft.com/es-es/library/ms126046.aspx
+    * 
+    * 
+    * restrictions CATALOG_NAME Optional. SCHEMA_NAME Optional. CUBE_NAME
+    * Optional. DIMENSION_UNIQUE_NAME Optional. HIERARCHY_UNIQUE_NAME Optional.
+    * LEVEL_UNIQUE_NAME Optional. LEVEL_NUMBER Optional. MEMBER_NAME Optional.
+    * MEMBER_UNIQUE_NAME Optional. MEMBER_CAPTION Optional. MEMBER_TYPE
+    * Optional. TREE_OP (Optional) Only applies to a single member:
+    * MDTREEOP_ANCESTORS (0x20) returns all of the ancestors. MDTREEOP_CHILDREN
+    * (0x01) returns only the immediate children. MDTREEOP_SIBLINGS (0x02)
+    * returns members on the same level. MDTREEOP_PARENT (0x04) returns only the
+    * immediate parent. MDTREEOP_SELF (0x08) returns itself in the list of
+    * returned rows. MDTREEOP_DESCENDANTS (0x10) returns all of the descendants.
+    * CUBE_SOURCE (Optional) A bitmap with one of the following valid values: 1
+    * CUBE 2 DIMENSION Default restriction is a value of 1.
+    * 
+    * Not supported
+    */
+   MDSCHEMA_MEMBERS(18, null, new Column[] { MdschemaMembersRowset.CatalogName, MdschemaMembersRowset.SchemaName, MdschemaMembersRowset.CubeName,
+            MdschemaMembersRowset.DimensionUniqueName, MdschemaMembersRowset.HierarchyUniqueName, MdschemaMembersRowset.LevelUniqueName, MdschemaMembersRowset.LevelNumber,
+            MdschemaMembersRowset.MemberOrdinal, MdschemaMembersRowset.MemberName, MdschemaMembersRowset.MemberUniqueName,  MdschemaMembersRowset.MemberCaption, MdschemaMembersRowset.MemberType,
+            MdschemaMembersRowset.MemberGuid, MdschemaMembersRowset.ChildrenCardinality, MdschemaMembersRowset.ParentLevel,
+            MdschemaMembersRowset.ParentUniqueName, MdschemaMembersRowset.ParentCount, MdschemaMembersRowset.TreeOp_, MdschemaMembersRowset.CubeSource,MdschemaMembersRowset.Scope,
+            MdschemaMembersRowset.Depth, MdschemaMembersRowset.MemberKey, MdschemaMembersRowset.IsPlaceHolderMember, MdschemaMembersRowset.IsDatamember, }, new Column[] {
+            MdschemaMembersRowset.CatalogName, MdschemaMembersRowset.SchemaName, MdschemaMembersRowset.CubeName, MdschemaMembersRowset.DimensionUniqueName,
+            MdschemaMembersRowset.HierarchyUniqueName, MdschemaMembersRowset.LevelUniqueName, MdschemaMembersRowset.LevelNumber, MdschemaMembersRowset.MemberOrdinal,
+            MdschemaMembersRowset.IsPlaceHolderMember, MdschemaMembersRowset.IsDatamember, MdschemaMembersRowset.Scope }) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaMembersRowset(request, handler);
+      }
+   },
+
+   /**
+    * http://msdn2.microsoft.com/en-us/library/ms126257(SQL.90).aspx
+    * 
+    * restrictions LIBRARY_NAME Optional. INTERFACE_NAME Optional. FUNCTION_NAME
+    * Optional. ORIGIN Optional.
+    * 
+    * Not supported DLL_NAME Optional HELP_FILE Optional HELP_CONTEXT Optional -
+    * SQL Server xml schema says that this must be present OBJECT Optional
+    * CAPTION The display caption for the function.
+    */
+   MDSCHEMA_FUNCTIONS(14, null, new Column[] {MdschemaFunctionsRowset.LibraryName, MdschemaFunctionsRowset.Description, MdschemaFunctionsRowset.ParameterList,
+            MdschemaFunctionsRowset.ReturnType,  MdschemaFunctionsRowset.InterfaceName, MdschemaFunctionsRowset.FunctionName, MdschemaFunctionsRowset.Origin,
+            MdschemaFunctionsRowset.Caption, }, new Column[] { MdschemaFunctionsRowset.LibraryName, MdschemaFunctionsRowset.InterfaceName, MdschemaFunctionsRowset.FunctionName,
+            MdschemaFunctionsRowset.Origin, }) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaFunctionsRowset(request, handler);
+      }
+   },
+
+   /**
+    * http://msdn2.microsoft.com/en-us/library/ms126032(SQL.90).aspx
+    * 
+    * restrictions CATALOG_NAME Optional SCHEMA_NAME Optional CUBE_NAME
+    * Mandatory ACTION_NAME Optional ACTION_TYPE Optional COORDINATE Mandatory
+    * COORDINATE_TYPE Mandatory INVOCATION (Optional) The INVOCATION restriction
+    * column defaults to the value of MDACTION_INVOCATION_INTERACTIVE. To
+    * retrieve all actions, use the MDACTION_INVOCATION_ALL value in the
+    * INVOCATION restriction column. CUBE_SOURCE (Optional) A bitmap with one of
+    * the following valid values:
+    * 
+    * 1 CUBE 2 DIMENSION
+    * 
+    * Default restriction is a value of 1.
+    * 
+    * Not supported
+    */
+   MDSCHEMA_ACTIONS(11, null, new Column[] { MdschemaActionsRowset.CatalogName, MdschemaActionsRowset.SchemaName, MdschemaActionsRowset.CubeName, MdschemaActionsRowset.ActionName,
+            MdschemaActionsRowset.ActionType, MdschemaActionsRowset.Coordinate, MdschemaActionsRowset.CoordinateType, MdschemaActionsRowset.Invocation,
+            MdschemaActionsRowset.CubeSource }, new Column[] {
+            // Spec says sort on CATALOG_NAME, SCHEMA_NAME, CUBE_NAME,
+            // ACTION_NAME.
+            MdschemaActionsRowset.CatalogName, MdschemaActionsRowset.SchemaName, MdschemaActionsRowset.CubeName, MdschemaActionsRowset.ActionName,
+            MdschemaActionsRowset.ActionType, MdschemaActionsRowset.Invocation, MdschemaActionsRowset.CubeSource }) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaActionsRowset(request, handler);
+      }
+   },
+
+   /**
+    * http://msdn2.microsoft.com/en-us/library/ms126290(SQL.90).aspx
+    * 
+    * restrictions CATALOG_NAME Optional. SCHEMA_NAME Optional. CUBE_NAME
+    * Optional. SET_NAME Optional. SCOPE Optional. HIERARCHY_UNIQUE_NAME
+    * Optional. CUBE_SOURCE Optional. Note: Only one hierarchy can be included,
+    * and only those named sets whose hierarchies exactly match the restriction
+    * are returned.
+    * 
+    * Not supported EXPRESSION DIMENSIONS SET_DISPLAY_FOLDER
+    */
+   MDSCHEMA_SETS(20, null, new Column[] { MdschemaSetsRowset.CatalogName, MdschemaSetsRowset.SchemaName, MdschemaSetsRowset.CubeName, MdschemaSetsRowset.SetName,
+            MdschemaSetsRowset.Scope, MdschemaSetsRowset.Description, MdschemaSetsRowset.Expression, MdschemaSetsRowset.Dimensions, MdschemaSetsRowset.SetDisplayFolder,
+            MdschemaSetsRowset.HierarchyUniqueName, MdschemaSetsRowset.CubeSource, MdschemaSetsRowset.SetEvaluationContext  },
+
+   new Column[] { MdschemaSetsRowset.CatalogName, MdschemaSetsRowset.SchemaName, MdschemaSetsRowset.CubeName, MdschemaSetsRowset.CubeSource,
+            MdschemaSetsRowset.SetEvaluationContext }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaSetsRowset(request, handler);
+      }
+   },
+
+   /**
+    * restrictions
+    * 
+    * Not supported
+    */
+   DISCOVER_INSTANCES(15, "", new Column[] { DiscoverInstancesRowset.InstanceName }, null /*
+                                                                                           * not
+                                                                                           * sorted
+                                                                                           */) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverLiteralsRowset(request, handler);
+      }
+   },
+
+   MDSCHEMA_KPIS(20, null, new Column[] { MdschemaKpisRowset.CatalogName, MdschemaKpisRowset.SchemaName, MdschemaKpisRowset.CubeName, MdschemaKpisRowset.KpiName,
+            MdschemaKpisRowset.CubeSource, MdschemaKpisRowset.Scope },
+
+   new Column[] { MdschemaKpisRowset.CatalogName, MdschemaKpisRowset.SchemaName, MdschemaKpisRowset.CubeName, MdschemaKpisRowset.KpiName, MdschemaKpisRowset.CubeSource,
+            MdschemaKpisRowset.Scope }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaKpisRowset(request, handler);
+      }
+   },
+
+   MDSCHEMA_MEASUREGROUPS(20, null, new Column[] { MdschemaMeasureGroupRowset.CatalogName, MdschemaMeasureGroupRowset.SchemaName, MdschemaMeasureGroupRowset.CubeName,
+            MdschemaMeasureGroupRowset.MeasureGroupName,
+
+            MdschemaMeasureGroupRowset.Description, MdschemaMeasureGroupRowset.IsWriteEnabled, MdschemaMeasureGroupRowset.MeasureGroupCaption,
+            MdschemaMeasureGroupRowset.CubeSource },
+
+   new Column[] { MdschemaMeasureGroupRowset.CatalogName, MdschemaMeasureGroupRowset.SchemaName, MdschemaMeasureGroupRowset.CubeName,
+            MdschemaMeasureGroupRowset.MeasureGroupCaption, MdschemaMeasureGroupRowset.CubeSource }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaMeasureGroupRowset(request, handler);
+      }
+   },
+
+   MDSCHEMA_MEASUREGROUP_DIMENSIONS(20, null, new Column[] { MdschemaMeasureGroupDimensionRowset.CatalogName, MdschemaMeasureGroupDimensionRowset.SchemaName,
+            MdschemaMeasureGroupDimensionRowset.CubeName, MdschemaMeasureGroupDimensionRowset.MeasureGroupName, MdschemaMeasureGroupDimensionRowset.MeasureGroupCardinality,
+            MdschemaMeasureGroupDimensionRowset.DimensionUniqueName, MdschemaMeasureGroupDimensionRowset.DimensionCardinality,
+            MdschemaMeasureGroupDimensionRowset.DimensionVisibility, MdschemaMeasureGroupDimensionRowset.DimensionISFactDimension,
+            MdschemaMeasureGroupDimensionRowset.DimensionPath, MdschemaMeasureGroupDimensionRowset.DimensionGranularity, },
+
+   new Column[] { MdschemaMeasureGroupDimensionRowset.CatalogName, MdschemaMeasureGroupDimensionRowset.SchemaName, MdschemaMeasureGroupDimensionRowset.CubeName,
+            MdschemaMeasureGroupDimensionRowset.MeasureGroupName, MdschemaMeasureGroupDimensionRowset.MeasureGroupCardinality,
+            MdschemaMeasureGroupDimensionRowset.DimensionUniqueName, MdschemaMeasureGroupDimensionRowset.DimensionCardinality,
+            MdschemaMeasureGroupDimensionRowset.DimensionVisibility, MdschemaMeasureGroupDimensionRowset.DimensionISFactDimension,
+            MdschemaMeasureGroupDimensionRowset.DimensionPath, MdschemaMeasureGroupDimensionRowset.DimensionGranularity, }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaMeasureGroupDimensionRowset(request, handler);
+      }
+   },
+
+   MDSCHEMA_INPUT_DATASOURCES(20, null, new Column[] { MdschemaInputDataSourcesSchema.CatalogName, MdschemaInputDataSourcesSchema.SchemaName,
+            MdschemaInputDataSourcesSchema.DataSourceName, MdschemaInputDataSourcesSchema.DataSourceType }, new Column[] { MdschemaInputDataSourcesSchema.CatalogName,
+            MdschemaInputDataSourcesSchema.SchemaName, MdschemaInputDataSourcesSchema.DataSourceName, MdschemaInputDataSourcesSchema.DataSourceType }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaInputDataSourcesSchema(request, handler);
+      }
+   },
+
+   // DMSCHEMA_MINING_SERVICES
+   DMSCHEMA_MINING_SERVICES(20, null, new Column[] { DmschemaMiningServices.ServiceName, DmschemaMiningServices.ServiceTypeId }, new Column[] { DmschemaMiningServices.ServiceName,
+            DmschemaMiningServices.ServiceTypeId }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DmschemaMiningServices(request, handler);
+      }
+   },
+
+   // DMSCHEMA_MINING_SERVICE_PARAMETERS
+   DMSCHEMA_MINING_SERVICE_PARAMETERS(20, null, new Column[] { DmschemaMiningServiceParametersRowset.ServiceName, DmschemaMiningServiceParametersRowset.ParameterName },
+            new Column[] { DmschemaMiningServiceParametersRowset.ServiceName, DmschemaMiningServiceParametersRowset.ParameterName }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DmschemaMiningServiceParametersRowset(request, handler);
+      }
+   },
+
+   // DMSCHEMA_MINING_FUNCTIONS
+   DMSCHEMA_MINING_FUNCTIONS(20, null, new Column[] { DmschemaMiningFunctionsRowset.ServiceName, DmschemaMiningFunctionsRowset.FunctionName }, new Column[] {
+            DmschemaMiningFunctionsRowset.FunctionName, DmschemaMiningFunctionsRowset.FunctionName }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DmschemaMiningFunctionsRowset(request, handler);
+      }
+   },
+
+   // DMSCHEMA_MINING_MODEL_CONTENT
+
+   DMSCHEMA_MINING_MODEL_CONTENT(20, null, new Column[] { DmschemaMiningModelContentRowset.ModelCatalog, DmschemaMiningModelContentRowset.ModelSchema,
+            DmschemaMiningModelContentRowset.ModelName, DmschemaMiningModelContentRowset.AttributeName, DmschemaMiningModelContentRowset.NodeName,
+            DmschemaMiningModelContentRowset.NodeUniqueName, DmschemaMiningModelContentRowset.NodeType, DmschemaMiningModelContentRowset.NodeGuid,
+            DmschemaMiningModelContentRowset.NodeCaption, DmschemaMiningModelContentRowset.TreeOperation }, new Column[] { DmschemaMiningModelContentRowset.ModelCatalog,
+            DmschemaMiningModelContentRowset.ModelSchema, DmschemaMiningModelContentRowset.ModelName, DmschemaMiningModelContentRowset.AttributeName,
+            DmschemaMiningModelContentRowset.NodeName, DmschemaMiningModelContentRowset.NodeUniqueName, DmschemaMiningModelContentRowset.NodeType,
+            DmschemaMiningModelContentRowset.NodeGuid, DmschemaMiningModelContentRowset.NodeCaption, DmschemaMiningModelContentRowset.TreeOperation }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DmschemaMiningFunctionsRowset(request, handler);
+      }
+   },
+   // DMSCHEMA_MINING_MODEL_XML
+
+   DMSCHEMA_MINING_MODEL_XML(20, null, new Column[] { DmschemaMiningModelXmlRowset.ModelCatalog, DmschemaMiningModelXmlRowset.ModelSchema, DmschemaMiningModelXmlRowset.ModelName,
+            DmschemaMiningModelXmlRowset.ModelType }, new Column[] { DmschemaMiningModelXmlRowset.ModelCatalog, DmschemaMiningModelXmlRowset.ModelSchema,
+            DmschemaMiningModelXmlRowset.ModelName, DmschemaMiningModelXmlRowset.ModelType }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DmschemaMiningModelXmlRowset(request, handler);
+      }
+   },
+   // DMSCHEMA_MINING_MODEL_CONTENT_PMML
+   DMSCHEMA_MINING_MODEL_CONTENT_PMML(20, null, new Column[] { DbschemaMiningCodelContentPmmlRowset.ModelCatalog, DbschemaMiningCodelContentPmmlRowset.ModelSchema,
+            DbschemaMiningCodelContentPmmlRowset.ModelName, DbschemaMiningCodelContentPmmlRowset.ModelType }, new Column[] { DbschemaMiningCodelContentPmmlRowset.ModelCatalog,
+            DbschemaMiningCodelContentPmmlRowset.ModelSchema, DbschemaMiningCodelContentPmmlRowset.ModelName, DbschemaMiningCodelContentPmmlRowset.ModelType }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DmschemaMiningModelXmlRowset(request, handler);
+      }
+   },
+
+   // DMSCHEMA_MINING_MODELS
+   DMSCHEMA_MINING_MODELS(20, null, new Column[] { DbschemaMiningModelsRowset.ModelCatalog, DbschemaMiningModelsRowset.ModelSchema, DbschemaMiningModelsRowset.ModelName,
+            DbschemaMiningModelsRowset.ModelType, DbschemaMiningModelsRowset.ServiceName, DbschemaMiningModelsRowset.ServiceTypeId, DbschemaMiningModelsRowset.MiningStructure },
+            new Column[] { DbschemaMiningModelsRowset.ModelCatalog, DbschemaMiningModelsRowset.ModelSchema, DbschemaMiningModelsRowset.ModelName,
+                     DbschemaMiningModelsRowset.ModelType, DbschemaMiningModelsRowset.ServiceName, DbschemaMiningModelsRowset.ServiceTypeId,
+                     DbschemaMiningModelsRowset.MiningStructure }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DmschemaMiningModelXmlRowset(request, handler);
+      }
+   },
+
+   // DMSCHEMA_MINING_COLUMNS
+
+   DMSCHEMA_MINING_COLUMNS(20, null, new Column[] { DbschemaMiningColumnsRowset.ModelCatalog, DbschemaMiningColumnsRowset.ModelSchema, DbschemaMiningColumnsRowset.ModelName,
+            DbschemaMiningColumnsRowset.ColumnName }, new Column[] { DbschemaMiningColumnsRowset.ModelCatalog, DbschemaMiningColumnsRowset.ModelSchema,
+            DbschemaMiningColumnsRowset.ModelName, DbschemaMiningColumnsRowset.ColumnName }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DbschemaMiningColumnsRowset(request, handler);
+      }
+   },
+
+   // DMSCHEMA_MINING_STRUCTURES
+
+   DMSCHEMA_MINING_STRUCTURES(20, null, new Column[] { DbschemaMiningStructuresRowset.StructureCatalog, DbschemaMiningStructuresRowset.StructureSchema,
+            DbschemaMiningStructuresRowset.StructureName }, new Column[] { DbschemaMiningStructuresRowset.StructureCatalog, DbschemaMiningStructuresRowset.StructureSchema,
+            DbschemaMiningStructuresRowset.StructureName }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DbschemaMiningColumnsRowset(request, handler);
+      }
+   },
+
+   // DMSCHEMA_MINING_STRUCTURE_COLUMNS
+
+   DMSCHEMA_MINING_STRUCTURE_COLUMNS(20, null, new Column[] { DbschemaMiningStructuresColumnsRowset.StructureCatalog, DbschemaMiningStructuresColumnsRowset.StructureSchema,
+            DbschemaMiningStructuresColumnsRowset.StructureName, DbschemaMiningStructuresColumnsRowset.ColumnName }, new Column[] {
+            DbschemaMiningStructuresColumnsRowset.StructureCatalog, DbschemaMiningStructuresColumnsRowset.StructureSchema, DbschemaMiningStructuresColumnsRowset.StructureName,
+            DbschemaMiningStructuresColumnsRowset.ColumnName }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DbschemaMiningStructuresColumnsRowset(request, handler);
+      }
+   },
+
    DISCOVER_DATASOURCES(0, "Returns a list of XML for Analysis data sources available on the " + "server or Web Service.", new Column[] { DiscoverDatasourcesRowset.DataSourceName,
             DiscoverDatasourcesRowset.DataSourceDescription, DiscoverDatasourcesRowset.URL, DiscoverDatasourcesRowset.DataSourceInfo, DiscoverDatasourcesRowset.ProviderName,
             DiscoverDatasourcesRowset.ProviderType, DiscoverDatasourcesRowset.AuthenticationMode, },
@@ -83,6 +637,25 @@ public enum RowsetDefinition {
             new Column[] { DiscoverDatasourcesRowset.DataSourceName, }) {
       public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
          return new DiscoverDatasourcesRowset(request, handler);
+      }
+   },
+
+   /**
+    * 
+    * 
+    * 
+    * restrictions
+    * 
+    * Not supported
+    */
+   DISCOVER_PROPERTIES(1, "Returns a list of information and values about the requested " + "properties that are supported by the specified data source " + "provider.",
+            new Column[] { DiscoverPropertiesRowset.PropertyName, DiscoverPropertiesRowset.PropertyDescription, DiscoverPropertiesRowset.PropertyType,
+                     DiscoverPropertiesRowset.PropertyAccessType, DiscoverPropertiesRowset.IsRequired, DiscoverPropertiesRowset.Value, }, null /*
+                                                                                                                                                * not
+                                                                                                                                                * sorted
+                                                                                                                                                */) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverPropertiesRowset(request, handler);
       }
    },
 
@@ -143,64 +716,301 @@ public enum RowsetDefinition {
       }
    },
 
+   DISCOVER_ENUMERATORS(20, null, new Column[] { DiscoverEnumeratorsSchema.EnumName }, new Column[] { DiscoverEnumeratorsSchema.EnumName }) {
 
-
-   /**
-    * 
-    * 
-    * 
-    * restrictions
-    * 
-    * Not supported
-    */
-   DISCOVER_PROPERTIES(1, "Returns a list of information and values about the requested " + "properties that are supported by the specified data source " + "provider.",
-            new Column[] { DiscoverPropertiesRowset.PropertyName, DiscoverPropertiesRowset.PropertyDescription, DiscoverPropertiesRowset.PropertyType,
-                     DiscoverPropertiesRowset.PropertyAccessType, DiscoverPropertiesRowset.IsRequired, DiscoverPropertiesRowset.Value, }, null /*
-                                                                                                                                                * not
-                                                                                                                                                * sorted
-                                                                                                                                                */) {
       public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new DiscoverPropertiesRowset(request, handler);
+         return new DiscoverEnumeratorsSchema(request, handler);
       }
    },
 
+   DISCOVER_KEYWORDS(20, null, new Column[] { DiscoverKeyWordsSchema.Keyword }, new Column[] { DiscoverKeyWordsSchema.Keyword }) {
 
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new MdschemaMeasureGroupRowset(request, handler);
+      }
+   },
 
-   /**
-    * 
-    * 
-    * 
-    * restrictions
-    * 
-    * Not supported
-    */
    DISCOVER_LITERALS(5, "Returns information about literals supported by the provider.", new Column[] { DiscoverLiteralsRowset.LiteralName, DiscoverLiteralsRowset.LiteralValue,
             DiscoverLiteralsRowset.LiteralInvalidChars, DiscoverLiteralsRowset.LiteralInvalidStartingChars, DiscoverLiteralsRowset.LiteralMaxLength,
-   // DiscoverLiteralsRowset.LiteralNameEnumValue, // used by SSAS 12
-            }, null /* not sorted */) {
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new DiscoverLiteralsRowset(request, handler);
-      }
-   },
-   
-   
-   
-   
-   /**
-    * 
-    * 
-    * 
-    * restrictions
-    * 
-    * Not supported
-    */
-   DISCOVER_INSTANCES(15, "", 
-            new Column[] { DiscoverInstancesRowset.InstanceName}, null /* not sorted */) {
+            DiscoverLiteralsRowset.LiteralNameEnumValue, // used by SSAS 12
+   }, null /* not sorted */) {
       public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
          return new DiscoverLiteralsRowset(request, handler);
       }
    },
 
+   DISCOVER_XML_METADATA(20, null, new Column[] { DiscoverXmlMetaData.DatabaseID, DiscoverXmlMetaData.DimensionPermissionID, DiscoverXmlMetaData.CubeID,
+            DiscoverXmlMetaData.MeasureGroupID, DiscoverXmlMetaData.PartitionID, DiscoverXmlMetaData.PerspectiveID, DiscoverXmlMetaData.DimensionPermissionID,
+            DiscoverXmlMetaData.RoleID, DiscoverXmlMetaData.DatabasePermissionID, DiscoverXmlMetaData.MiningModelID, DiscoverXmlMetaData.MiningModelPermissionID,
+            DiscoverXmlMetaData.DataSourceID, DiscoverXmlMetaData.MiningStructureID, DiscoverXmlMetaData.AggregationDesignID, DiscoverXmlMetaData.TraceID,
+            DiscoverXmlMetaData.MiningStructurePermissionID, DiscoverXmlMetaData.CubePermissionID, DiscoverXmlMetaData.AssemblyID, DiscoverXmlMetaData.MdxScriptID,
+            DiscoverXmlMetaData.DataSourceViewID, DiscoverXmlMetaData.DataSourcePermissionID, DiscoverXmlMetaData.CalculatedColumns, DiscoverXmlMetaData.ObjectExpansion, },
+
+   new Column[] { DiscoverXmlMetaData.DatabaseID, DiscoverXmlMetaData.DimensionPermissionID, DiscoverXmlMetaData.CubeID, DiscoverXmlMetaData.MeasureGroupID,
+            DiscoverXmlMetaData.PartitionID, DiscoverXmlMetaData.PerspectiveID, DiscoverXmlMetaData.DimensionPermissionID, DiscoverXmlMetaData.RoleID,
+            DiscoverXmlMetaData.DatabasePermissionID, DiscoverXmlMetaData.MiningModelID, DiscoverXmlMetaData.MiningModelPermissionID, DiscoverXmlMetaData.DataSourceID,
+            DiscoverXmlMetaData.MiningStructureID, DiscoverXmlMetaData.AggregationDesignID, DiscoverXmlMetaData.TraceID, DiscoverXmlMetaData.MiningStructurePermissionID,
+            DiscoverXmlMetaData.CubePermissionID, DiscoverXmlMetaData.AssemblyID, DiscoverXmlMetaData.MdxScriptID, DiscoverXmlMetaData.DataSourceViewID,
+            DiscoverXmlMetaData.DataSourcePermissionID, DiscoverXmlMetaData.CalculatedColumns, DiscoverXmlMetaData.ObjectExpansion, }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverXmlMetaData(request, handler);
+      }
+   },
+
+   DISCOVER_TRACES(15, "", new Column[] { DiscoverTracesRowset.TraceId, DiscoverTracesRowset.Type }, null) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverTracesRowset(request, handler);
+      }
+
+   },
+   DISCOVER_TRACE_DEFINITION_PROVIDERINFO(15, "", new Column[] { DiscoverTraceDefinitionProviderInfo.Data }, null) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverTraceDefinitionProviderInfo(request, handler);
+      }
+   },
+
+   DISCOVER_XEVENT_TRACE_DEFINITION(15, "", new Column[] { DiscoverXeventTraceDefinition.Data }, null) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverXeventTraceDefinition(request, handler);
+      }
+   },
+
+   DISCOVER_TRACE_COLUMNS(15, "", new Column[] { DiscoverTraceColumns.Data }, null) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverTraceColumns(request, handler);
+      }
+   },
+
+   DISCOVER_TRACE_EVENT_CATEGORIES(15, "", new Column[] { DiscoverTraceEventCategories.Data }, null) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverTraceEventCategories(request, handler);
+      }
+   },
+
+   DISCOVER_MEMORYUSAGE(15, "", new Column[] { DiscoverMemoryUsage.SPID, DiscoverMemoryUsage.MemoryUsed, DiscoverMemoryUsage.BaseObjectType, DiscoverMemoryUsage.Shrinkable }, null /*
+                                                                                                                                                                                     * not
+                                                                                                                                                                                     * sorted
+                                                                                                                                                                                     */) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverMemoryUsage(request, handler);
+      }
+   },
+
+   DISCOVER_MEMORYGRANT(15, "", new Column[] { DiscoveryMemoryGrant.SPID }, null) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoveryMemoryGrant(request, handler);
+      }
+   },
+
+   DISCOVER_LOCKS(20, null, new Column[] { DiscoverLocksRowset.SPID, DiscoverLocksRowset.LockTransactionId, DiscoverLocksRowset.LockObjectId, DiscoverLocksRowset.LockStauts,
+
+   DiscoverLocksRowset.LockType, DiscoverLocksRowset.LockMinTotalMs, },
+
+   new Column[] { DiscoverLocksRowset.SPID, DiscoverLocksRowset.LockTransactionId, DiscoverLocksRowset.LockObjectId, DiscoverLocksRowset.LockStauts,
+
+   DiscoverLocksRowset.LockType, DiscoverLocksRowset.LockMinTotalMs, }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverLocksRowset(request, handler);
+      }
+   },
+
+   DISCOVER_CONNECTIONS(20, null, new Column[] { DiscoverConnectionsRowset.ConnectionId, DiscoverConnectionsRowset.ConnectionUserName,
+            DiscoverConnectionsRowset.ConnectionImpersonatedUserName, DiscoverConnectionsRowset.ConnectionHostName, DiscoverConnectionsRowset.ConnectionElapsedTiemMs,
+            DiscoverConnectionsRowset.ConnectionLastCommandElapsedTimeMs, DiscoverConnectionsRowset.ConnectionIdleTimeMs, },
+
+   new Column[] { DiscoverConnectionsRowset.ConnectionId, DiscoverConnectionsRowset.ConnectionUserName, DiscoverConnectionsRowset.ConnectionImpersonatedUserName,
+            DiscoverConnectionsRowset.ConnectionHostName, DiscoverConnectionsRowset.ConnectionElapsedTiemMs, DiscoverConnectionsRowset.ConnectionLastCommandElapsedTimeMs,
+            DiscoverConnectionsRowset.ConnectionIdleTimeMs, }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverConnectionsRowset(request, handler);
+      }
+   },
+
+   DISCOVER_SESSIONS(20, null, new Column[] { DiscoverSessionsRowset.SessionId, DiscoverSessionsRowset.SessionSpId, DiscoverSessionsRowset.SessionConnectionId,
+            DiscoverSessionsRowset.SessionUserName, DiscoverSessionsRowset.SessionCurrentDatabase, DiscoverSessionsRowset.SessionElapsedTimeMs,
+            DiscoverSessionsRowset.SessionCpuTimeMs, DiscoverSessionsRowset.SessionIdleTimeMs, DiscoverSessionsRowset.SessionStatus, },
+
+   new Column[] { DiscoverSessionsRowset.SessionId, DiscoverSessionsRowset.SessionSpId, DiscoverSessionsRowset.SessionConnectionId, DiscoverSessionsRowset.SessionUserName,
+            DiscoverSessionsRowset.SessionCurrentDatabase, DiscoverSessionsRowset.SessionElapsedTimeMs, DiscoverSessionsRowset.SessionCpuTimeMs,
+            DiscoverSessionsRowset.SessionIdleTimeMs, DiscoverSessionsRowset.SessionStatus, }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverSessionsRowset(request, handler);
+      }
+   },
+
+   DISCOVER_JOBS(20, null, new Column[] { DiscoverJobsRowset.SpId, DiscoverJobsRowset.JobId, DiscoverJobsRowset.JobDescription, DiscoverJobsRowset.JobThreadPollId,
+            DiscoverJobsRowset.JobMinTotalTimeMs, },
+
+   new Column[] { DiscoverJobsRowset.SpId, DiscoverJobsRowset.JobId, DiscoverJobsRowset.JobDescription, DiscoverJobsRowset.JobThreadPollId, DiscoverJobsRowset.JobMinTotalTimeMs, }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverJobsRowset(request, handler);
+      }
+   },
+
+   DISCOVER_TRANSACTIONS(20, null, new Column[] { DiscoverTransactionsRowset.TransactionId, DiscoverTransactionsRowset.TransactionSessionId }, new Column[] {
+            DiscoverTransactionsRowset.TransactionId, DiscoverTransactionsRowset.TransactionSessionId }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverTransactionsRowset(request, handler);
+      }
+   },
+
+   DISCOVER_DB_CONNECTIONS(0, "Returns a list of XML for Analysis data sources available on the " + "", new Column[] { DiscoverDBConnectionsRowset.ConnectionId,
+            DiscoverDBConnectionsRowset.ConnectionInUser, DiscoverDBConnectionsRowset.ConnectionServerName, DiscoverDBConnectionsRowset.ConnectionCatalogName,
+            DiscoverDBConnectionsRowset.ConnectionSpId },
+   // XMLA does not specify a sort order, but olap4j does.
+            new Column[] { DiscoverDBConnectionsRowset.ConnectionId, DiscoverDBConnectionsRowset.ConnectionInUser, DiscoverDBConnectionsRowset.ConnectionServerName,
+                     DiscoverDBConnectionsRowset.ConnectionCatalogName, DiscoverDBConnectionsRowset.ConnectionSpId }) {
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverDatasourcesRowset(request, handler);
+      }
+   },
+
+   DISCOVER_MASTER_KEY(20, null, new Column[] { DiscoverMasterKey.Key }, new Column[] { DiscoverMasterKey.Key }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverMasterKey(request, handler);
+      }
+   },
+
+   DISCOVER_PERFORMANCE_COUNTERS(20, null, new Column[] { DiscoverPerformanceCounterSchema.PrefCounterName }, new Column[] { DiscoverPerformanceCounterSchema.PrefCounterName }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverPerformanceCounterSchema(request, handler);
+      }
+   },
+
+   DISCOVER_LOCATIONS(20, null, new Column[] { DiscoverLocationsRowset.LocationBackUpFilePathName,  DiscoverLocationsRowset.LocationPassWord },
+
+   new Column[] {DiscoverLocationsRowset.LocationBackUpFilePathName, DiscoverLocationsRowset.LocationPassWord  }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverLocationsRowset(request, handler);
+      }
+   },
+
+   DISCOVER_PARTITION_DIMENSION_STAT(20, null, new Column[] { DiscoverPartitionDimensionStatSchema.DatabaseName, DiscoverPartitionDimensionStatSchema.CubeName,
+            DiscoverPartitionDimensionStatSchema.MeasureGroupName, DiscoverPartitionDimensionStatSchema.PartitionName }, new Column[] {
+            DiscoverPartitionDimensionStatSchema.DatabaseName, DiscoverPartitionDimensionStatSchema.CubeName, DiscoverPartitionDimensionStatSchema.MeasureGroupName,
+            DiscoverPartitionDimensionStatSchema.PartitionName }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverPerformanceCounterSchema(request, handler);
+      }
+   },
+
+   // DISCOVER_PARTITION_STAT
+   DISCOVER_PARTITION_STAT(20, null, new Column[] { DiscoverPartitionStateSchema.DatabaseName, DiscoverPartitionStateSchema.CubeName,
+            DiscoverPartitionStateSchema.MeasureGroupName, DiscoverPartitionStateSchema.PartitionName }, new Column[] { DiscoverPartitionStateSchema.DatabaseName,
+            DiscoverPartitionStateSchema.CubeName, DiscoverPartitionStateSchema.MeasureGroupName, DiscoverPartitionStateSchema.PartitionName }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverPerformanceCounterSchema(request, handler);
+      }
+   },
+
+   DISCOVER_DIMENSION_STAT(20, null, new Column[] { DiscoverDimensionStatRowset.DatabaseName,DiscoverDimensionStatRowset.DimensionName },
+
+   new Column[] { DiscoverDimensionStatRowset.DatabaseName,DiscoverDimensionStatRowset.DimensionName }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverLocationsRowset(request, handler);
+      }
+   },
+
+   DISCOVER_COMMANDS(20, null, new Column[] { DiscoverCommandsRowset.SessionSpId },
+
+   new Column[] { DiscoverCommandsRowset.SessionSpId }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverCommandsRowset(request, handler);
+      }
+   },
+
+   DISCOVER_COMMAND_OBJECTS(20, null, new Column[] { DiscoverCommandObjectsRowset.SessionSpId, DiscoverCommandObjectsRowset.SessionId,
+            DiscoverCommandObjectsRowset.ObjectParentPath, DiscoverCommandObjectsRowset.ObjectId },
+
+   new Column[] { DiscoverCommandObjectsRowset.SessionSpId, DiscoverCommandObjectsRowset.SessionId, DiscoverCommandObjectsRowset.ObjectParentPath,
+            DiscoverCommandObjectsRowset.ObjectId }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverCommandObjectsRowset(request, handler);
+      }
+   },
+
+   DISCOVER_OBJECT_ACTIVITY(20, null, new Column[] { DiscoverObjectActivityRowset.ObjectParentPath, DiscoverObjectActivityRowset.ObjectId },
+
+   new Column[] { DiscoverObjectActivityRowset.ObjectParentPath, DiscoverObjectActivityRowset.ObjectId }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverObjectActivityRowset(request, handler);
+      }
+   },
+
+   DISCOVER_OBJECT_MEMORY_USAGE(20, null, new Column[] { DiscoverObjectMemoryUsageRowset.ObjectParentPath, DiscoverObjectMemoryUsageRowset.ObjectId },
+
+   new Column[] { DiscoverObjectMemoryUsageRowset.ObjectParentPath, DiscoverObjectMemoryUsageRowset.ObjectId }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverObjectMemoryUsageRowset(request, handler);
+      }
+   },
+
+   DISCOVER_STORAGE_TABLES(20, null, new Column[] { DiscoverStorageTablesRowset.DatabaseName, DiscoverStorageTablesRowset.CubeName, DiscoverStorageTablesRowset.MeasureGroupName },
+
+   new Column[] { DiscoverStorageTablesRowset.DatabaseName, DiscoverStorageTablesRowset.CubeName, DiscoverStorageTablesRowset.MeasureGroupName }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverStorageTablesRowset(request, handler);
+      }
+   },
+
+   DISCOVER_STORAGE_TABLE_COLUMNS(20, null, new Column[] { DiscoverStorageTableColumnsRowset.DatabaseName, DiscoverStorageTableColumnsRowset.CubeName,
+            DiscoverStorageTableColumnsRowset.MeasureGroupName },
+
+   new Column[] { DiscoverStorageTableColumnsRowset.DatabaseName, DiscoverStorageTableColumnsRowset.CubeName, DiscoverStorageTableColumnsRowset.MeasureGroupName }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverStorageTableColumnsRowset(request, handler);
+      }
+   },
+
+   DISCOVER_STORAGE_TABLE_COLUMN_SEGMENTS(20, null, new Column[] { DiscoverStorageTableColumnSegments.DatabaseName, DiscoverStorageTableColumnSegments.CubeName,
+            DiscoverStorageTableColumnSegments.MeasureGroupName, DiscoverStorageTableColumnSegments.PartitionName },
+
+   new Column[] { DiscoverStorageTableColumnSegments.DatabaseName, DiscoverStorageTableColumnSegments.CubeName, DiscoverStorageTableColumnSegments.MeasureGroupName,
+            DiscoverStorageTableColumnSegments.PartitionName }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverStorageTableColumnSegments(request, handler);
+      }
+   },
+
+   DISCOVER_CALC_DEPENDENCY(20, null, new Column[] { DiscoverCalcDependencyRowset.DatabaseName, DiscoverCalcDependencyRowset.ObjectType, DiscoverCalcDependencyRowset.Query },
+
+   new Column[] { DiscoverCalcDependencyRowset.DatabaseName, DiscoverCalcDependencyRowset.ObjectType, DiscoverCalcDependencyRowset.Query }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverCalcDependencyRowset(request, handler);
+      }
+   },
+
+   DISCOVER_CSDL_METADATA(20, null, new Column[] { DiscoverCsdlMetaData.CatalogName, DiscoverCsdlMetaData.PerspectiveName, DiscoverCsdlMetaData.Version },
+
+   new Column[] { DiscoverCsdlMetaData.CatalogName, DiscoverCsdlMetaData.PerspectiveName, DiscoverCsdlMetaData.Version }) {
+
+      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         return new DiscoverCsdlMetaData(request, handler);
+      }
+   };
+
+   // //End
+
    /**
     * 
     * 
@@ -209,48 +1019,6 @@ public enum RowsetDefinition {
     * 
     * Not supported
     */
-   DBSCHEMA_CATALOGS(6, "Identifies the physical attributes associated with catalogs " + "accessible from the provider.", new Column[] { DbschemaCatalogsRowset.CatalogName,
-            DbschemaCatalogsRowset.Description, DbschemaCatalogsRowset.Roles, DbschemaCatalogsRowset.DateModified, }, new Column[] { DbschemaCatalogsRowset.CatalogName, }) {
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new DbschemaCatalogsRowset(request, handler);
-      }
-   },
-
-   /**
-    * 
-    * 
-    * 
-    * restrictions
-    * 
-    * Not supported COLUMN_OLAP_TYPE
-    */
-   DBSCHEMA_COLUMNS(7, null, new Column[] { DbschemaColumnsRowset.TableCatalog, DbschemaColumnsRowset.TableSchema, DbschemaColumnsRowset.TableName,
-            DbschemaColumnsRowset.ColumnName, DbschemaColumnsRowset.OrdinalPosition, DbschemaColumnsRowset.ColumnHasDefault, DbschemaColumnsRowset.ColumnFlags,
-            DbschemaColumnsRowset.IsNullable, DbschemaColumnsRowset.DataType, DbschemaColumnsRowset.CharacterMaximumLength, DbschemaColumnsRowset.CharacterOctetLength,
-            DbschemaColumnsRowset.NumericPrecision, DbschemaColumnsRowset.NumericScale, }, new Column[] { DbschemaColumnsRowset.TableCatalog, DbschemaColumnsRowset.TableSchema,
-            DbschemaColumnsRowset.TableName, }) {
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new DbschemaColumnsRowset(request, handler);
-      }
-   },
-
-   /**
-    * 
-    * 
-    * 
-    * restrictions
-    * 
-    * Not supported
-    */
-   DBSCHEMA_PROVIDER_TYPES(8, null, new Column[] { DbschemaProviderTypesRowset.TypeName, DbschemaProviderTypesRowset.DataType, DbschemaProviderTypesRowset.ColumnSize,
-            DbschemaProviderTypesRowset.LiteralPrefix, DbschemaProviderTypesRowset.LiteralSuffix, DbschemaProviderTypesRowset.IsNullable,
-            DbschemaProviderTypesRowset.CaseSensitive, DbschemaProviderTypesRowset.Searchable, DbschemaProviderTypesRowset.UnsignedAttribute,
-            DbschemaProviderTypesRowset.FixedPrecScale, DbschemaProviderTypesRowset.AutoUniqueValue, DbschemaProviderTypesRowset.IsLong, DbschemaProviderTypesRowset.BestMatch, },
-            new Column[] { DbschemaProviderTypesRowset.DataType, }) {
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new DbschemaProviderTypesRowset(request, handler);
-      }
-   },
 
    // DBSCHEMA_SCHEMATA(
    // 8, null,
@@ -269,25 +1037,6 @@ public enum RowsetDefinition {
    // return new DbschemaSchemataRowset(request, handler);
    // }
    // },
-
-   /**
-    * http://msdn2.microsoft.com/en-us/library/ms126299(SQL.90).aspx
-    * 
-    * restrictions: TABLE_CATALOG Optional TABLE_SCHEMA Optional TABLE_NAME
-    * Optional TABLE_TYPE Optional TABLE_OLAP_TYPE Optional
-    * 
-    * Not supported
-    */
-   DBSCHEMA_TABLES(9, null, new Column[] { DbschemaTablesRowset.TableCatalog, DbschemaTablesRowset.TableSchema, DbschemaTablesRowset.TableName, DbschemaTablesRowset.TableType,
-            DbschemaTablesRowset.TableGuid, DbschemaTablesRowset.Description, DbschemaTablesRowset.TablePropId, DbschemaTablesRowset.DateCreated,
-            DbschemaTablesRowset.DateModified, DbschemaTablesRowset.TableOlapType, }, new Column[] { DbschemaTablesRowset.TableType, DbschemaTablesRowset.TableCatalog,
-            DbschemaTablesRowset.TableSchema, DbschemaTablesRowset.TableName, DbschemaTablesRowset.TableOlapType,
-
-   }) {
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new DbschemaTablesRowset(request, handler);
-      }
-   },
 
    /**
     * http://msdn.microsoft.com/library/en-us/oledb/htm/
@@ -322,440 +1071,6 @@ public enum RowsetDefinition {
    // return new DbschemaTablesInfoRowset(request, handler);
    // }
    // },
-
-   /**
-    * http://msdn2.microsoft.com/en-us/library/ms126032(SQL.90).aspx
-    * 
-    * restrictions CATALOG_NAME Optional SCHEMA_NAME Optional CUBE_NAME
-    * Mandatory ACTION_NAME Optional ACTION_TYPE Optional COORDINATE Mandatory
-    * COORDINATE_TYPE Mandatory INVOCATION (Optional) The INVOCATION restriction
-    * column defaults to the value of MDACTION_INVOCATION_INTERACTIVE. To
-    * retrieve all actions, use the MDACTION_INVOCATION_ALL value in the
-    * INVOCATION restriction column. CUBE_SOURCE (Optional) A bitmap with one of
-    * the following valid values:
-    * 
-    * 1 CUBE 2 DIMENSION
-    * 
-    * Default restriction is a value of 1.
-    * 
-    * Not supported
-    */
-   MDSCHEMA_ACTIONS(11, null, new Column[] { MdschemaActionsRowset.CatalogName, MdschemaActionsRowset.SchemaName, MdschemaActionsRowset.CubeName, MdschemaActionsRowset.ActionName,
-            MdschemaActionsRowset.ActionType, MdschemaActionsRowset.Coordinate, MdschemaActionsRowset.CoordinateType, MdschemaActionsRowset.Invocation, }, new Column[] {
-            // Spec says sort on CATALOG_NAME, SCHEMA_NAME, CUBE_NAME,
-            // ACTION_NAME.
-            MdschemaActionsRowset.CatalogName, MdschemaActionsRowset.SchemaName, MdschemaActionsRowset.CubeName, MdschemaActionsRowset.ActionName,
-            MdschemaActionsRowset.ActionType, MdschemaActionsRowset.Invocation, }) {
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new MdschemaActionsRowset(request, handler);
-      }
-   },
-
-   /**
-    * http://msdn2.microsoft.com/en-us/library/ms126271(SQL.90).aspx
-    * 
-    * restrictions CATALOG_NAME Optional. SCHEMA_NAME Optional. CUBE_NAME
-    * Optional. CUBE_TYPE (Optional) A bitmap with one of these valid values: 1
-    * CUBE 2 DIMENSION Default restriction is a value of 1. BASE_CUBE_NAME
-    * Optional.
-    * 
-    * Not supported CREATED_ON LAST_SCHEMA_UPDATE SCHEMA_UPDATED_BY
-    * LAST_DATA_UPDATE DATA_UPDATED_BY ANNOTATIONS
-    */
-   MDSCHEMA_CUBES(12, null, new Column[] { MdschemaCubesRowset.CatalogName, MdschemaCubesRowset.SchemaName, MdschemaCubesRowset.CubeName, MdschemaCubesRowset.CubeType,
-            MdschemaCubesRowset.CubeGuid, MdschemaCubesRowset.CreatedOn, MdschemaCubesRowset.LastSchemaUpdate, MdschemaCubesRowset.SchemaUpdatedBy,
-            MdschemaCubesRowset.LastDataUpdate, MdschemaCubesRowset.DataUpdatedBy, MdschemaCubesRowset.IsDrillthroughEnabled, MdschemaCubesRowset.IsWriteEnabled,
-            MdschemaCubesRowset.IsLinkable, MdschemaCubesRowset.IsSqlEnabled, MdschemaCubesRowset.CubeCaption, MdschemaCubesRowset.BaseCubeName, MdschemaCubesRowset.CubeSource,
-            MdschemaCubesRowset.PreferedQueryPatterns, MdschemaCubesRowset.Description, MdschemaCubesRowset.Dimensions, MdschemaCubesRowset.Sets, MdschemaCubesRowset.Measures },
-            new Column[] { MdschemaCubesRowset.CatalogName, MdschemaCubesRowset.SchemaName, MdschemaCubesRowset.CubeName, MdschemaCubesRowset.BaseCubeName,
-                     MdschemaCubesRowset.CubeSource, MdschemaCubesRowset.PreferedQueryPatterns, }) {
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new MdschemaCubesRowset(request, handler);
-      }
-   },
-
-   /**
-    * http://msdn2.microsoft.com/en-us/library/ms126180(SQL.90).aspx
-    * http://msdn2.microsoft.com/en-us/library/ms126180.aspx
-    * 
-    * restrictions CATALOG_NAME Optional. SCHEMA_NAME Optional. CUBE_NAME
-    * Optional. DIMENSION_NAME Optional. DIMENSION_UNIQUE_NAME Optional.
-    * CUBE_SOURCE (Optional) A bitmap with one of the following valid values: 1
-    * CUBE 2 DIMENSION Default restriction is a value of 1.
-    * 
-    * DIMENSION_VISIBILITY (Optional) A bitmap with one of the following valid
-    * values: 1 Visible 2 Not visible Default restriction is a value of 1.
-    */
-   MDSCHEMA_DIMENSIONS(13, null, new Column[] { MdschemaDimensionsRowset.CatalogName, MdschemaDimensionsRowset.SchemaName, MdschemaDimensionsRowset.CubeName,
-            MdschemaDimensionsRowset.DimensionName, MdschemaDimensionsRowset.DimensionUniqueName, MdschemaDimensionsRowset.DimensionGuid,
-            MdschemaDimensionsRowset.DimensionCaption, MdschemaDimensionsRowset.DimensionOrdinal, MdschemaDimensionsRowset.DimensionType,
-            MdschemaDimensionsRowset.DimensionCardinality, MdschemaDimensionsRowset.DefaultHierarchy, MdschemaDimensionsRowset.Description, MdschemaDimensionsRowset.IsVirtual,
-            MdschemaDimensionsRowset.IsReadWrite, MdschemaDimensionsRowset.DimensionUniqueSettings, MdschemaDimensionsRowset.DimensionMasterUniqueName,
-            MdschemaDimensionsRowset.DimensionVisibility, MdschemaDimensionsRowset.Hierarchies, MdschemaDimensionsRowset.CubeSource,
-
-   }, new Column[] { MdschemaDimensionsRowset.CatalogName, MdschemaDimensionsRowset.SchemaName, MdschemaDimensionsRowset.CubeName, MdschemaDimensionsRowset.DimensionName,
-            MdschemaDimensionsRowset.CubeSource, }) {
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new MdschemaDimensionsRowset(request, handler);
-      }
-   },
-
-   /**
-    * http://msdn2.microsoft.com/en-us/library/ms126257(SQL.90).aspx
-    * 
-    * restrictions LIBRARY_NAME Optional. INTERFACE_NAME Optional. FUNCTION_NAME
-    * Optional. ORIGIN Optional.
-    * 
-    * Not supported DLL_NAME Optional HELP_FILE Optional HELP_CONTEXT Optional -
-    * SQL Server xml schema says that this must be present OBJECT Optional
-    * CAPTION The display caption for the function.
-    */
-   MDSCHEMA_FUNCTIONS(14, null, new Column[] { MdschemaFunctionsRowset.FunctionName, MdschemaFunctionsRowset.Description, MdschemaFunctionsRowset.ParameterList,
-            MdschemaFunctionsRowset.ReturnType, MdschemaFunctionsRowset.Origin, MdschemaFunctionsRowset.InterfaceName, MdschemaFunctionsRowset.LibraryName,
-            MdschemaFunctionsRowset.Caption, }, new Column[] { MdschemaFunctionsRowset.LibraryName, MdschemaFunctionsRowset.InterfaceName, MdschemaFunctionsRowset.FunctionName,
-            MdschemaFunctionsRowset.Origin, }) {
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new MdschemaFunctionsRowset(request, handler);
-      }
-   },
-
-   /**
-    * http://msdn2.microsoft.com/en-us/library/ms126062(SQL.90).aspx
-    * 
-    * restrictions CATALOG_NAME Optional. SCHEMA_NAME Optional. CUBE_NAME
-    * Optional. DIMENSION_UNIQUE_NAME Optional. HIERARCHY_NAME Optional.
-    * HIERARCHY_UNIQUE_NAME Optional. HIERARCHY_ORIGIN (Optional) A default
-    * restriction is in effect on MD_USER_DEFINED and MD_SYSTEM_ENABLED.
-    * CUBE_SOURCE (Optional) A bitmap with one of the following valid values: 1
-    * CUBE 2 DIMENSION Default restriction is a value of 1. HIERARCHY_VISIBILITY
-    * (Optional) A bitmap with one of the following valid values: 1 Visible 2
-    * Not visible Default restriction is a value of 1.
-    * 
-    * Not supported HIERARCHY_ORIGIN HIERARCHY_DISPLAY_FOLDER INSTANCE_SELECTION
-    */
-   MDSCHEMA_HIERARCHIES(15, null, new Column[] { MdschemaHierarchiesRowset.CatalogName, MdschemaHierarchiesRowset.SchemaName, MdschemaHierarchiesRowset.CubeName,
-            MdschemaHierarchiesRowset.DimensionUniqueName, MdschemaHierarchiesRowset.HierarchyName, MdschemaHierarchiesRowset.HierarchyUniqueName,
-            MdschemaHierarchiesRowset.HierarchyGuid, MdschemaHierarchiesRowset.HierarchyCaption, MdschemaHierarchiesRowset.DimensionType,
-            MdschemaHierarchiesRowset.HierarchyCardinality, MdschemaHierarchiesRowset.DefaultMember, MdschemaHierarchiesRowset.AllMember, MdschemaHierarchiesRowset.Description,
-            MdschemaHierarchiesRowset.Structure, MdschemaHierarchiesRowset.IsVirtual, MdschemaHierarchiesRowset.IsReadWrite, MdschemaHierarchiesRowset.DimensionUniqueSettings,
-            MdschemaHierarchiesRowset.DimensionMasterUniqueName,
-            MdschemaHierarchiesRowset.DimensionIsVisible, MdschemaHierarchiesRowset.HierarchyOrdinal,
-            MdschemaHierarchiesRowset.DimensionIsShared, MdschemaHierarchiesRowset.HierarchyIsVisible,
-            MdschemaHierarchiesRowset.HierarchyVisibility,MdschemaHierarchiesRowset.CubeSource,
-
-            MdschemaHierarchiesRowset.HierarchyOrigin, MdschemaHierarchiesRowset.HierarchyDisplayFolder, MdschemaHierarchiesRowset.InstanceSelection, MdschemaHierarchiesRowset.GroupingBehaviors,
-            MdschemaHierarchiesRowset.StructureType, }, new Column[] { MdschemaHierarchiesRowset.CatalogName, MdschemaHierarchiesRowset.SchemaName,
-            MdschemaHierarchiesRowset.CubeName, MdschemaHierarchiesRowset.DimensionUniqueName, MdschemaHierarchiesRowset.HierarchyName,            
-            MdschemaHierarchiesRowset.HierarchyVisibility,MdschemaHierarchiesRowset.CubeSource}) {
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new MdschemaHierarchiesRowset(request, handler);
-      }
-   },
-   
-   
-   
-   
-   
-
-   /**
-    * http://msdn2.microsoft.com/en-us/library/ms126038(SQL.90).aspx
-    * 
-    * restriction CATALOG_NAME Optional. SCHEMA_NAME Optional. CUBE_NAME
-    * Optional. DIMENSION_UNIQUE_NAME Optional. HIERARCHY_UNIQUE_NAME Optional.
-    * LEVEL_NAME Optional. LEVEL_UNIQUE_NAME Optional. LEVEL_ORIGIN (Optional) A
-    * default restriction is in effect on MD_USER_DEFINED and MD_SYSTEM_ENABLED
-    * CUBE_SOURCE (Optional) A bitmap with one of the following valid values: 1
-    * CUBE 2 DIMENSION Default restriction is a value of 1. LEVEL_VISIBILITY
-    * (Optional) A bitmap with one of the following values: 1 Visible 2 Not
-    * visible Default restriction is a value of 1.
-    * 
-    * Not supported CUSTOM_ROLLUP_SETTINGS LEVEL_UNIQUE_SETTINGS
-    * LEVEL_ORDERING_PROPERTY LEVEL_DBTYPE LEVEL_MASTER_UNIQUE_NAME
-    * LEVEL_NAME_SQL_COLUMN_NAME Customers:(All)!NAME LEVEL_KEY_SQL_COLUMN_NAME
-    * Customers:(All)!KEY LEVEL_UNIQUE_NAME_SQL_COLUMN_NAME
-    * Customers:(All)!UNIQUE_NAME LEVEL_ATTRIBUTE_HIERARCHY_NAME
-    * LEVEL_KEY_CARDINALITY LEVEL_ORIGIN
-    * 
-    */
-   MDSCHEMA_LEVELS(16, null, new Column[] { MdschemaLevelsRowset.CatalogName, MdschemaLevelsRowset.SchemaName, MdschemaLevelsRowset.CubeName,
-            MdschemaLevelsRowset.DimensionUniqueName, MdschemaLevelsRowset.HierarchyUniqueName, MdschemaLevelsRowset.LevelName, MdschemaLevelsRowset.LevelUniqueName,
-            MdschemaLevelsRowset.LevelGuid, MdschemaLevelsRowset.LevelCaption, MdschemaLevelsRowset.LevelNumber, MdschemaLevelsRowset.LevelCardinality,
-            MdschemaLevelsRowset.LevelType, MdschemaLevelsRowset.CustomRollupSettings, MdschemaLevelsRowset.LevelUniqueSettings, MdschemaLevelsRowset.LevelIsVisible,
-            MdschemaLevelsRowset.Description,
-           
-             MdschemaLevelsRowset.LevelDbtype,
-             MdschemaLevelsRowset.LevelKeyCardinality,
-             MdschemaLevelsRowset.LevelOrigin,
-             MdschemaLevelsRowset.LevelNameSqlColumnName,
-             MdschemaLevelsRowset.LevelKeySqlColumnName,
-             MdschemaLevelsRowset.LevelUniqueNameSqlColumnName,
-             MdschemaLevelsRowset.LevelAttributeHierarchyName,
-             MdschemaLevelsRowset.LevelOrderingProperty
-
-            }, new Column[] { MdschemaLevelsRowset.CatalogName, MdschemaLevelsRowset.SchemaName, MdschemaLevelsRowset.CubeName, MdschemaLevelsRowset.DimensionUniqueName,
-                     MdschemaLevelsRowset.HierarchyUniqueName, MdschemaLevelsRowset.LevelNumber,
-
-            // MdschemaLevelsRowset.LevelDbtype,
-            // MdschemaLevelsRowset.LevelKeyCardinality,
-            // MdschemaLevelsRowset.LevelOrigin,
-
-            }) {
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new MdschemaLevelsRowset(request, handler);
-      }
-   },
-
-   /**
-    * http://msdn2.microsoft.com/en-us/library/ms126250(SQL.90).aspx
-    * 
-    * restrictions CATALOG_NAME Optional. SCHEMA_NAME Optional. CUBE_NAME
-    * Optional. MEASURE_NAME Optional. MEASURE_UNIQUE_NAME Optional. CUBE_SOURCE
-    * (Optional) A bitmap with one of the following valid values: 1 CUBE 2
-    * DIMENSION Default restriction is a value of 1. MEASURE_VISIBILITY
-    * (Optional) A bitmap with one of the following valid values: 1 Visible 2
-    * Not Visible Default restriction is a value of 1.
-    * 
-    * Not supported MEASURE_GUID NUMERIC_PRECISION NUMERIC_SCALE MEASURE_UNITS
-    * EXPRESSION MEASURE_NAME_SQL_COLUMN_NAME MEASURE_UNQUALIFIED_CAPTION
-    * MEASUREGROUP_NAME MEASURE_DISPLAY_FOLDER DEFAULT_FORMAT_STRING
-    */
-   MDSCHEMA_MEASURES(17, null, new Column[] { 
-            MdschemaMeasuresRowset.CatalogName, 
-            MdschemaMeasuresRowset.SchemaName, 
-            MdschemaMeasuresRowset.CubeName,
-            MdschemaMeasuresRowset.MeasureName, 
-            MdschemaMeasuresRowset.MeasureUniqueName,
-            MdschemaMeasuresRowset.MeasureCaption, 
-            MdschemaMeasuresRowset.MeasureGuid,
-            MdschemaMeasuresRowset.MeasureAggregator, 
-            MdschemaMeasuresRowset.DataType, 
-            MdschemaMeasuresRowset.NumericPrecision,
-            MdschemaMeasuresRowset.NumericScale,
-            MdschemaMeasuresRowset.MeasureUnits,
-            MdschemaMeasuresRowset.Description,
-            MdschemaMeasuresRowset.Expression,
-            MdschemaMeasuresRowset.MeasureIsVisible, 
-            MdschemaMeasuresRowset.LevelsList,
-            MdschemaMeasuresRowset.MeasureNameSql, 
-            MdschemaMeasuresRowset.MeasureUnqualifiedCaption,
-            MdschemaMeasuresRowset.MeasureGroupName,
-            MdschemaMeasuresRowset.MeasureDisplayFolder,
-            MdschemaMeasuresRowset.FormatString,
-            MdschemaMeasuresRowset.CubeSource,
-            MdschemaMeasuresRowset.MeasureVisibility,
-           }, 
-            new Column[] { MdschemaMeasuresRowset.CatalogName, MdschemaMeasuresRowset.SchemaName, MdschemaMeasuresRowset.CubeName, MdschemaMeasuresRowset.MeasureName,
-            MdschemaMeasuresRowset.NumericScale, MdschemaMeasuresRowset.MeasureIsVisible, MdschemaMeasuresRowset.MeasureNameSql, MdschemaMeasuresRowset.MeasureGroupName,
-            MdschemaMeasuresRowset.CubeSource, MdschemaMeasuresRowset.MeasureVisibility }) {
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new MdschemaMeasuresRowset(request, handler);
-      }
-   },
-
-   /**
-    * 
-    * http://msdn2.microsoft.com/es-es/library/ms126046.aspx
-    * 
-    * 
-    * restrictions CATALOG_NAME Optional. SCHEMA_NAME Optional. CUBE_NAME
-    * Optional. DIMENSION_UNIQUE_NAME Optional. HIERARCHY_UNIQUE_NAME Optional.
-    * LEVEL_UNIQUE_NAME Optional. LEVEL_NUMBER Optional. MEMBER_NAME Optional.
-    * MEMBER_UNIQUE_NAME Optional. MEMBER_CAPTION Optional. MEMBER_TYPE
-    * Optional. TREE_OP (Optional) Only applies to a single member:
-    * MDTREEOP_ANCESTORS (0x20) returns all of the ancestors. MDTREEOP_CHILDREN
-    * (0x01) returns only the immediate children. MDTREEOP_SIBLINGS (0x02)
-    * returns members on the same level. MDTREEOP_PARENT (0x04) returns only the
-    * immediate parent. MDTREEOP_SELF (0x08) returns itself in the list of
-    * returned rows. MDTREEOP_DESCENDANTS (0x10) returns all of the descendants.
-    * CUBE_SOURCE (Optional) A bitmap with one of the following valid values: 1
-    * CUBE 2 DIMENSION Default restriction is a value of 1.
-    * 
-    * Not supported
-    */
-   MDSCHEMA_MEMBERS(18, null, new Column[] { MdschemaMembersRowset.CatalogName, MdschemaMembersRowset.SchemaName, MdschemaMembersRowset.CubeName,
-            MdschemaMembersRowset.DimensionUniqueName, MdschemaMembersRowset.HierarchyUniqueName, MdschemaMembersRowset.LevelUniqueName, MdschemaMembersRowset.LevelNumber,
-            MdschemaMembersRowset.MemberOrdinal, MdschemaMembersRowset.MemberName, MdschemaMembersRowset.MemberUniqueName, MdschemaMembersRowset.MemberType,
-            MdschemaMembersRowset.MemberGuid, MdschemaMembersRowset.MemberCaption, MdschemaMembersRowset.ChildrenCardinality, MdschemaMembersRowset.ParentLevel,
-            MdschemaMembersRowset.ParentUniqueName, MdschemaMembersRowset.ParentCount, MdschemaMembersRowset.TreeOp_, MdschemaMembersRowset.CubeSource,
-            MdschemaMembersRowset.Depth, MdschemaMembersRowset.MemberKey, MdschemaMembersRowset.IsPlaceHolderMember, MdschemaMembersRowset.IsDatamember, }, new Column[] {
-            MdschemaMembersRowset.CatalogName, MdschemaMembersRowset.SchemaName, MdschemaMembersRowset.CubeName, MdschemaMembersRowset.DimensionUniqueName,
-            MdschemaMembersRowset.HierarchyUniqueName, MdschemaMembersRowset.LevelUniqueName, MdschemaMembersRowset.LevelNumber, MdschemaMembersRowset.MemberOrdinal,
-            MdschemaMembersRowset.IsPlaceHolderMember, MdschemaMembersRowset.IsDatamember, }) {
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new MdschemaMembersRowset(request, handler);
-      }
-   },
-
-   /**
-    * http://msdn2.microsoft.com/en-us/library/ms126309(SQL.90).aspx
-    * 
-    * restrictions CATALOG_NAME Mandatory SCHEMA_NAME Optional CUBE_NAME
-    * Optional DIMENSION_UNIQUE_NAME Optional HIERARCHY_UNIQUE_NAME Optional
-    * LEVEL_UNIQUE_NAME Optional
-    * 
-    * MEMBER_UNIQUE_NAME Optional PROPERTY_NAME Optional PROPERTY_TYPE Optional
-    * PROPERTY_CONTENT_TYPE (Optional) A default restriction is in place on
-    * MDPROP_MEMBER OR MDPROP_CELL. PROPERTY_ORIGIN (Optional) A default
-    * restriction is in place on MD_USER_DEFINED OR MD_SYSTEM_ENABLED
-    * CUBE_SOURCE (Optional) A bitmap with one of the following valid values: 1
-    * CUBE 2 DIMENSION Default restriction is a value of 1. PROPERTY_VISIBILITY
-    * (Optional) A bitmap with one of the following valid values: 1 Visible 2
-    * Not visible Default restriction is a value of 1.
-    * 
-    * Not supported PROPERTY_ORIGIN CUBE_SOURCE PROPERTY_VISIBILITY
-    * CHARACTER_MAXIMUM_LENGTH CHARACTER_OCTET_LENGTH NUMERIC_PRECISION
-    * NUMERIC_SCALE DESCRIPTION SQL_COLUMN_NAME LANGUAGE
-    * PROPERTY_ATTRIBUTE_HIERARCHY_NAME PROPERTY_CARDINALITY MIME_TYPE
-    * PROPERTY_IS_VISIBLE
-    */
-   MDSCHEMA_PROPERTIES(19, null, new Column[] { 
-            MdschemaPropertiesRowset.CatalogName,  
-            MdschemaPropertiesRowset.SchemaName,
-            MdschemaPropertiesRowset.CubeName,
-            MdschemaPropertiesRowset.DimensionUniqueName, 
-            MdschemaPropertiesRowset.HierarchyUniqueName, 
-            MdschemaPropertiesRowset.LevelUniqueName, 
-            MdschemaPropertiesRowset.MemberUniqueName,
-            MdschemaPropertiesRowset.PropertyName, 
-            MdschemaPropertiesRowset.PropertyType,
-            MdschemaPropertiesRowset.PropertyContentType,
-            MdschemaPropertiesRowset.PropertyOrigin, //PROPERTY_ORIGIN
-            MdschemaPropertiesRowset.CubeSource,
-            MdschemaPropertiesRowset.PropertyVisibility,
-            MdschemaPropertiesRowset.PropertyIsVisible,
-
-            MdschemaPropertiesRowset.Description,
-            MdschemaPropertiesRowset.PropertyCaption, 
-            MdschemaPropertiesRowset.DataType,  
-            MdschemaPropertiesRowset.CharacterMaximumLength, //CHARACTER_MAXIMUM_LENGTH
-            MdschemaPropertiesRowset.CharacterOctetLength,//CHARACTER_OCTET_LENGTH
-            MdschemaPropertiesRowset.NumericPrecision,//NUMERIC_PRECISION
-            MdschemaPropertiesRowset.NumericScale,//NUMERIC_SCALE
-            MdschemaPropertiesRowset.SqlColumnName, //SQL_COLUMN_NAME
-            MdschemaPropertiesRowset.Language,
-            MdschemaPropertiesRowset.PropertyAttributeHierarchyName,
-            //MdschemaPropertiesRowset.CubeSource,
-            MdschemaPropertiesRowset.PropertyCardinality,
-            MdschemaPropertiesRowset.MimeType,
-
-   }, null /* not sorted */) {
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new MdschemaPropertiesRowset(request, handler);
-      }
-   },
-
-   /**
-    * http://msdn2.microsoft.com/en-us/library/ms126290(SQL.90).aspx
-    * 
-    * restrictions CATALOG_NAME Optional. SCHEMA_NAME Optional. CUBE_NAME
-    * Optional. SET_NAME Optional. SCOPE Optional. HIERARCHY_UNIQUE_NAME
-    * Optional. CUBE_SOURCE Optional. Note: Only one hierarchy can be included,
-    * and only those named sets whose hierarchies exactly match the restriction
-    * are returned.
-    * 
-    * Not supported EXPRESSION DIMENSIONS SET_DISPLAY_FOLDER
-    */
-   MDSCHEMA_SETS(20, null, new Column[] { 
-            MdschemaSetsRowset.CatalogName, 
-            MdschemaSetsRowset.SchemaName, 
-            MdschemaSetsRowset.CubeName, 
-            MdschemaSetsRowset.SetName,
-            MdschemaSetsRowset.Scope,
-            MdschemaSetsRowset.Description,
-            MdschemaSetsRowset.Expression,
-            MdschemaSetsRowset.Dimensions,
-            MdschemaSetsRowset.SetDisplayFolder,
-            MdschemaSetsRowset.SetEvaluationContext}, 
-            
-            new Column[] { 
-            MdschemaSetsRowset.CatalogName, 
-            MdschemaSetsRowset.SchemaName, 
-            MdschemaSetsRowset.CubeName, }) {
-      
-      
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new MdschemaSetsRowset(request, handler);
-      }
-   },
-   
-   
-   MDSCHEMA_KPIS(20, null, new Column[] { 
-            MdschemaKpisRowset.CatalogName, 
-            MdschemaKpisRowset.SchemaName, 
-            MdschemaKpisRowset.CubeName, 
-            MdschemaKpisRowset.KpiName,
-            MdschemaKpisRowset.CubeSource,
-            MdschemaKpisRowset.Scope}, 
-            
-            new Column[] { 
-            MdschemaKpisRowset.CatalogName, 
-            MdschemaKpisRowset.SchemaName, 
-            MdschemaKpisRowset.CubeName, 
-            MdschemaKpisRowset.KpiName,
-            MdschemaKpisRowset.CubeSource,
-            MdschemaKpisRowset.Scope }) {
-      
-      
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new MdschemaSetsRowset(request, handler);
-      }
-   },
-   
-   MDSCHEMA_MEASUREGROUPS(20, null, new Column[] { 
-            MdschemaMeasureGroupRowset.CatalogName, 
-            MdschemaMeasureGroupRowset.SchemaName, 
-            MdschemaMeasureGroupRowset.CubeName, 
-            MdschemaMeasureGroupRowset.MeasureGroupName, 
-            
-            MdschemaMeasureGroupRowset.Description, 
-            MdschemaMeasureGroupRowset.IsWriteEnabled,
-            MdschemaMeasureGroupRowset.MeasureGroupCaption}, 
-            
-            new Column[] { 
-            MdschemaMeasureGroupRowset.CatalogName, 
-            MdschemaMeasureGroupRowset.SchemaName, 
-            MdschemaMeasureGroupRowset.CubeName, }) {
-      
-      
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new MdschemaMeasureGroupRowset(request, handler);
-      }
-   },
-   
-   MDSCHEMA_MEASUREGROUP_DIMENSIONS(20, null, new Column[] { 
-            MdschemaMeasureGroupDimensionRowset.CatalogName, 
-            MdschemaMeasureGroupDimensionRowset.SchemaName, 
-            MdschemaMeasureGroupDimensionRowset.CubeName, 
-            MdschemaMeasureGroupDimensionRowset.MeasureGroupName,
-            MdschemaMeasureGroupDimensionRowset.MeasureGroupCardinality,
-            MdschemaMeasureGroupDimensionRowset.DimensionUniqueName,
-            MdschemaMeasureGroupDimensionRowset.DimensionCardinality,
-            MdschemaMeasureGroupDimensionRowset.DimensionIsVisible,
-            MdschemaMeasureGroupDimensionRowset.DimensionISFactDimension,
-            MdschemaMeasureGroupDimensionRowset.DimensionPath,
-            MdschemaMeasureGroupDimensionRowset.DimensionGranularity,}, 
-            
-            new Column[] { 
-            MdschemaMeasureGroupDimensionRowset.CatalogName, 
-            MdschemaMeasureGroupDimensionRowset.SchemaName, 
-            MdschemaMeasureGroupDimensionRowset.CubeName, 
-            MdschemaMeasureGroupDimensionRowset.MeasureGroupName,
-            MdschemaMeasureGroupDimensionRowset.MeasureGroupCardinality,
-            MdschemaMeasureGroupDimensionRowset.DimensionUniqueName,
-            MdschemaMeasureGroupDimensionRowset.DimensionCardinality,
-            MdschemaMeasureGroupDimensionRowset.DimensionIsVisible,
-            MdschemaMeasureGroupDimensionRowset.DimensionISFactDimension,
-            MdschemaMeasureGroupDimensionRowset.DimensionPath,
-            MdschemaMeasureGroupDimensionRowset.DimensionGranularity, }) {
-      
-      
-      public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
-         return new MdschemaMeasureGroupDimensionRowset(request, handler);
-      }
-   };
-   
-   
-   
 
    transient final Column[] columnDefinitions;
    transient final Column[] sortColumnDefinitions;
@@ -862,12 +1177,11 @@ public enum RowsetDefinition {
    }
 
    protected void writeRowsetXmlSchemaTop(SaxWriter writer) {
-      writer.startElement("xsd:schema",   "xmlns:sql", "urn:schemas-microsoft-com:xml-sql", "targetNamespace",
-               NS_XMLA_ROWSET, "elementFormDefault", "qualified");
+      writer.startElement("xsd:schema", "xmlns:sql", "urn:schemas-microsoft-com:xml-sql", "targetNamespace", NS_XMLA_ROWSET, "elementFormDefault", "qualified");
 
       writer.startElement("xsd:element", "name", "root");
       writer.startElement("xsd:complexType");
-      writer.startElement("xsd:sequence","minOccurs",0,"maxOccurs","unbounded");
+      writer.startElement("xsd:sequence", "minOccurs", 0, "maxOccurs", "unbounded");
       writer.element("xsd:element", "name", "row", "type", "row");
       writer.endElement(); // xsd:sequence
       writer.endElement(); // xsd:complexType
@@ -884,8 +1198,7 @@ public enum RowsetDefinition {
    }
 
    protected void writeRowsetXmlSchemaRowDef(SaxWriter writer) {
- 
-      
+
       Map<String, Object[]> tmpMap = new HashMap<String, Object[]>();
       List<Object[]> tmpList = new ArrayList<Object[]>();
       for (Column column : columnDefinitions) {
@@ -906,35 +1219,35 @@ public enum RowsetDefinition {
                attrs = new Object[] { "sql:field", column.name, "name", name, "type", xsdType };
             }
          }
-       
+
          tmpMap.put(column.name, attrs);
          tmpList.add(attrs);
       }
-      
-      //This's the right order of elements under complex type 
-      final String[] nameList = {"CATALOG_NAME","SCHEMA_NAME","CUBE_NAME","DIMENSION_UNIQUE_NAME","HIERARCHY_UNIQUE_NAME","LEVEL_UNIQUE_NAME","MEMBER_UNIQUE_NAME","PROPERTY_TYPE","PROPERTY_NAME","PROPERTY_CAPTION",
-                     "DATA_TYPE","CHARACTER_MAXIMUM_LENGTH","CHARACTER_OCTET_LENGTH","NUMERIC_PRECISION","NUMERIC_SCALE","DESCRIPTION","PROPERTY_CONTENT_TYPE","SQL_COLUMN_NAME","LANGUAGE","PROPERTY_ORIGIN","PROPERTY_ATTRIBUTE_HIERARCHY_NAME",
-                     "PROPERTY_CARDINALITY","MIME_TYPE","PROPERTY_IS_VISIBLE"};
-      
+
+      // This's the right order of elements under complex type
+      final String[] nameList = { "CATALOG_NAME", "SCHEMA_NAME", "CUBE_NAME", "DIMENSION_UNIQUE_NAME", "HIERARCHY_UNIQUE_NAME", "LEVEL_UNIQUE_NAME", "MEMBER_UNIQUE_NAME",
+               "PROPERTY_TYPE", "PROPERTY_NAME", "PROPERTY_CAPTION", "DATA_TYPE", "CHARACTER_MAXIMUM_LENGTH", "CHARACTER_OCTET_LENGTH", "NUMERIC_PRECISION", "NUMERIC_SCALE",
+               "DESCRIPTION", "PROPERTY_CONTENT_TYPE", "SQL_COLUMN_NAME", "LANGUAGE", "PROPERTY_ORIGIN", "PROPERTY_ATTRIBUTE_HIERARCHY_NAME", "PROPERTY_CARDINALITY", "MIME_TYPE",
+               "PROPERTY_IS_VISIBLE" };
+
       boolean isMdschemaProperties = false;
-      
-      for(String s: nameList){
-         isMdschemaProperties = true;   
-         if (!tmpMap.containsKey(s)){
+
+      for (String s : nameList) {
+         isMdschemaProperties = true;
+         if (!tmpMap.containsKey(s)) {
             isMdschemaProperties = false;
-               break;
+            break;
          }
       }
       writer.startElement("xsd:complexType", "name", "row");
       writer.startElement("xsd:sequence");
-      if(isMdschemaProperties){
-         for(String s: nameList){
-            writer.element("xsd:element", (Object[])(tmpMap.get(s)));
+      if (isMdschemaProperties) {
+         for (String s : nameList) {
+            writer.element("xsd:element", (Object[]) (tmpMap.get(s)));
          }
-      }
-      else {
-         for(Object o: tmpList){
-            writer.element("xsd:element", (Object[])o);
+      } else {
+         for (Object o : tmpList) {
+            writer.element("xsd:element", (Object[]) o);
          }
       }
       writer.endElement(); // xsd:sequence
@@ -1126,8 +1439,6 @@ public enum RowsetDefinition {
    // -------------------------------------------------------------------------
    // From this point on, just rowset classess.
 
-
-
    static class DiscoverSchemaRowsetsRowset extends Rowset {
       private static final Column SchemaName = new Column("SchemaName", Type.StringArray, null, Column.RESTRICTION, Column.REQUIRED,
                "The name of the schema/request. This returns the values in " + "the RequestTypes enumeration, plus any additional types "
@@ -1144,41 +1455,39 @@ public enum RowsetDefinition {
                Column.OPTIONAL,
 
                "The lowest N bits set to 1, where N is the number of restrictions.");
-      
-      
+
       private List restrictedSchemas = null;
 
       public DiscoverSchemaRowsetsRowset(XmlaRequest request, CustomXmlaHandler handler) {
          super(DISCOVER_SCHEMA_ROWSETS, request, handler);
-         
-         if(request.getRestrictions() != null && request.getRestrictions().size() > 0){
+
+         if (request.getRestrictions() != null && request.getRestrictions().size() > 0) {
             Map restrictions = request.getRestrictions();
-            restrictedSchemas =(List<String>) restrictions.get("SchemaName");
+            restrictedSchemas = (List<String>) restrictions.get("SchemaName");
          }
       }
 
       public void populateImpl(XmlaResponse response, OlapConnection connection, List<Row> rows) throws XmlaException {
          RowsetDefinition[] rowsetDefinitions = RowsetDefinition.class.getEnumConstants().clone();
-         Arrays.sort(rowsetDefinitions, new Comparator<RowsetDefinition>() {
-            public int compare(RowsetDefinition o1, RowsetDefinition o2) {
-               return o1.name().compareTo(o2.name());
-            }
-         });
+         // Arrays.sort(rowsetDefinitions, new Comparator<RowsetDefinition>() {
+         // public int compare(RowsetDefinition o1, RowsetDefinition o2) {
+         // return o1.name().compareTo(o2.name());
+         // }
+         // });
          for (RowsetDefinition rowsetDefinition : rowsetDefinitions) {
-            if(restrictedSchemas== null || (restrictedSchemas !=null && restrictedSchemas.contains(rowsetDefinition.name()))){
-            Row row = new Row();
+            if (restrictedSchemas == null || (restrictedSchemas != null && restrictedSchemas.contains(rowsetDefinition.name()))) {
+               Row row = new Row();
 
-            row.set(SchemaName.name, rowsetDefinition.name());
-            row.set(SchemaGuid.name, UUID.fromString(getSchemGuid(rowsetDefinition)));
-            row.set(Restrictions.name, getRestrictions(rowsetDefinition));
-            row.set(RestrictionsMask.name, getRestrictionsMask(rowsetDefinition));
-            addRow(row, rows);
+               row.set(SchemaName.name, rowsetDefinition.name());
+               row.set(SchemaGuid.name, UUID.fromString(getSchemGuid(rowsetDefinition)));
+               row.set(Restrictions.name, getRestrictions(rowsetDefinition));
+               row.set(RestrictionsMask.name, getRestrictionsMask(rowsetDefinition));
+               addRow(row, rows);
             }
          }
       }
 
       private List<XmlElement> getRestrictions(RowsetDefinition rowsetDefinition) {
-         
 
          List<XmlElement> restrictionList = new ArrayList<XmlElement>();
          final Column[] columns = rowsetDefinition.columnDefinitions;
@@ -1193,6 +1502,8 @@ public enum RowsetDefinition {
       }
 
       private String getRestrictionsMask(RowsetDefinition rowsetDefinition) {
+
+         // Ignore
          if (rowsetDefinition.equals(DBSCHEMA_CATALOGS))
             return "1";
          if (rowsetDefinition.equals(DBSCHEMA_TABLES))
@@ -1238,57 +1549,233 @@ public enum RowsetDefinition {
             return "1";
          if (rowsetDefinition.equals(MDSCHEMA_KPIS))
             return "63";
+         if (rowsetDefinition.equals(DISCOVER_CONNECTIONS))
+            return "127";
+         if (rowsetDefinition.equals(DISCOVER_SESSIONS))
+            return "511";
+         if (rowsetDefinition.equals(DISCOVER_JOBS))
+            return "31";
+         if (rowsetDefinition.equals(DISCOVER_LOCKS))
+            return "63";
+         if (rowsetDefinition.equals(DISCOVER_XML_METADATA))
+            return "8388607";
+         if (rowsetDefinition.equals(DISCOVER_KEYWORDS))
+            return "1";
+         if (rowsetDefinition.equals(DISCOVER_ENUMERATORS))
+            return "1";
+         if (rowsetDefinition.equals(MDSCHEMA_INPUT_DATASOURCES))
+            return "15";
+         if (rowsetDefinition.equals(DISCOVER_TRANSACTIONS))
+            return "3";
+         if (rowsetDefinition.equals(DISCOVER_MASTER_KEY))
+            return "1";
+         if (rowsetDefinition.equals(DISCOVER_PERFORMANCE_COUNTERS))
+            return "1";
+         if (rowsetDefinition.equals(DISCOVER_PARTITION_DIMENSION_STAT))
+            return "15";
+         if (rowsetDefinition.equals(DISCOVER_PARTITION_DIMENSION_STAT))
+            return "15";
+         if (rowsetDefinition.equals(DISCOVER_PARTITION_STAT))
+            return "15";
+         if (rowsetDefinition.equals(DISCOVER_LOCATIONS))
+            return "3";
+         if (rowsetDefinition.equals(DISCOVER_DIMENSION_STAT))
+            return "3";
+         if (rowsetDefinition.equals(DISCOVER_COMMANDS))
+            return "1";
+         if (rowsetDefinition.equals(DISCOVER_COMMAND_OBJECTS))
+            return "15";
+         if (rowsetDefinition.equals(DISCOVER_OBJECT_ACTIVITY))
+            return "3";
+         if (rowsetDefinition.equals(DISCOVER_OBJECT_MEMORY_USAGE))
+            return "3";
+         if (rowsetDefinition.equals(DISCOVER_STORAGE_TABLES))
+            return "7";
+         if (rowsetDefinition.equals(DISCOVER_STORAGE_TABLE_COLUMNS))
+            return "7";
+         if (rowsetDefinition.equals(DISCOVER_STORAGE_TABLE_COLUMN_SEGMENTS))
+            return "15";
+         if (rowsetDefinition.equals(DISCOVER_CALC_DEPENDENCY))
+            return "7";
+         if (rowsetDefinition.equals(DISCOVER_CSDL_METADATA))
+            return "7";
+         if (rowsetDefinition.equals(DISCOVER_DB_CONNECTIONS))
+
+            return "31";
+         if (rowsetDefinition.equals(DISCOVER_MEMORYUSAGE))
+            return "15";
+
+         if (rowsetDefinition.equals(DISCOVER_MEMORYGRANT))
+            return "1";
+         if (rowsetDefinition.equals(DISCOVER_TRACE_DEFINITION_PROVIDERINFO))
+            return "1";
+         if (rowsetDefinition.equals(DISCOVER_XEVENT_TRACE_DEFINITION))
+            return "1";
+         if (rowsetDefinition.equals(DISCOVER_TRACE_COLUMNS))
+            return "1";
+         if (rowsetDefinition.equals(DISCOVER_TRACE_EVENT_CATEGORIES))
+            return "1";
+         if (rowsetDefinition.equals(DISCOVER_TRACES))
+            return "3";
+
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_SERVICES))
+            return "3";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_SERVICE_PARAMETERS))
+            return "3";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_FUNCTIONS))
+            return "3";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_MODEL_CONTENT))
+            return "1023";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_MODEL_XML))
+            return "15";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_MODEL_CONTENT_PMML))
+            return "15";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_MODELS))
+            return "127";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_COLUMNS))
+            return "15";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_STRUCTURES))
+            return "7";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_STRUCTURE_COLUMNS))
+            return "15";
+
          throw new IllegalArgumentException("illegal rowset input");
       }
 
       private String getSchemGuid(RowsetDefinition rowsetDefinition) {
 
          if (rowsetDefinition.equals(DBSCHEMA_CATALOGS))
-            return "c8b52211-5cf3-11ce-ade5-00aa0044773d";
+            return "C8B52211-5CF3-11CE-ADE5-00AA0044773D";
          if (rowsetDefinition.equals(DBSCHEMA_TABLES))
-            return "c8b52229-5cf3-11ce-ade5-00aa0044773d";
+            return "C8B52229-5CF3-11CE-ADE5-00AA0044773D";
          if (rowsetDefinition.equals(DBSCHEMA_COLUMNS))
-            return "c8b52214-5cf3-11ce-ade5-00aa0044773d";
+            return "C8B52214-5CF3-11CE-ADE5-00AA0044773D";
          if (rowsetDefinition.equals(DBSCHEMA_PROVIDER_TYPES))
-            return "c8b5222c-5cf3-11ce-ade5-00aa0044773d";
+            return "C8B5222C-5CF3-11CE-ADE5-00AA0044773D";
          if (rowsetDefinition.equals(DISCOVER_DATASOURCES))
-            return "06c03d41-f66d-49f3-b1b8-987f7af4cf18";
+            return "06C03D41-F66D-49F3-B1B8-987F7AF4CF18";
 
          if (rowsetDefinition.equals(DISCOVER_LITERALS))
-            return "c3ef5ecb-0a07-4665-a140-b075722dbdc2";
+            return "C3EF5ECB-0A07-4665-A140-B075722DBDC2";
          if (rowsetDefinition.equals(DISCOVER_PROPERTIES))
-            return "4b40adfb-8b09-4758-97bb-636e8ae97bcf";
+            return "4B40ADFB-8B09-4758-97BB-636E8AE97BCF";
          if (rowsetDefinition.equals(DISCOVER_SCHEMA_ROWSETS))
-            return "eea0302b-7922-4992-8991-0e605d0e5593";
+            return "EEA0302B-7922-4992-8991-0E605D0E5593";
          if (rowsetDefinition.equals(MDSCHEMA_ACTIONS))
-            return "a07ccd08-8148-11d0-87bb-00c04fc33942";
+            return "A07CCD08-8148-11D0-87BB-00C04FC33942";
          if (rowsetDefinition.equals(MDSCHEMA_CUBES))
-            return "c8b522d8-5cf3-11ce-ade5-00aa0044773d";
+            return "C8B522D8-5CF3-11CE-ADE5-00AA0044773D";
          if (rowsetDefinition.equals(MDSCHEMA_DIMENSIONS))
-            return "c8b522d9-5cf3-11ce-ade5-00aa0044773d";
+            return "C8B522D9-5CF3-11CE-ADE5-00AA0044773D";
          if (rowsetDefinition.equals(MDSCHEMA_FUNCTIONS))
-            return "a07ccd07-8148-11d0-87bb-00c04fc33942";
+            return "A07CCD07-8148-11D0-87BB-00C04FC33942";
          if (rowsetDefinition.equals(MDSCHEMA_HIERARCHIES))
-            return "c8b522da-5cf3-11ce-ade5-00aa0044773d";
+            return "C8B522DA-5CF3-11CE-ADE5-00AA0044773D";
          if (rowsetDefinition.equals(MDSCHEMA_LEVELS))
-            return "c8b522db-5cf3-11ce-ade5-00aa0044773d";
+            return "C8B522DB-5CF3-11CE-ADE5-00AA0044773D";
          if (rowsetDefinition.equals(MDSCHEMA_MEASURES))
-            return "c8b522dc-5cf3-11ce-ade5-00aa0044773d";
+            return "C8B522DC-5CF3-11CE-ADE5-00AA0044773D";
          if (rowsetDefinition.equals(MDSCHEMA_MEMBERS))
-            return "c8b522de-5cf3-11ce-ade5-00aa0044773d";
+            return "C8B522DE-5CF3-11CE-ADE5-00AA0044773D";
          if (rowsetDefinition.equals(MDSCHEMA_PROPERTIES))
-            return "c8b522dd-5cf3-11ce-ade5-00aa0044773d";
+            return "C8B522DD-5CF3-11CE-ADE5-00AA0044773D";
          if (rowsetDefinition.equals(MDSCHEMA_SETS))
-            return "a07ccd0b-8148-11d0-87bb-00c04fc33942";
+            return "A07CCD0B-8148-11D0-87BB-00C04FC33942";
          if (rowsetDefinition.equals(MDSCHEMA_MEASUREGROUPS))
-            return "e1625ebf-fa96-42fd-bea6-db90adafd96b";
+            return "E1625EBF-FA96-42FD-BEA6-DB90ADAFD96B";
          if (rowsetDefinition.equals(MDSCHEMA_MEASUREGROUP_DIMENSIONS))
-            return "a07ccd33-8148-11d0-87bb-00c04fc33942";
+            return "A07CCD33-8148-11D0-87BB-00C04FC33942";
          if (rowsetDefinition.equals(DISCOVER_INSTANCES))
-            return "20518699-2474-4C15-9885-0E947EC7A7E3";      
+            return "20518699-2474-4C15-9885-0E947EC7A7E3";
          if (rowsetDefinition.equals(MDSCHEMA_KPIS))
-            return "2AE44109-ED3D-4842-B16F-B694D1CB0E3F";      
-         
+            return "2AE44109-ED3D-4842-B16F-B694D1CB0E3F";
+         if (rowsetDefinition.equals(DISCOVER_CONNECTIONS))
+            return "A07CCD25-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_SESSIONS))
+            return "A07CCD26-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_JOBS))
+            return "A07CCD27-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_LOCKS))
+            return "A07CCD24-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_XML_METADATA))
+            return "3444B255-171E-4CB9-AD98-19E57888A75F";
+         if (rowsetDefinition.equals(DISCOVER_KEYWORDS))
+            return "1426C443-4CDD-4A40-8F45-572FAB9BBAA1";
+         if (rowsetDefinition.equals(DISCOVER_ENUMERATORS))
+            return "55A9E78B-ACCB-45B4-95A6-94C5065617A7";
+         if (rowsetDefinition.equals(MDSCHEMA_INPUT_DATASOURCES))
+            return "A07CCD32-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_TRANSACTIONS))
+            return "A07CCD28-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_MASTER_KEY))
+            return "A07CCD29-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_PERFORMANCE_COUNTERS))
+            return "A07CCD2E-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_PARTITION_DIMENSION_STAT))
+            return "A07CCD8E-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_PARTITION_STAT))
+            return "A07CCD8F-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_LOCATIONS))
+            return "A07CCD92-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_DIMENSION_STAT))
+            return "A07CCD90-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_COMMANDS))
+            return "A07CCD34-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_COMMAND_OBJECTS))
+            return "A07CCD35-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_OBJECT_ACTIVITY))
+            return "A07CCD36-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_OBJECT_MEMORY_USAGE))
+            return "A07CCD37-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_STORAGE_TABLES))
+            return "A07CCD43-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_STORAGE_TABLE_COLUMNS))
+            return "A07CCD44-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_STORAGE_TABLE_COLUMN_SEGMENTS))
+            return "A07CCD45-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_CALC_DEPENDENCY))
+            return "A07CCD46-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_CSDL_METADATA))
+            return "87B86062-21C3-460F-B4F8-5BE98394F13B";
+         if (rowsetDefinition.equals(DISCOVER_DB_CONNECTIONS))
+            return "A07CCD2A-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_MEMORYUSAGE))
+            return "A07CCD21-8148-11D0-87BB-00C04FC33942";
+
+         if (rowsetDefinition.equals(DISCOVER_MEMORYGRANT))
+            return "A07CCD23-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_TRACE_DEFINITION_PROVIDERINFO))
+            return "A07CCD1B-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_XEVENT_TRACE_DEFINITION))
+            return "A07CCD1C-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_TRACE_COLUMNS))
+            return "A07CCD18-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_TRACE_EVENT_CATEGORIES))
+            return "A07CCD19-8148-11D0-87BB-00C04FC33942";
+         if (rowsetDefinition.equals(DISCOVER_TRACES))
+            return "A07CCD1A-8148-11D0-87BB-00C04FC33942";
+
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_SERVICES))
+            return "3ADD8A95-D8B9-11D2-8D2A-00E029154FDE";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_SERVICE_PARAMETERS))
+            return "3ADD8A75-D8B9-11D2-8D2A-00E029154FDE";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_FUNCTIONS))
+            return "3ADD8A79-D8B9-11D2-8D2A-00E029154FDE";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_MODEL_CONTENT))
+            return "3ADD8A76-D8B9-11D2-8D2A-00E029154FDE";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_MODEL_XML))
+            return "4290B2D5-0E9C-4AA7-9369-98C95CFD9D13";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_MODEL_CONTENT_PMML))
+            return "4290B2D5-0E9C-4AA7-9369-98C95CFD9D13";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_MODELS))
+            return "3ADD8A77-D8B9-11D2-8D2A-00E029154FDE";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_COLUMNS))
+            return "3ADD8A78-D8B9-11D2-8D2A-00E029154FDE";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_STRUCTURES))
+            return "883269F3-0CAD-462F-B6F5-E88A72418C4B";
+         if (rowsetDefinition.equals(DMSCHEMA_MINING_STRUCTURE_COLUMNS))
+            return "9952E836-BFBF-4D1F-8535-9B67DBD9DDFE";
+
          throw new IllegalArgumentException("illegal rowset input");
       }
 
@@ -1353,6 +1840,7 @@ public enum RowsetDefinition {
          }
       }
    }
+
    static class DiscoverInstancesRowset extends Rowset {
       DiscoverInstancesRowset(XmlaRequest request, CustomXmlaHandler handler) {
          super(DISCOVER_INSTANCES, request, handler);
@@ -1363,101 +1851,110 @@ public enum RowsetDefinition {
 
       @Override
       protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
-         
+
       }
    }
 
+   static class DiscoverMemoryUsage extends Rowset {
+      DiscoverMemoryUsage(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_MEMORYUSAGE, request, handler);
+      }
+
+      private static final Column SPID = new Column("SPID", Type.UnsignedInteger, null, Column.RESTRICTION, Column.OPTIONAL, "");
+      private static final Column MemoryUsed = new Column("MemoryUsed", Type.Long, null, Column.RESTRICTION, Column.OPTIONAL, "");
+      private static final Column BaseObjectType = new Column("BaseObjectType", Type.UnsignedInteger, null, Column.RESTRICTION, Column.OPTIONAL, "");
+      private static final Column Shrinkable = new Column("Shrinkable", Type.Boolean, null, Column.RESTRICTION, Column.OPTIONAL, "");
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+
+      }
+   }
+
+   static class DiscoveryMemoryGrant extends Rowset {
+      DiscoveryMemoryGrant(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_MEMORYGRANT, request, handler);
+      }
+
+      private static final Column SPID = new Column("SPID", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+
+      }
+   }
+
+   // DiscoverTracesRowset
+
+   static class DiscoverTraceDefinitionProviderInfo extends Rowset {
+      DiscoverTraceDefinitionProviderInfo(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_TRACE_DEFINITION_PROVIDERINFO, request, handler);
+      }
+
+      private static final Column Data = new Column("Data", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+
+      }
+   }
+
+   static class DiscoverTracesRowset extends Rowset {
+      DiscoverTracesRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_TRACES, request, handler);
+      }
+
+      private static final Column TraceId = new Column("TraceID", RowsetDefinition.Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
+      private static final Column Type = new Column("Type", RowsetDefinition.Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+
+      }
+   }
+
+   static class DiscoverXeventTraceDefinition extends Rowset {
+      DiscoverXeventTraceDefinition(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_XEVENT_TRACE_DEFINITION, request, handler);
+      }
+
+      private static final Column Data = new Column("Data", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+
+      }
+   }
+
+   static class DiscoverTraceColumns extends Rowset {
+      DiscoverTraceColumns(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_TRACE_COLUMNS, request, handler);
+      }
+
+      private static final Column Data = new Column("Data", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+
+      }
+   }
+
+   static class DiscoverTraceEventCategories extends Rowset {
+      DiscoverTraceEventCategories(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_TRACE_EVENT_CATEGORIES, request, handler);
+      }
+
+      private static final Column Data = new Column("Data", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+
+      }
+   }
 
    static class DiscoverLiteralsRowset extends Rowset {
       DiscoverLiteralsRowset(XmlaRequest request, CustomXmlaHandler handler) {
          super(DISCOVER_LITERALS, request, handler);
-      }
-
-      // contains data
-
-      public static Map<String, List<String>> fillLiteralSchema() {
-
-         Map<String, List<String>> data = new HashMap<String, List<String>>();
-
-         List row;
-         row = new ArrayList();
-         row.addAll(Arrays.asList("", ".", "0123456789", "24", "2"));
-         data.put("CATALOG_NAME", row);
-
-         row.clear();
-         row.add(Arrays.asList(".", "", "", "1", "3"));
-         data.put("CATALOG_SEPARATOR", row);
-         row.clear();
-
-         row.clear();
-         row.add(Arrays.asList("", "\'\"[]", "0123456789", "255", "5"));
-         data.put("COLUMN_ALIAS", row);
-
-         row.clear();
-         row.add(Arrays.asList("", ".", "0123456789", "14", "6"));
-         data.put("COLUMN_NAME", row);
-
-         row.clear();
-         row.add(Arrays.asList("", "\'\"[]", "0123456789", "255", "7"));
-         data.put("CORRELATION_NAME", row);
-
-         row.clear();
-         row.add(Arrays.asList("", ".", "0123456789", "255", "14"));
-         data.put("PROCEDURE_NAME", row);
-
-         row.clear();
-         row.add(Arrays.asList("", ".", "0123456789", "24", "17"));
-         data.put("TABLE_NAME", row);
-
-         row.clear();
-         row.add(Arrays.asList("", "", "", "0", "18"));
-         data.put("TEXT_COMMAND", row);
-
-         row.clear();
-         row.add(Arrays.asList("", "", "", "0", "19"));
-         data.put("USER_NAME", row);
-
-         row.clear();
-         row.add(Arrays.asList("[", "", "", "1", "15"));
-         data.put("QUOTE_PREFIX", row);
-
-         row.clear();
-         row.add(Arrays.asList("", ".", "0123456789", "24", "21"));
-         data.put("CUBE_NAME", row);
-
-         row.clear();
-         row.add(Arrays.asList("", ".", "0123456789", "14", "22"));
-         data.put("DIMENSION_NAME", row);
-
-         row.clear();
-         row.add(Arrays.asList("", ".", "0123456789", "10", "23"));
-         data.put("HIERARCHY_NAME", row);
-
-         row.clear();
-         row.add(Arrays.asList("", ".", "0123456789", "255", "24"));
-         data.put("LEVEL_NAME", row);
-
-         row.clear();
-         row.add(Arrays.asList("", ".", "0123456789", "255", "25"));
-         data.put("MEMBER_NAME", row);
-
-         row.clear();
-         row.add(Arrays.asList("", ".", "0123456789", "255", "26"));
-         data.put("PROPERTY_NAME", row);
-
-         row.clear();
-         row.add(Arrays.asList("]", "", "", "1", "28"));
-         data.put("QUOTE_SUFFIX", row);
-
-         row.clear();
-         row.add(Arrays.asList("", ".", "0123456789", "24", "16"));
-         data.put("SCHEMA_NAME", row);
-
-         row.clear();
-         row.add(Arrays.asList(".", "", "", "1", "27"));
-         data.put("SCHEMA_SEPARATOR", row);
-
-         return data;
       }
 
       public static List getColumnNamese() {
@@ -1487,9 +1984,7 @@ public enum RowsetDefinition {
 
       private static final Column LiteralMaxLength = new Column("LiteralMaxLength", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "The maximum number of characters in the literal. If there is no " + "maximum or the maximum is unknown, the value is ?1.");
-      private static final Column LiteralNameEnumValue = new Column("LiteralNameEnumValue", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
-               "");
-
+      private static final Column LiteralNameEnumValue = new Column("LiteralNameEnumValue", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
 
       public void populateImpl(XmlaResponse response, OlapConnection connection, List<Row> rows) throws XmlaException {
          populate(XmlaConstants.Literal.class, rows, new Comparator<XmlaConstants.Literal>() {
@@ -1523,11 +2018,12 @@ public enum RowsetDefinition {
                "The date that the catalog was last modified.");
 
       public void populateImpl(XmlaResponse response, OlapConnection connection, List<Row> rows) throws XmlaException, SQLException {
-           Iterable<Catalog> catalogsItr =  catIter(connection);
+         Iterable<Catalog> catalogsItr = catIter(connection);
 
          for (Catalog catalog : catalogsItr) {
-            
-            for (@SuppressWarnings("unused") Schema m : catalog.getSchemas()) {
+
+            for (@SuppressWarnings("unused")
+            Schema m : catalog.getSchemas()) {
                Row row = new Row();
                row.set(CatalogName.name, catalog.getName());
                row.set(Description.name, "No description available");
@@ -1560,6 +2056,8 @@ public enum RowsetDefinition {
 
       private static final Column TableCatalog = new Column("TABLE_CATALOG", Type.String, null, Column.RESTRICTION, Column.REQUIRED, "The name of the Database.");
       private static final Column TableSchema = new Column("TABLE_SCHEMA", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, null);
+      private static final Column ColumnOlapType = new Column("COLUMN_OLAP_TYPE", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, null);
+
       private static final Column TableName = new Column("TABLE_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED, "The name of the cube.");
       private static final Column ColumnName = new Column("COLUMN_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED, "The name of the attribute hierarchy or measure.");
       private static final Column OrdinalPosition = new Column("ORDINAL_POSITION", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.REQUIRED,
@@ -1640,7 +2138,7 @@ public enum RowsetDefinition {
                   // Measures, aggregate Measures??, maybe they
                   // are all numeric? (or currency)
                   row.set(DataType.name, XmlaConstants.DBType.R8.xmlaOrdinal());
-                  //  16/255 seems to be what MS SQL Server
+                  // 16/255 seems to be what MS SQL Server
                   // always returns.
                   row.set(NumericPrecision.name, 16);
                   row.set(NumericScale.name, 255);
@@ -1649,7 +2147,7 @@ public enum RowsetDefinition {
             }
          }
       }
-      
+
       private int populateHierarchy(Cube cube, Hierarchy hierarchy, int ordinalPosition, List<Row> rows) {
          String schemaName = cube.getSchema().getName();
          String cubeName = cube.getName();
@@ -1750,7 +2248,7 @@ public enum RowsetDefinition {
             case INTEGER:
             case UNSIGNED_INTEGER:
             case DOUBLE:
-               //  16/255 seems to be what MS SQL Server
+               // 16/255 seems to be what MS SQL Server
                // always returns.
                row.set(NumericPrecision.name, 16);
                row.set(NumericScale.name, 255);
@@ -1760,7 +2258,7 @@ public enum RowsetDefinition {
                row.set(NumericScale.name, 255);
                break;
             default:
-                //what type is it really, its
+               // what type is it really, its
                // not a string
                row.set(CharacterMaximumLength.name, 0);
                row.set(CharacterOctetLength.name, 0);
@@ -2075,8 +2573,6 @@ public enum RowsetDefinition {
       }
    }
 
-  
-
    static class MdschemaActionsRowset extends Rowset {
       MdschemaActionsRowset(XmlaRequest request, CustomXmlaHandler handler) {
          super(MDSCHEMA_ACTIONS, request, handler);
@@ -2087,6 +2583,8 @@ public enum RowsetDefinition {
       private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "The name of the schema to which this action belongs.");
       private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED, "The name of the cube to which this action belongs.");
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, "");
+
       private static final Column ActionName = new Column("ACTION_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED, "The name of the action.");
 
       private static final Column ActionType = new Column("ACTION_TYPE", Type.Integer, null, Column.RESTRICTION, Column.REQUIRED, "The name of the action.");
@@ -2097,7 +2595,6 @@ public enum RowsetDefinition {
       private static final Column Coordinate = new Column("COORDINATE", Type.String, null, Column.RESTRICTION, Column.REQUIRED, null);
       private static final Column CoordinateType = new Column("COORDINATE_TYPE", Type.Integer, null, Column.RESTRICTION, Column.REQUIRED, null);
 
-      
       public void populateImpl(XmlaResponse response, OlapConnection connection, List<Row> rows) throws XmlaException {
          // mondrian doesn't support actions. It's not an error to ask for
          // them, there just aren't any
@@ -2124,7 +2621,7 @@ public enum RowsetDefinition {
       private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "The name of the schema to which this cube belongs.");
       private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED, "Name of the cube.");
-      private static final Column CubeType = new Column("CUBE_TYPE", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "Cube type.");
+      private static final Column CubeType = new Column("CUBE_TYPE", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Cube type.");
       private static final Column CubeGuid = new Column("CUBE_GUID", Type.UUID, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Cube type.");
       private static final Column CreatedOn = new Column("CREATED_ON", Type.DateTime, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Date and time of cube creation.");
       private static final Column LastSchemaUpdate = new Column("LAST_SCHEMA_UPDATE", Type.DateTime, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
@@ -2195,7 +2692,7 @@ public enum RowsetDefinition {
                                        MdschemaMeasuresRowset.SchemaName, schema.getName(), MdschemaMeasuresRowset.CubeName, cube.getName())), handler));
                   }
                   row.set(CubeSource.name, "1");
-              //    row.set(BaseCubeName.name, cube.getName());
+                  // row.set(BaseCubeName.name, cube.getName());
                   row.set(PreferedQueryPatterns.name, 0);
                   addRow(row, rows);
                }
@@ -2263,7 +2760,7 @@ public enum RowsetDefinition {
       private static final Column DimensionUniqueSettings = new Column("DIMENSION_UNIQUE_SETTINGS", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A bitmap that specifies which columns contain unique values " + "if the dimension contains only members with unique names.");
       private static final Column DimensionMasterUniqueName = new Column("DIMENSION_MASTER_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Always NULL.");
-      private static final Column DimensionVisibility = new Column("DIMENSION_VISIBILITY", Type.UnsignedInteger, null, Column.RESTRICTION, Column.REQUIRED, "Always TRUE.");
+      private static final Column DimensionVisibility = new Column("DIMENSION_VISIBILITY", Type.UnsignedShort, null, Column.RESTRICTION, Column.REQUIRED, "Always TRUE.");
       private static final Column Hierarchies = new Column("HIERARCHIES", Type.Rowset, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Hierarchies in this dimension.");
 
       private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL,
@@ -2339,8 +2836,8 @@ public enum RowsetDefinition {
 
          row.set(DimensionUniqueSettings.name, 0);
          row.set(DimensionMasterUniqueName.name, dimension.getName());
-         row.set(DimensionVisibility.name, dimension.isVisible() ? 1:0);
-         
+         row.set(DimensionVisibility.name, dimension.isVisible() ? 1 : 0);
+
          if (deep) {
             row.set(Hierarchies.name,
                      new MdschemaHierarchiesRowset(wrapRequest(request, Olap4jUtil.mapOf(MdschemaHierarchiesRowset.CatalogName, catalog.getName(),
@@ -2486,14 +2983,15 @@ public enum RowsetDefinition {
       private final Util.Functor1<Boolean, Hierarchy> hierarchyNameCond;
 
       MdschemaHierarchiesRowset(XmlaRequest request, CustomXmlaHandler handler) {
-        
+
          super(MDSCHEMA_HIERARCHIES, request, handler);
-//         if (((DefaultXmlaRequest)request).getRequestItemName() != null && ((DefaultXmlaRequest)request).getRequestItemName().equals("MDSCHEMA_HIERARCHIES")){
-//            if(getRestriction("CUBE_NAME")== null){
-//               putRestriction("CUBE_NAME", Arrays.asList(handler.currentCube));
-//            }
-//         }
-    
+         // if (((DefaultXmlaRequest)request).getRequestItemName() != null &&
+         // ((DefaultXmlaRequest)request).getRequestItemName().equals("MDSCHEMA_HIERARCHIES")){
+         // if(getRestriction("CUBE_NAME")== null){
+         // putRestriction("CUBE_NAME", Arrays.asList(handler.currentCube));
+         // }
+         // }
+
          catalogCond = makeCondition(CATALOG_NAME_GETTER, CatalogName);
          schemaNameCond = makeCondition(SCHEMA_NAME_GETTER, SchemaName);
          cubeNameCond = makeCondition(ELEMENT_NAME_GETTER, CubeName);
@@ -2507,12 +3005,11 @@ public enum RowsetDefinition {
       private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "Not supported");
       private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "The name of the cube to which this hierarchy belongs.");
-      
-      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedInteger, null, Column.RESTRICTION, Column.OPTIONAL,
-               "");
+
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, "");
       private static final Column DimensionUniqueName = new Column("DIMENSION_UNIQUE_NAME", Type.String, null, Column.OPTIONAL, Column.OPTIONAL,
                "The unique name of the dimension to which this hierarchy " + "belongs.");
-      
+
       private static final Column DimensionMasterUniqueName = new Column("DIMENSION_MASTER_UNIQUE_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "The unique name of the dimension to which this hierarchy " + "belongs.");
       private static final Column HierarchyName = new Column("HIERARCHY_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
@@ -2542,13 +3039,12 @@ public enum RowsetDefinition {
                "A Boolean that indicates whether the parent dimension is visible.");
       private static final Column HierarchyIsVisible = new Column("HIERARCHY_IS_VISIBLE", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A Boolean that indicates whether the hieararchy is visible.");
-      private static final Column HierarchyVisibility = new Column("HIERARCHY_VISIBILITY", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL,
-               "");
+      private static final Column HierarchyVisibility = new Column("HIERARCHY_VISIBILITY", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, "");
       private static final Column HierarchyOrdinal = new Column("HIERARCHY_ORDINAL", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "The ordinal number of the hierarchy across all hierarchies of " + "the cube.");
       private static final Column DimensionIsShared = new Column("DIMENSION_IS_SHARED", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Always returns true.");
       private static final Column Levels = new Column("LEVELS", Type.Rowset, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Levels in this hierarchy.");
-      private static final Column DimensionUniqueSettings = new Column("DIMENSION_UNIQUE_SETTINGS", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL,"");
+      private static final Column DimensionUniqueSettings = new Column("DIMENSION_UNIQUE_SETTINGS", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
 
       private static final Column HierarchyOrigin = new Column("HIERARCHY_ORIGIN", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, "Levels in this hierarchy.");
       private static final Column HierarchyDisplayFolder = new Column("HIERARCHY_DISPLAY_FOLDER", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
@@ -2556,7 +3052,9 @@ public enum RowsetDefinition {
       /*
        * NOTE: This is non-standard, where did it come from?
        */
-   //   private static final Column ParentChild = new Column("PARENT_CHILD", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Is hierarchy a parent.");
+      // private static final Column ParentChild = new Column("PARENT_CHILD",
+      // Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
+      // "Is hierarchy a parent.");
 
       private static final Column InstanceSelection = new Column("INSTANCE_SELECTION", Type.UnsignedShort, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
 
@@ -2565,18 +3063,19 @@ public enum RowsetDefinition {
       private static final Column GroupingBehaviors = new Column("GROUPING_BEHAVIOR", Type.UnsignedShort, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
 
       public void populateImpl(XmlaResponse response, OlapConnection connection, List<Row> rows) throws XmlaException, SQLException {
-         
-//         if(visualModeEnable)
-//            return;
-     
+
+         // if(visualModeEnable)
+         // return;
+
          for (Catalog catalog : catIter(connection, catNameCond(), catalogCond)) {
             populateCatalog(connection, catalog, rows);
          }
       }
+
       protected void populateCatalog(OlapConnection connection, Catalog catalog, List<Row> rows) throws XmlaException, SQLException {
          for (Schema schema : filter(catalog.getSchemas(), schemaNameCond)) {
             for (Cube cube : filteredCubes(schema, cubeNameCond)) {
-               if(cube instanceof SharedDimensionHolderCube){
+               if (cube instanceof SharedDimensionHolderCube) {
                   continue;
                }
                populateCube(connection, catalog, cube, rows);
@@ -2602,8 +3101,7 @@ public enum RowsetDefinition {
          final NamedList<Hierarchy> hierarchies = dimension.getHierarchies();
          for (Hierarchy hierarchy : filter(hierarchies, hierarchyNameCond, hierarchyUnameCond)) {
 
-            populateHierarchy(connection, catalog, cube, dimension, hierarchy,
-                     ordinal + hierarchies.indexOf(hierarchy), rows);
+            populateHierarchy(connection, catalog, cube, dimension, hierarchy, ordinal + hierarchies.indexOf(hierarchy), rows);
 
          }
       }
@@ -2619,7 +3117,7 @@ public enum RowsetDefinition {
 
          Row row = new Row();
          row.set(CatalogName.name, catalog.getName());
-      //   row.set(SchemaName.name, cube.getSchema().getName());
+         // row.set(SchemaName.name, cube.getSchema().getName());
          row.set(CubeName.name, cube.getName());
          row.set(DimensionUniqueName.name, dimension.getUniqueName());
          row.set(HierarchyName.name, hierarchy.getName());
@@ -2663,7 +3161,7 @@ public enum RowsetDefinition {
          // always true
          row.set(DimensionIsShared.name, true);
 
-       //  row.set(ParentChild.name, extra.isHierarchyParentChild(hierarchy));
+         // row.set(ParentChild.name, extra.isHierarchyParentChild(hierarchy));
          if (deep) {
             row.set(Levels.name,
                      new MdschemaLevelsRowset(wrapRequest(request, Olap4jUtil.mapOf(MdschemaLevelsRowset.CatalogName, catalog.getName(), MdschemaLevelsRowset.SchemaName, cube
@@ -2671,7 +3169,7 @@ public enum RowsetDefinition {
                               MdschemaLevelsRowset.HierarchyUniqueName, hierarchy.getUniqueName())), handler));
          }
 
-        // row.set(InstanceSelection.name, 1);
+         // row.set(InstanceSelection.name, 1);
          row.set(HierarchyDisplayFolder.name, "");
          row.set(GroupingBehaviors.name, 1);
          row.set(HierarchyOrigin.name, 1);
@@ -2689,79 +3187,81 @@ public enum RowsetDefinition {
          }
       }
    }
-static class DiscoverDatasourcesRowset extends Rowset {
 
-   private static final Column DataSourceName = new Column("DataSourceName", Type.String, null, Column.RESTRICTION, Column.REQUIRED,
-            "The name of the data source, such as FoodMart 2000.");
-   private static final Column DataSourceDescription = new Column("DataSourceDescription", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
-            "A description of the data source, as entered by the " + "publisher.");
-   private static final Column URL = new Column("URL", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "The unique path that shows where to invoke the XML for "
-            + "Analysis methods for that data source.");
-   private static final Column DataSourceInfo = new Column("DataSourceInfo", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
-            "A string containing any additional information required to " + "connect to the data source. This can include the Initial "
-                     + "Catalog property or other information for the provider.\n" + "Example: \"Provider=MSOLAP;Data Source=Local;\"");
-   private static final Column ProviderName = new Column("ProviderName", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
-            "The name of the provider behind the data source.\n" + "Example: \"MSDASQL\"");
-   private static final Column ProviderType = new Column("ProviderType", Type.EnumerationArray, Enumeration.PROVIDER_TYPE, Column.RESTRICTION, Column.REQUIRED,
-            Column.UNBOUNDED, "The types of data supported by the provider. May include one " + "or more of the following types. Example follows this " + "table.\n"
-                     + "TDP: tabular data provider.\n" + "MDP: multidimensional data provider.\n" + "DMP: data mining provider. A DMP provider implements the "
-                     + "OLE DB for Data Mining specification.");
-   private static final Column AuthenticationMode = new Column("AuthenticationMode", Type.EnumString, Enumeration.AUTHENTICATION_MODE, Column.RESTRICTION, Column.REQUIRED,
-            "Specification of what type of security mode the data source " + "uses. Values can be one of the following:\n"
-                     + "Unauthenticated: no user ID or password needs to be sent.\n" + "Authenticated: User ID and Password must be included in the "
-                     + "information required for the connection.\n" + "Integrated: the data source uses the underlying security to "
-                     + "determine authorization, such as Integrated Security " + "provided by Microsoft Internet Information Services (IIS).");
+   static class DiscoverDatasourcesRowset extends Rowset {
 
-   DiscoverDatasourcesRowset(RowsetDefinition definition, XmlaRequest request, CustomXmlaHandler handler) {
-      super(definition, request, handler);
-   }
+      private static final Column DataSourceName = new Column("DataSourceName", Type.String, null, Column.RESTRICTION, Column.REQUIRED,
+               "The name of the data source, such as FoodMart 2000.");
+      private static final Column DataSourceDescription = new Column("DataSourceDescription", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
+               "A description of the data source, as entered by the " + "publisher.");
+      private static final Column URL = new Column("URL", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "The unique path that shows where to invoke the XML for "
+               + "Analysis methods for that data source.");
+      private static final Column DataSourceInfo = new Column("DataSourceInfo", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
+               "A string containing any additional information required to " + "connect to the data source. This can include the Initial "
+                        + "Catalog property or other information for the provider.\n" + "Example: \"Provider=MSOLAP;Data Source=Local;\"");
+      private static final Column ProviderName = new Column("ProviderName", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
+               "The name of the provider behind the data source.\n" + "Example: \"MSDASQL\"");
+      private static final Column ProviderType = new Column("ProviderType", Type.EnumerationArray, Enumeration.PROVIDER_TYPE, Column.RESTRICTION, Column.REQUIRED,
+               Column.UNBOUNDED, "The types of data supported by the provider. May include one " + "or more of the following types. Example follows this " + "table.\n"
+                        + "TDP: tabular data provider.\n" + "MDP: multidimensional data provider.\n" + "DMP: data mining provider. A DMP provider implements the "
+                        + "OLE DB for Data Mining specification.");
+      private static final Column AuthenticationMode = new Column("AuthenticationMode", Type.EnumString, Enumeration.AUTHENTICATION_MODE, Column.RESTRICTION, Column.REQUIRED,
+               "Specification of what type of security mode the data source " + "uses. Values can be one of the following:\n"
+                        + "Unauthenticated: no user ID or password needs to be sent.\n" + "Authenticated: User ID and Password must be included in the "
+                        + "information required for the connection.\n" + "Integrated: the data source uses the underlying security to "
+                        + "determine authorization, such as Integrated Security " + "provided by Microsoft Internet Information Services (IIS).");
 
-   public DiscoverDatasourcesRowset(XmlaRequest request, CustomXmlaHandler handler) {
-      this(DISCOVER_DATASOURCES,request,handler);
-   }
+      DiscoverDatasourcesRowset(RowsetDefinition definition, XmlaRequest request, CustomXmlaHandler handler) {
+         super(definition, request, handler);
+      }
 
-   private static final Column[] columns = { DataSourceName, DataSourceDescription, URL, DataSourceInfo, ProviderName, ProviderType, AuthenticationMode, };
+      public DiscoverDatasourcesRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         this(DISCOVER_DATASOURCES, request, handler);
+      }
 
-   @Override
-   protected void populateImpl(XmlaResponse response, OlapConnection connection, List<Row> rows) throws XmlaException, SQLException {
-      if (needConnection()) {
-         final CustomXmlaHandler.XmlaExtra extra = getExtra(connection);
-         for (Map<String, Object> ds : extra.getDataSources(connection)) {
+      private static final Column[] columns = { DataSourceName, DataSourceDescription, URL, DataSourceInfo, ProviderName, ProviderType, AuthenticationMode, };
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List<Row> rows) throws XmlaException, SQLException {
+         if (needConnection()) {
+            final CustomXmlaHandler.XmlaExtra extra = getExtra(connection);
+            for (Map<String, Object> ds : extra.getDataSources(connection)) {
+               Row row = new Row();
+               for (Column column : columns) {
+                  Object val = ds.get(column.name);
+                  row.set(column.name, val);
+               }
+               addRow(row, rows);
+            }
+         } else {
+            // using pre-configured discover datasources response
             Row row = new Row();
+            Map<String, Object> map = this.handler.connectionFactory.getPreConfiguredDiscoverDatasourcesResponse();
             for (Column column : columns) {
-               Object val = ds.get(column.name);
-               row.set(column.name, val);
+               row.set(column.name, map.get(column.name));
             }
             addRow(row, rows);
          }
-      } else {
-         // using pre-configured discover datasources response
-         Row row = new Row();
-         Map<String, Object> map = this.handler.connectionFactory.getPreConfiguredDiscoverDatasourcesResponse();
-         for (Column column : columns) {
-            row.set(column.name, map.get(column.name));
+      }
+
+      @Override
+      protected boolean needConnection() {
+         // If the olap connection factory has a pre configured response,
+         // we don't need to connect to find metadata. This is good.
+         return this.handler.connectionFactory.getPreConfiguredDiscoverDatasourcesResponse() == null;
+      }
+
+      protected void setProperty(PropertyDefinition propertyDef, String value) {
+         switch (propertyDef) {
+         case Content:
+            break;
+         default:
+            super.setProperty(propertyDef, value);
          }
-         addRow(row, rows);
-      }      
-   }
-   
-   @Override
-   protected boolean needConnection() {
-      // If the olap connection factory has a pre configured response,
-      // we don't need to connect to find metadata. This is good.
-      return this.handler.connectionFactory.getPreConfiguredDiscoverDatasourcesResponse() == null;
+      }
+
    }
 
-   protected void setProperty(PropertyDefinition propertyDef, String value) {
-      switch (propertyDef) {
-      case Content:
-         break;
-      default:
-         super.setProperty(propertyDef, value);
-      }
-   }
-   
-}
    static class MdschemaLevelsRowset extends Rowset {
       private final Util.Functor1<Boolean, Catalog> catalogCond;
       private final Util.Functor1<Boolean, Schema> schemaNameCond;
@@ -2804,6 +3304,8 @@ static class DiscoverDatasourcesRowset extends Rowset {
       private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "The name of the schema to which this level belongs.");
       private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED, "The name of the cube to which this level belongs.");
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, "");
+
       private static final Column DimensionUniqueName = new Column("DIMENSION_UNIQUE_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED,
                "The unique name of the dimension to which this level " + "belongs.");
       private static final Column HierarchyUniqueName = new Column("HIERARCHY_UNIQUE_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED,
@@ -2823,13 +3325,13 @@ static class DiscoverDatasourcesRowset extends Rowset {
                "A bitmap that specifies the custom rollup options.");
       private static final Column LevelUniqueSettings = new Column("LEVEL_UNIQUE_SETTINGS", Type.Integer, null, Column.NOT_RESTRICTION, Column.REQUIRED,
                "A bitmap that specifies which columns contain unique values, " + "if the level only has members with unique names or keys.");
-      private static final Column LevelIsVisible = new Column("LEVEL_IS_VISIBLE", Type.Boolean, null, Column.NOT_RESTRICTION, Column.REQUIRED,
+      private static final Column LevelVisibility = new Column("LEVEL_VISIBILITY", Type.UnsignedShort, null, Column.RESTRICTION, Column.REQUIRED,
                "A Boolean that indicates whether the level is visible.");
       private static final Column Description = new Column("DESCRIPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A human-readable description of the level. NULL if no " + "description exists.");
       private static final Column LevelKeyCardinality = new Column("LEVEL_KEY_CARDINALITY", Type.Short, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
-      private static final Column LevelOrigin = new Column("LEVEL_ORIGIN", Type.Short, null, Column.RESTRICTION, Column.OPTIONAL, "");
-      
+      private static final Column LevelOrigin = new Column("LEVEL_ORIGIN", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, "");
+
       private static final Column LevelDbtype = new Column("LEVEL_DBTYPE", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
       private static final Column LevelOrderingProperty = new Column("LEVEL_ORDERING_PROPERTY", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
       private static final Column LevelNameSqlColumnName = new Column("LEVEL_NAME_SQL_COLUMN_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
@@ -2920,24 +3422,23 @@ static class DiscoverDatasourcesRowset extends Rowset {
             uniqueSettings |= 1;
          }
          row.set(LevelUniqueSettings.name, uniqueSettings);
-         row.set(LevelIsVisible.name, level.isVisible());
+         int levelVisibility = level.isVisible() ? 1 : 0;
+         row.set(LevelVisibility.name, (short) levelVisibility);
          row.set(LevelOrderingProperty.name, level.getName());
          row.set(Description.name, desc);
          row.set(LevelDbtype.name, 3);
          row.set(LevelKeyCardinality.name, 1);
          row.set(LevelOrigin.name, 2);
-         
-         
-         if(!level.getName().equalsIgnoreCase("(All)")){
+
+         if (!level.getName().equalsIgnoreCase("(All)")) {
             String tmpName = level.getUniqueName();
             String str = tmpName.substring(1);
             tmpName = "[$".concat(str);
-            
-            row.set(LevelNameSqlColumnName.name, "NAME("+tmpName+")");
-            row.set(LevelKeySqlColumnName.name, "KEY(" + tmpName+")");
-            row.set(LevelUniqueNameSqlColumnName.name, "(UNIQUENAME(" +tmpName + ")");
+
+            row.set(LevelNameSqlColumnName.name, "NAME(" + tmpName + ")");
+            row.set(LevelKeySqlColumnName.name, "KEY(" + tmpName + ")");
+            row.set(LevelUniqueNameSqlColumnName.name, "(UNIQUENAME(" + tmpName + ")");
             row.set(LevelAttributeHierarchyName.name, level.getName());
-            
 
          }
          addRow(row, rows);
@@ -3032,7 +3533,7 @@ static class DiscoverDatasourcesRowset extends Rowset {
       private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "The name of the schema to which this measure belongs.");
       private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "The name of the cube to which this measure belongs.");
-      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL,
                "A bitmask with one of the following valid values: Cube, Dimension");
       private static final Column MeasureName = new Column("MEASURE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "The name of the measure.");
       private static final Column MeasureUniqueName = new Column("MEASURE_UNIQUE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "The Unique name of the measure.");
@@ -3052,24 +3553,21 @@ static class DiscoverDatasourcesRowset extends Rowset {
                "A Boolean that always returns True. If the measure is not " + "visible, it will not be included in the schema rowset.");
       private static final Column LevelsList = new Column("LEVELS_LIST", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A string that always returns NULL. EXCEPT that SQL Server " + "returns non-null values!!!");
-      
-      private static final Column MeasureUnqualifiedCaption = new Column("MEASURE_UNQUALIFIED_CAPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
-               "");
-      private static final Column Expression = new Column("EXPRESSION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
-               "");
-      
+
+      private static final Column MeasureUnqualifiedCaption = new Column("MEASURE_UNQUALIFIED_CAPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column Expression = new Column("EXPRESSION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+
       private static final Column Description = new Column("DESCRIPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A human-readable description of the measure.");
       private static final Column FormatString = new Column("DEFAULT_FORMAT_STRING", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "The default format string for the measure.");
       private static final Column NumericScale = new Column("NUMERIC_SCALE", Type.Short, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "The number of digits to the right of the decimal point for " + "DBTYPE_DECIMAL, DBTYPE_NUMERIC, DBTYPE_VARNUMERIC. " + "Otherwise, this is NULL.");
-      private static final Column MeasureUnits = new Column("MEASURE_UNITS", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
-               "");
+      private static final Column MeasureUnits = new Column("MEASURE_UNITS", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
 
       private static final Column MeasureGroupName = new Column("MEASUREGROUP_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
       private static final Column MeasureDisplayFolder = new Column("MEASURE_DISPLAY_FOLDER", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
- 
+
       public void populateImpl(XmlaResponse response, OlapConnection connection, List<Row> rows) throws XmlaException, SQLException {
          for (Catalog catalog : catIter(connection, catNameCond(), catalogCond)) {
             populateCatalog(connection, catalog, rows);
@@ -3132,8 +3630,8 @@ static class DiscoverDatasourcesRowset extends Rowset {
             desc = cube.getName() + " Cube - " + member.getName() + " Member";
          }
          String formatString = (String) member.getPropertyValue(Property.StandardCellProperty.FORMAT_STRING);
-         if(formatString == null)
-               formatString = "#.#";
+         if (formatString == null)
+            formatString = "#.#";
 
          Row row = new Row();
          row.set(CatalogName.name, catalog.getName());
@@ -3151,7 +3649,7 @@ static class DiscoverDatasourcesRowset extends Rowset {
          // DATA_TYPE DBType best guess is string
          XmlaConstants.DBType dbType = XmlaConstants.DBType.WSTR;
          String datatype = (String) member.getPropertyValue(Property.StandardCellProperty.DATATYPE);
-         String precision ="16";
+         String precision = "16";
          if (datatype != null) {
             if (datatype.equals("Integer")) {
                dbType = XmlaConstants.DBType.I4;
@@ -3169,10 +3667,10 @@ static class DiscoverDatasourcesRowset extends Rowset {
          row.set(NumericScale.name, -1);
          row.set(MeasureIsVisible.name, true);
          row.set(MeasureNameSql.name, member.getName());
-        // row.set(MeasureGroupName.name, member.getCaption());
-       //  row.set(MeasureGroupName.name, "");
+         // row.set(MeasureGroupName.name, member.getCaption());
+         // row.set(MeasureGroupName.name, "");
          row.set(Description.name, desc);
-         row.set(MeasureDisplayFolder.name,"");
+         row.set(MeasureDisplayFolder.name, "");
          row.set(FormatString.name, formatString);
          addRow(row, rows);
       }
@@ -3186,7 +3684,7 @@ static class DiscoverDatasourcesRowset extends Rowset {
          }
       }
    }
-   
+
    @SuppressWarnings("unused")
    static class MdschemaMembersRowset extends Rowset {
       private final Util.Functor1<Boolean, Catalog> catalogCond;
@@ -3243,7 +3741,9 @@ static class DiscoverDatasourcesRowset extends Rowset {
                "Number of parents that this member has.");
       private static final Column TreeOp_ = new Column("TREE_OP", Type.Enumeration, Enumeration.TREE_OP, Column.RESTRICTION, Column.OPTIONAL, "Tree Operation");
 
-      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL,
+               "A bitmask with one of the following valid values: Cube, Dimension");
+      private static final Column Scope = new Column("SCOPE", Type.Integer, null, Column.RESTRICTION, Column.OPTIONAL,
                "A bitmask with one of the following valid values: Cube, Dimension");
       /* Mondrian specified member properties. */
       private static final Column Depth = new Column("DEPTH", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "depth");
@@ -3521,6 +4021,8 @@ static class DiscoverDatasourcesRowset extends Rowset {
       private static final Column CatalogName = new Column("CATALOG_NAME", Type.String, null, true, true, null);
       private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String, null, true, true, null);
       private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, true, true, null);
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, true, true, null);
+
       private static final Column SetName = new Column("SET_NAME", Type.String, null, true, true, null);
       private static final Column Scope = new Column("SCOPE", Type.Integer, null, true, true, null);
       private static final Column Description = new Column("DESCRIPTION", Type.String, null, false, true, "A human-readable description of the measure.");
@@ -3529,7 +4031,8 @@ static class DiscoverDatasourcesRowset extends Rowset {
       private static final Column SetCaption = new Column("SET_CAPTION", Type.String, null, true, true, null);
 
       private static final Column SetDisplayFolder = new Column("SET_DISPLAY_FOLDER", Type.String, null, false, true, "");
-      private static final Column SetEvaluationContext = new Column("SET_EVALUATION_CONTEXT", Type.Integer, null, false, true, "");
+      private static final Column SetEvaluationContext = new Column("SET_EVALUATION_CONTEXT", Type.Integer, null, true, true, "");
+      private static final Column HierarchyUniqueName = new Column("HIERARCHY_UNIQUE_NAME", Type.String, null, true, true, "");
 
 
       public void populateImpl(XmlaResponse response, OlapConnection connection, List<Row> rows) throws XmlaException, OlapException {
@@ -3550,22 +4053,20 @@ static class DiscoverDatasourcesRowset extends Rowset {
          for (NamedSet namedSet : filter(cube.getSets(), setUnameCond)) {
             Row row = new Row();
 
-         
             Writer writer = new StringWriter();
             ParseTreeWriter parseTreeWriter = new ParseTreeWriter(writer);
             ParseTreeNode node = namedSet.getExpression();
             node.unparse(parseTreeWriter);
-            //String expression = writer.toString();
-           // expression = expression.substring(1, expression.toCharArray().length - 1);
+            // String expression = writer.toString();
+            // expression = expression.substring(1,
+            // expression.toCharArray().length - 1);
 
             final String expression = "[Product].[Category].&[1]";
 
-
-           
             row.set(CatalogName.name, catalog.getName());
-           // row.set(SchemaName.name, cube.getSchema().getName());
+            // row.set(SchemaName.name, cube.getSchema().getName());
             row.set(CubeName.name, cube.getName());
-            row.set(SetName.name, namedSet.getUniqueName().substring(1, namedSet.getUniqueName().length() -1));
+            row.set(SetName.name, namedSet.getUniqueName().substring(1, namedSet.getUniqueName().length() - 1));
             row.set(Scope.name, GLOBAL_SCOPE);
             row.set(Description.name, namedSet.getDescription());
             row.set(Expression.name, expression);
@@ -3577,91 +4078,750 @@ static class DiscoverDatasourcesRowset extends Rowset {
          }
       }
    }
-   
+
    static class MdschemaKpisRowset extends Rowset {
       MdschemaKpisRowset(XmlaRequest request, CustomXmlaHandler handler) {
          super(MDSCHEMA_KPIS, request, handler);
       }
-     
-      private static final Column CatalogName = new Column("CATALOG_NAME", Type.String,  null, Column.RESTRICTION, Column.OPTIONAL, "");
-      private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String,  null, Column.RESTRICTION, Column.OPTIONAL, "");
-      private static final Column CubeName = new Column("CUBE_NAME", Type.String,  null, Column.RESTRICTION, Column.OPTIONAL, "");
+
+      private static final Column CatalogName = new Column("CATALOG_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
+      private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
+      private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
       private static final Column KpiName = new Column("KPI_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
-      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, "");
       private static final Column Scope = new Column("SCOPE", Type.Integer, null, Column.RESTRICTION, Column.OPTIONAL, "");
 
-      
       @Override
       protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
-         
+
       }
    }
+
    static class MdschemaMeasureGroupRowset extends Rowset {
       MdschemaMeasureGroupRowset(XmlaRequest request, CustomXmlaHandler handler) {
          super(MDSCHEMA_MEASUREGROUPS, request, handler);
 
       }
-     
+
       private static final Column CatalogName = new Column("CATALOG_NAME", Type.String, null, true, true, null);
       private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String, null, true, true, null);
       private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, true, false, null);
       private static final Column MeasureGroupName = new Column("MEASUREGROUP_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
       private static final Column Description = new Column("DESCRIPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
-               "A human-readable description of the measure.");      
-      private static final Column IsWriteEnabled = new Column("IS_WRITE_ENABLED", Type.Boolean, null, Column.RESTRICTION, Column.OPTIONAL,
-               "The unique name of the dimension.");
-      private static final Column MeasureGroupCaption = new Column("MEASUREGROUP_CAPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+               "A human-readable description of the measure.");
+      private static final Column IsWriteEnabled = new Column("IS_WRITE_ENABLED", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "The unique name of the dimension.");
+      private static final Column MeasureGroupCaption = new Column("MEASUREGROUP_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
+      private static final Column CubeSource = new Column("CUBE_NAME", Type.UnsignedShort, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
 
-      
       @Override
       protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
-         
+
       }
    }
-   
-   
+
    static class MdschemaMeasureGroupDimensionRowset extends Rowset {
       MdschemaMeasureGroupDimensionRowset(XmlaRequest request, CustomXmlaHandler handler) {
          super(MDSCHEMA_MEASUREGROUP_DIMENSIONS, request, handler);
 
       }
-      
-      
+
       private static final Column CatalogName = new Column("CATALOG_NAME", Type.String, null, true, true, null);
       private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String, null, true, true, null);
       private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, true, false, null);
-      private static final Column MeasureGroupName = new Column("MEASUREGROUP_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column MeasureGroupName = new Column("MEASUREGROUP_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
       private static final Column MeasureGroupCardinality = new Column("MEASUREGROUP_CARDINALITY", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
       private static final Column DimensionUniqueName = new Column("DIMENSION_UNIQUE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "The unique name of the dimension.");
       private static final Column DimensionCardinality = new Column("DIMENSION_CARDINALITY", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.REQUIRED,
                "The number of members in the key attribute.");
-      private static final Column DimensionIsVisible = new Column("DIMENSION_IS_VISIBLE", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Always TRUE.");
+      private static final Column DimensionVisibility = new Column("DIMENSION_VISIBILITY", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, "Always TRUE.");
       private static final Column DimensionISFactDimension = new Column("DIMENSION_IS_FACT_DIMENSION", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Always TRUE.");
       private static final Column DimensionPath = new Column("DIMENSION_PATH", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Always TRUE.");
 
       private static final Column DimensionGranularity = new Column("DIMENSION_GRANULARITY", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Always TRUE.");
 
-      
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverTransactionsRowset extends Rowset {
+      DiscoverTransactionsRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_TRANSACTIONS, request, handler);
+
+      }
+
+      private static final Column TransactionId = new Column("TRANSACTION_ID", Type.String, null, true, false, null);
+      private static final Column TransactionSessionId = new Column("TRANSACTION_SESSION_ID", Type.String, null, true, false, null);
 
       @Override
       protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
          // TODO Auto-generated method stub
-         
+
       }
    }
-   
-   
-   
+
+   static class DiscoverDbConnections extends Rowset {
+      DiscoverDbConnections(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_DB_CONNECTIONS, request, handler);
+
+      }
+
+      private static final Column ConnectionId = new Column("CONNECTION_ID", Type.Integer, null, true, true, null);
+      private static final Column ConnectionInUse = new Column("CONNECTION_IN_USE", Type.Integer, null, true, true, null);
+      private static final Column ConnectionServerName = new Column("CONNECTION_SERVER_NAME", Type.String, null, true, true, null);
+      private static final Column ConnectionCatalogName = new Column("CONNECTION_CATALOG_NAME", Type.String, null, true, true, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverMasterKey extends Rowset {
+      DiscoverMasterKey(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_MASTER_KEY, request, handler);
+
+      }
+
+      private static final Column Key = new Column("Key", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverPerformanceCounterSchema extends Rowset {
+      DiscoverPerformanceCounterSchema(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_PERFORMANCE_COUNTERS, request, handler);
+
+      }
+
+      private static final Column PrefCounterName = new Column("PERF_COUNTER_NAME", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverPartitionStateSchema extends Rowset {
+      DiscoverPartitionStateSchema(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_PARTITION_STAT, request, handler);
+
+      }
+
+      private static final Column DatabaseName = new Column("DATABASE_NAME", Type.String, null, true, false, null);
+      private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, true, false, null);
+      private static final Column MeasureGroupName = new Column("MEASURE_GROUP_NAME", Type.String, null, true, false, null);
+      private static final Column PartitionName = new Column("PARTITION_NAME", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverPartitionDimensionStatSchema extends Rowset {
+      DiscoverPartitionDimensionStatSchema(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_PARTITION_DIMENSION_STAT, request, handler);
+
+      }
+
+      private static final Column DatabaseName = new Column("DATABASE_NAME", Type.String, null, true, false, null);
+      private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, true, false, null);
+      private static final Column MeasureGroupName = new Column("MEASURE_GROUP_NAME", Type.String, null, true, false, null);
+      private static final Column PartitionName = new Column("PARTITION_NAME", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverDBConnectionsRowset extends Rowset {
+      DiscoverDBConnectionsRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_DB_CONNECTIONS, request, handler);
+
+      }
+
+      private static final Column ConnectionId = new Column("CONNECTION_ID", Type.Integer, null, true, false, null);
+      private static final Column ConnectionInUser = new Column("CONNECTION_IN_USE", Type.Integer, null, true, false, null);
+      private static final Column ConnectionServerName = new Column("CONNECTION_SERVER_NAME", Type.String, null, true, false, null);
+      private static final Column ConnectionCatalogName = new Column("CONNECTION_CATALOG_NAME", Type.String, null, true, false, null);
+      private static final Column ConnectionSpId = new Column("CONNECTION_SPID", Type.Integer, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverJobsRowset extends Rowset {
+      DiscoverJobsRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_JOBS, request, handler);
+
+      }
+
+      private static final Column SpId = new Column("SPID", Type.Integer, null, true, false, null);
+      private static final Column JobId = new Column("JOB_ID", Type.Integer, null, true, false, null);
+      private static final Column JobDescription = new Column("JOB_DESCRIPTION", Type.String, null, true, false, null);
+      private static final Column JobThreadPollId = new Column("JOB_THREADPOOL_ID", Type.Integer, null, true, false, null);
+      private static final Column JobMinTotalTimeMs = new Column("JOB_MIN_TOTAL_TIME_MS", Type.Long, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverSessionsRowset extends Rowset {
+      DiscoverSessionsRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_SESSIONS, request, handler);
+
+      }
+
+      private static final Column SessionId = new Column("SESSION_ID", Type.String, null, true, false, null);
+      private static final Column SessionSpId = new Column("SESSION_SPID", Type.Integer, null, true, false, null);
+      private static final Column SessionConnectionId = new Column("SESSION_CONNECTION_ID", Type.Integer, null, true, false, null);
+      private static final Column SessionUserName = new Column("SESSION_USER_NAME", Type.String, null, true, false, null);
+      private static final Column SessionCurrentDatabase = new Column("SESSION_CURRENT_DATABASE", Type.String, null, true, false, null);
+      private static final Column SessionElapsedTimeMs = new Column("SESSION_ELAPSED_TIME_MS", Type.UnsignedLong, null, true, false, null);
+      private static final Column SessionCpuTimeMs = new Column("SESSION_CPU_TIME_MS", Type.UnsignedLong, null, true, false, null);
+      private static final Column SessionIdleTimeMs = new Column("SESSION_IDLE_TIME_MS", Type.UnsignedLong, null, true, false, null);
+      private static final Column SessionStatus = new Column("SESSION_STATUS", Type.Integer, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverConnectionsRowset extends Rowset {
+      DiscoverConnectionsRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_CONNECTIONS, request, handler);
+
+      }
+
+      private static final Column ConnectionId = new Column("CONNECTION_ID", Type.Integer, null, true, false, null);
+      private static final Column ConnectionUserName = new Column("CONNECTION_USER_NAME", Type.String, null, true, false, null);
+      private static final Column ConnectionImpersonatedUserName = new Column("CONNECTION_IMPERSONATED_USER_NAME", Type.String, null, true, false, null);
+      private static final Column ConnectionHostName = new Column("CONNECTION_HOST_NAME", Type.String, null, true, false, null);
+      private static final Column ConnectionElapsedTiemMs = new Column("CONNECTION_ELAPSED_TIME_MS", Type.Long, null, true, false, null);
+      private static final Column ConnectionLastCommandElapsedTimeMs = new Column("CONNECTION_LAST_COMMAND_ELAPSED_TIME_MS", Type.Long, null, true, false, null);
+      private static final Column ConnectionIdleTimeMs = new Column("CONNECTION_IDLE_TIME_MS", Type.Long, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverKeyWordsSchema extends Rowset {
+      DiscoverKeyWordsSchema(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_KEYWORDS, request, handler);
+
+      }
+
+      private static final Column Keyword = new Column("Keyword", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverEnumeratorsSchema extends Rowset {
+      DiscoverEnumeratorsSchema(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_ENUMERATORS, request, handler);
+
+      }
+
+      private static final Column EnumName = new Column("EnumName", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class MdschemaInputDataSourcesSchema extends Rowset {
+      MdschemaInputDataSourcesSchema(XmlaRequest request, CustomXmlaHandler handler) {
+         super(MDSCHEMA_INPUT_DATASOURCES, request, handler);
+
+      }
+
+      private static final Column CatalogName = new Column("CATALOG_NAME", Type.String, null, true, false, null);
+      private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String, null, true, false, null);
+      private static final Column DataSourceName = new Column("DATASOURCE_NAME", Type.String, null, true, false, null);
+      private static final Column DataSourceType = new Column("DATASOURCE_TYPE", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DmschemaMiningServices extends Rowset {
+      DmschemaMiningServices(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DMSCHEMA_MINING_SERVICES, request, handler);
+
+      }
+
+      private static final Column ServiceName = new Column("SERVICE_NAME", Type.String, null, true, false, null);
+      private static final Column ServiceTypeId = new Column("SERVICE_TYPE_ID", Type.UnsignedInteger, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DmschemaMiningServiceParametersRowset extends Rowset {
+      DmschemaMiningServiceParametersRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DMSCHEMA_MINING_SERVICES, request, handler);
+
+      }
+
+      private static final Column ServiceName = new Column("SERVICE_NAME", Type.String, null, true, false, null);
+      private static final Column ParameterName = new Column("PARAMETER_NAME", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DmschemaMiningFunctionsRowset extends Rowset {
+      DmschemaMiningFunctionsRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DMSCHEMA_MINING_FUNCTIONS, request, handler);
+
+      }
+
+      private static final Column ServiceName = new Column("SERVICE_NAME", Type.String, null, true, false, null);
+      private static final Column FunctionName = new Column("FUNCTION_NAME", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DmschemaMiningModelXmlRowset extends Rowset {
+
+      DmschemaMiningModelXmlRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DMSCHEMA_MINING_MODEL_XML, request, handler);
+
+      }
+
+      private static final Column ModelCatalog = new Column("MODEL_CATALOG", Type.String, null, true, false, null);
+      private static final Column ModelSchema = new Column("MODEL_SCHEMA", Type.String, null, true, false, null);
+      private static final Column ModelName = new Column("MODEL_NAME", Type.String, null, true, false, null);
+      private static final Column ModelType = new Column("MODEL_TYPE", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DbschemaMiningColumnsRowset extends Rowset {
+
+      DbschemaMiningColumnsRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DMSCHEMA_MINING_COLUMNS, request, handler);
+
+      }
+
+      private static final Column ModelCatalog = new Column("MODEL_CATALOG", Type.String, null, true, false, null);
+      private static final Column ModelSchema = new Column("MODEL_SCHEMA", Type.String, null, true, false, null);
+      private static final Column ModelName = new Column("MODEL_NAME", Type.String, null, true, false, null);
+      private static final Column ColumnName = new Column("COLUMN_NAME", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   // DbschemaMiningStructuresRowset
+   static class DbschemaMiningStructuresRowset extends Rowset {
+
+      DbschemaMiningStructuresRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DMSCHEMA_MINING_STRUCTURES, request, handler);
+
+      }
+
+      private static final Column StructureCatalog = new Column("STRUCTURE_CATALOG", Type.String, null, true, false, null);
+      private static final Column StructureSchema = new Column("STRUCTURE_SCHEMA", Type.String, null, true, false, null);
+      private static final Column StructureName = new Column("STRUCTURE_NAME", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   // DMSCHEMA_MINING_STRUCTURE_COLUMNS
+   static class DbschemaMiningStructuresColumnsRowset extends Rowset {
+
+      DbschemaMiningStructuresColumnsRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DMSCHEMA_MINING_STRUCTURE_COLUMNS, request, handler);
+
+      }
+
+      private static final Column StructureCatalog = new Column("STRUCTURE_CATALOG", Type.String, null, true, false, null);
+      private static final Column StructureSchema = new Column("STRUCTURE_SCHEMA", Type.String, null, true, false, null);
+      private static final Column StructureName = new Column("STRUCTURE_NAME", Type.String, null, true, false, null);
+      private static final Column ColumnName = new Column("COLUMN_NAME", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   // DMSCHEMA_MINING_MODEL_CONTENT_PMML
+   static class DbschemaMiningCodelContentPmmlRowset extends Rowset {
+
+      DbschemaMiningCodelContentPmmlRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DMSCHEMA_MINING_MODEL_CONTENT_PMML, request, handler);
+
+      }
+
+      private static final Column ModelCatalog = new Column("MODEL_CATALOG", Type.String, null, true, false, null);
+      private static final Column ModelSchema = new Column("MODEL_SCHEMA", Type.String, null, true, false, null);
+      private static final Column ModelName = new Column("MODEL_NAME", Type.String, null, true, false, null);
+      private static final Column ModelType = new Column("MODEL_TYPE", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   // DMSCHEMA_MINING_MODEL_CONTENT_PMML
+   static class DbschemaMiningModelsRowset extends Rowset {
+
+      DbschemaMiningModelsRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DMSCHEMA_MINING_MODELS, request, handler);
+
+      }
+
+      private static final Column ModelCatalog = new Column("MODEL_CATALOG", Type.String, null, true, false, null);
+      private static final Column ModelSchema = new Column("MODEL_SCHEMA", Type.String, null, true, false, null);
+      private static final Column ModelName = new Column("MODEL_NAME", Type.String, null, true, false, null);
+      private static final Column ModelType = new Column("MODEL_TYPE", Type.String, null, true, false, null);
+      private static final Column ServiceName = new Column("SERVICE_NAME", Type.String, null, true, false, null);
+      private static final Column ServiceTypeId = new Column("SERVICE_TYPE_ID", Type.UnsignedInteger, null, true, false, null);
+      private static final Column MiningStructure = new Column("MINING_STRUCTURE", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DmschemaMiningModelContentRowset extends Rowset {
+      DmschemaMiningModelContentRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DMSCHEMA_MINING_MODEL_CONTENT, request, handler);
+
+      }
+
+      private static final Column ModelCatalog = new Column("MODEL_CATALOG", Type.String, null, true, false, null);
+      private static final Column ModelSchema = new Column("MODEL_SCHEMA", Type.String, null, true, false, null);
+      private static final Column ModelName = new Column("MODEL_NAME", Type.String, null, true, false, null);
+
+      private static final Column AttributeName = new Column("ATTRIBUTE_NAME", Type.String, null, true, false, null);
+      private static final Column NodeName = new Column("NODE_NAME", Type.String, null, true, false, null);
+
+      private static final Column NodeUniqueName = new Column("NODE_UNIQUE_NAME", Type.String, null, true, false, null);
+      private static final Column NodeType = new Column("NODE_TYPE", Type.Integer, null, true, false, null);
+
+      private static final Column NodeGuid = new Column("NODE_GUID", Type.String, null, true, false, null);
+      private static final Column NodeCaption = new Column("NODE_CAPTION", Type.String, null, true, false, null);
+
+      private static final Column TreeOperation = new Column("TREE_OPERATION", Type.UnsignedInteger, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverXmlMetaData extends Rowset {
+      DiscoverXmlMetaData(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_XML_METADATA, request, handler);
+
+      }
+
+      private static final Column DatabaseID = new Column("DatabaseID", Type.String, null, true, false, null);
+      private static final Column DimensionID = new Column("DimensionID", Type.String, null, true, false, null);
+      private static final Column CubeID = new Column("CubeID", Type.String, null, true, false, null);
+      private static final Column MeasureGroupID = new Column("MeasureGroupID", Type.String, null, true, false, null);
+      private static final Column PartitionID = new Column("PartitionID", Type.String, null, true, false, null);
+      private static final Column PerspectiveID = new Column("PerspectiveID", Type.String, null, true, false, null);
+      private static final Column DimensionPermissionID = new Column("DimensionPermissionID", Type.String, null, true, false, null);
+      private static final Column RoleID = new Column("RoleID", Type.String, null, true, false, null);
+      private static final Column DatabasePermissionID = new Column("DatabasePermissionID", Type.String, null, true, false, null);
+      private static final Column MiningModelID = new Column("MiningModelID", Type.String, null, true, false, null);
+      private static final Column MiningModelPermissionID = new Column("MiningModelPermissionID", Type.String, null, true, false, null);
+      private static final Column DataSourceID = new Column("DataSourceID", Type.String, null, true, false, null);
+      private static final Column MiningStructureID = new Column("MiningStructureID", Type.String, null, true, false, null);
+      private static final Column AggregationDesignID = new Column("AggregationDesignID", Type.String, null, true, false, null);
+      private static final Column TraceID = new Column("TraceID", Type.String, null, true, false, null);
+      private static final Column MiningStructurePermissionID = new Column("MiningStructurePermissionID", Type.String, null, true, false, null);
+      private static final Column CubePermissionID = new Column("CubePermissionID", Type.String, null, true, false, null);
+      private static final Column AssemblyID = new Column("AssemblyID", Type.String, null, true, false, null);
+      private static final Column MdxScriptID = new Column("MdxScriptID", Type.String, null, true, false, null);
+      private static final Column DataSourceViewID = new Column("DataSourceViewID", Type.String, null, true, false, null);
+      private static final Column DataSourcePermissionID = new Column("DataSourcePermissionID", Type.String, null, true, false, null);
+      private static final Column CalculatedColumns = new Column("CalculatedColumns", Type.String, null, true, false, null);
+      private static final Column ObjectExpansion = new Column("ObjectExpansion", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverLocksRowset extends Rowset {
+      DiscoverLocksRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_LOCKS, request, handler);
+
+      }
+
+      private static final Column SPID = new Column("SPID", Type.Integer, null, true, false, null);
+      private static final Column LockTransactionId = new Column("LOCK_TRANSACTION_ID", Type.UUID, null, true, false, null);
+      private static final Column LockObjectId = new Column("LOCK_OBJECT_ID", Type.String, null, true, false, null);
+      private static final Column LockStauts = new Column("LOCK_STATUS", Type.Integer, null, true, false, null);
+      private static final Column LockType = new Column("LOCK_TYPE", Type.Integer, null, true, false, null);
+      private static final Column LockMinTotalMs = new Column("LOCK_MIN_TOTAL_MS", Type.Long, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverLocationsRowset extends Rowset {
+      DiscoverLocationsRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_LOCATIONS, request, handler);
+
+      }
+
+      private static final Column LocationBackUpFilePathName = new Column("LOCATION_BACKUP_FILE_PATHNAME", Type.String, null, true, false, null);
+      private static final Column LocationPassWord = new Column("LOCATION_PASSWORD", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverDimensionStatRowset extends Rowset {
+      DiscoverDimensionStatRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_DIMENSION_STAT, request, handler);
+
+      }
+
+      private static final Column DatabaseName = new Column("DATABASE_NAME", Type.String, null, true, false, null);
+      private static final Column DimensionName = new Column("DIMENSION_NAME", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverCommandsRowset extends Rowset {
+      DiscoverCommandsRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_COMMANDS, request, handler);
+
+      }
+
+      private static final Column SessionSpId = new Column("SESSION_SPID", Type.Integer, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverStorageTablesRowset extends Rowset {
+      DiscoverStorageTablesRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_STORAGE_TABLES, request, handler);
+
+      }
+
+      private static final Column DatabaseName = new Column("DATABASE_NAME", Type.String, null, true, false, null);
+      private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, true, false, null);
+      private static final Column MeasureGroupName = new Column("MEASURE_GROUP_NAME", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverStorageTableColumnsRowset extends Rowset {
+      DiscoverStorageTableColumnsRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_STORAGE_TABLE_COLUMNS, request, handler);
+
+      }
+
+      private static final Column DatabaseName = new Column("DATABASE_NAME", Type.String, null, true, false, null);
+      private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, true, false, null);
+      private static final Column MeasureGroupName = new Column("MEASURE_GROUP_NAME", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverStorageTableColumnSegments extends Rowset {
+      DiscoverStorageTableColumnSegments(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_STORAGE_TABLE_COLUMN_SEGMENTS, request, handler);
+
+      }
+
+      private static final Column DatabaseName = new Column("DATABASE_NAME", Type.String, null, true, false, null);
+      private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, true, false, null);
+      private static final Column MeasureGroupName = new Column("MEASURE_GROUP_NAME", Type.String, null, true, false, null);
+      private static final Column PartitionName = new Column("PARTITION_NAME", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverCommandObjectsRowset extends Rowset {
+      DiscoverCommandObjectsRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_COMMAND_OBJECTS, request, handler);
+
+      }
+
+      private static final Column SessionSpId = new Column("SESSION_SPID", Type.Integer, null, true, false, null);
+      private static final Column SessionId = new Column("SESSION_ID", Type.String, null, true, false, null);
+      private static final Column ObjectParentPath = new Column("OBJECT_PARENT_PATH", Type.String, null, true, false, null);
+      private static final Column ObjectId = new Column("OBJECT_ID", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverCalcDependencyRowset extends Rowset {
+      DiscoverCalcDependencyRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_CALC_DEPENDENCY, request, handler);
+
+      }
+
+      private static final Column DatabaseName = new Column("DATABASE_NAME", Type.String, null, true, false, null);
+      private static final Column ObjectType = new Column("OBJECT_TYPE", Type.String, null, true, false, null);
+      private static final Column Query = new Column("Query", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverCsdlMetaData extends Rowset {
+      DiscoverCsdlMetaData(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_CSDL_METADATA, request, handler);
+
+      }
+
+      private static final Column CatalogName = new Column("CATALOG_NAME", Type.String, null, true, false, null);
+      private static final Column PerspectiveName = new Column("PERSPECTIVE_NAME", Type.String, null, true, false, null);
+      private static final Column Version = new Column("VERSION", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverObjectActivityRowset extends Rowset {
+      DiscoverObjectActivityRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_OBJECT_ACTIVITY, request, handler);
+
+      }
+
+      private static final Column ObjectParentPath = new Column("OBJECT_PARENT_PATH", Type.String, null, true, false, null);
+      private static final Column ObjectId = new Column("OBJECT_ID", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   static class DiscoverObjectMemoryUsageRowset extends Rowset {
+      DiscoverObjectMemoryUsageRowset(XmlaRequest request, CustomXmlaHandler handler) {
+         super(DISCOVER_OBJECT_MEMORY_USAGE, request, handler);
+
+      }
+
+      private static final Column ObjectParentPath = new Column("OBJECT_PARENT_PATH", Type.String, null, true, false, null);
+      private static final Column ObjectId = new Column("OBJECT_ID", Type.String, null, true, false, null);
+
+      @Override
+      protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
    @SuppressWarnings("unused")
    static class MdschemaPropertiesRowset extends Rowset {
-      private  Util.Functor1<Boolean, Catalog> catalogCond;
-      private  Util.Functor1<Boolean, Schema> schemaNameCond;
-      private  Util.Functor1<Boolean, Cube> cubeNameCond;
-      private  Util.Functor1<Boolean, Dimension> dimensionUnameCond;
-      private  Util.Functor1<Boolean, Hierarchy> hierarchyUnameCond;
-      private  Util.Functor1<Boolean, Property> propertyNameCond;
-      private  Util.Functor1<Boolean, Level> levelNameCond;
+      private Util.Functor1<Boolean, Catalog> catalogCond;
+      private Util.Functor1<Boolean, Schema> schemaNameCond;
+      private Util.Functor1<Boolean, Cube> cubeNameCond;
+      private Util.Functor1<Boolean, Dimension> dimensionUnameCond;
+      private Util.Functor1<Boolean, Hierarchy> hierarchyUnameCond;
+      private Util.Functor1<Boolean, Property> propertyNameCond;
+      private Util.Functor1<Boolean, Level> levelNameCond;
 
       MdschemaPropertiesRowset(XmlaRequest request, CustomXmlaHandler handler) {
          super(MDSCHEMA_PROPERTIES, request, handler);
@@ -3670,7 +4830,7 @@ static class DiscoverDatasourcesRowset extends Rowset {
          cubeNameCond = makeCondition(ELEMENT_NAME_GETTER, CubeName);
          dimensionUnameCond = makeCondition(ELEMENT_UNAME_GETTER, DimensionUniqueName);
          hierarchyUnameCond = makeCondition(ELEMENT_UNAME_GETTER, HierarchyUniqueName);
-         levelNameCond = makeCondition(ELEMENT_NAME_GETTER,LevelUniqueName);
+         levelNameCond = makeCondition(ELEMENT_NAME_GETTER, LevelUniqueName);
          propertyNameCond = makeCondition(ELEMENT_NAME_GETTER, PropertyName);
       }
 
@@ -3680,8 +4840,7 @@ static class DiscoverDatasourcesRowset extends Rowset {
       private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "The name of the cube.");
       private static final Column DimensionUniqueName = new Column("DIMENSION_UNIQUE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "The unique name of the dimension.");
-      private static  Column HierarchyUniqueName = new Column("HIERARCHY_UNIQUE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
-               "The unique name of the hierarchy.");
+      private static Column HierarchyUniqueName = new Column("HIERARCHY_UNIQUE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "The unique name of the hierarchy.");
       private static final Column LevelUniqueName = new Column("LEVEL_UNIQUE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "The unique name of the level to which this property belongs.");
       // According to MS this should not be nullable
@@ -3703,30 +4862,29 @@ static class DiscoverDatasourcesRowset extends Rowset {
 
       private static final Column Description = new Column("DESCRIPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A human-readable description of the measure.");
-      private static final Column PropertyIsVisible = new Column("PROPERTY_IS_VISIBLE", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
-      private static final Column PropertyVisibility = new Column("PROPERTY_VISIBILITY", Type.Boolean, null, Column.RESTRICTION, Column.OPTIONAL, "");
+      private static final Column PropertyVisibility = new Column("PROPERTY_VISIBILITY", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, "");
 
-      private static final Column LevelOrderingProperty = new Column("LEVEL_ORDERING_PROPERTY", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column LevelDbtype = new Column("LEVEL_DBTYPE", Type.Integer,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column LevelNameSqlColumnName = new Column("LEVEL_NAME_SQL_COLUMN_NAME", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column LevelKeySqlColumnName = new Column("LEVEL_KEY_SQL_COLUMN_NAME", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column LevelUniqueNameSqlColumnName = new Column("LEVEL_UNIQUE_NAME_SQL_COLUMN_NAME", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column LevelAttributeHierarchyName = new Column("LEVEL_ATTRIBUTE_HIERARCHY_NAME", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column LevelKeyCardinality = new Column("LEVEL_KEY_CARDINALITY", Type.UnsignedShort,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column LevelOrign = new Column("LEVEL_ORIGIN", Type.UnsignedShort,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort,null, Column.RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column CharacterMaximumLength = new Column("CHARACTER_MAXIMUM_LENGTH", Type.UnsignedInteger,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column CharacterOctetLength = new Column("CHARACTER_OCTET_LENGTH", Type.UnsignedInteger,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column NumericPrecision = new Column("NUMERIC_PRECISION", Type.UnsignedShort,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column NumericScale = new Column("NUMERIC_SCALE", Type.UnsignedShort,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column SqlColumnName = new Column("SQL_COLUMN_NAME", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column Language = new Column("LANGUAGE", Type.UnsignedShort,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column MimeType = new Column("MIME_TYPE", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
+      private static final Column LevelOrderingProperty = new Column("LEVEL_ORDERING_PROPERTY", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column LevelDbtype = new Column("LEVEL_DBTYPE", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column LevelNameSqlColumnName = new Column("LEVEL_NAME_SQL_COLUMN_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column LevelKeySqlColumnName = new Column("LEVEL_KEY_SQL_COLUMN_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column LevelUniqueNameSqlColumnName = new Column("LEVEL_UNIQUE_NAME_SQL_COLUMN_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column LevelAttributeHierarchyName = new Column("LEVEL_ATTRIBUTE_HIERARCHY_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column LevelKeyCardinality = new Column("LEVEL_KEY_CARDINALITY", Type.UnsignedShort, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column LevelOrign = new Column("LEVEL_ORIGIN", Type.UnsignedShort, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, "");
+      private static final Column CharacterMaximumLength = new Column("CHARACTER_MAXIMUM_LENGTH", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column CharacterOctetLength = new Column("CHARACTER_OCTET_LENGTH", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column NumericPrecision = new Column("NUMERIC_PRECISION", Type.UnsignedShort, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column NumericScale = new Column("NUMERIC_SCALE", Type.UnsignedShort, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column SqlColumnName = new Column("SQL_COLUMN_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column Language = new Column("LANGUAGE", Type.UnsignedShort, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column MimeType = new Column("MIME_TYPE", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
 
-     
       protected boolean needConnection() {
          return false;
       }
+
       public void populateImpl(XmlaResponse response, OlapConnection connection, List<Row> rows) throws XmlaException, SQLException {
          // Default PROPERTY_TYPE is MDPROP_MEMBER.
          final List<String> list = (List<String>) restrictions.get(PropertyType.name);
@@ -3755,79 +4913,74 @@ static class DiscoverDatasourcesRowset extends Rowset {
 
       private void populateCell(List<Row> rows) {
          List<Row> tmpRow = new ArrayList<Row>(12);
-         for(int i=0;i<12;i++){
+         for (int i = 0; i < 12; i++) {
             tmpRow.add(new Row());
          }
          for (Property.StandardCellProperty property : Property.StandardCellProperty.values()) {
-            if(property.name().equals("VALUE")|| property.name().equals("FORMAT_STRING")||property.name().equals("BACK_COLOR")||property.name().equals("FORE_COLOR")||
-                     property.name().equals("FONT_NAME")||property.name().equals("FONT_SIZE")||property.name().equals("FONT_FLAGS")
-                     ||property.name().equals("LANGUAGE")||property.name().equals("CELL_ORDINAL") || property.name().equals("FORMATTED_VALUE")
-                     || property.name().equals("ACTION_TYPE")||property.name().equals("UPDATEABLE")){
-               
-               
-            Row row = new Row();
+            if (property.name().equals("VALUE") || property.name().equals("FORMAT_STRING") || property.name().equals("BACK_COLOR") || property.name().equals("FORE_COLOR")
+                     || property.name().equals("FONT_NAME") || property.name().equals("FONT_SIZE") || property.name().equals("FONT_FLAGS") || property.name().equals("LANGUAGE")
+                     || property.name().equals("CELL_ORDINAL") || property.name().equals("FORMATTED_VALUE") || property.name().equals("ACTION_TYPE")
+                     || property.name().equals("UPDATEABLE")) {
 
-            row.set(PropertyType.name, Property.TypeFlag.getDictionary().toMask(property.getType()));
-            row.set(PropertyName.name, property.name());
-            row.set(PropertyCaption.name, property.getCaption());            
-            
-            if(property.name().equals("BACK_COLOR")){
-               row.set(DataType.name, 19);
+               Row row = new Row();
+               row.set(PropertyType.name, Property.TypeFlag.getDictionary().toMask(property.getType()));
+               row.set(PropertyName.name, property.name());
 
-            }
-            else if(property.name().equals("FORE_COLOR")){
-               row.set(DataType.name, 19);
+               row.set(PropertyCaption.name, property.getCaption());
 
-            }
-            else if(property.name().equals("ACTION_TYPE")){
-               row.set(DataType.name, 19);
+               if (property.name().equals("BACK_COLOR")) {
+                  row.set(DataType.name, 19);
 
-            }
-            else if(property.name().equals("FONT_SIZE")){
-               row.set(DataType.name, 18);
+               } else if (property.name().equals("FORE_COLOR")) {
+                  row.set(DataType.name, 19);
 
-            }
-            else if(property.name().equals("FONT_FLAGS")){
-               row.set(DataType.name, 3);
+               } else if (property.name().equals("ACTION_TYPE")) {
+                  row.set(DataType.name, 19);
 
-            }else{
-               row.set(DataType.name, property.getDatatype().xmlaOrdinal());
-            }
-//            row.set(PropertyOrigin.name, "6");
-//            row.set(PropertyIsVisible.name, true);
-            if(property.name().equals("VALUE"))
-               tmpRow.set(0, row);     
-            else if(property.name().equals("FORMAT_STRING"))
-               tmpRow.set(1, row);
-            else if(property.name().equals("BACK_COLOR"))
-               tmpRow.set(2, row);
-            else if(property.name().equals("FORE_COLOR"))
-               tmpRow.set(3, row);
-            else if(property.name().equals("FONT_NAME"))
-               tmpRow.set(4, row);
-            else if(property.name().equals("FONT_SIZE"))
-               tmpRow.set(5, row);
-            else if(property.name().equals("FONT_FLAGS"))
-               tmpRow.set(6, row);
-            else if(property.name().equals("LANGUAGE"))
-               tmpRow.set(7, row);
-            else if(property.name().equals("CELL_ORDINAL"))
-               tmpRow.set(8, row);
-            else if(property.name().equals("FORMATTED_VALUE"))
-               tmpRow.set(9, row);
-            else if(property.name().equals("ACTION_TYPE"))
-               tmpRow.set(10, row);
-            else if(property.name().equals("UPDATEABLE"))
-               tmpRow.set(11, row);
-            
+               } else if (property.name().equals("FONT_SIZE")) {
+                  row.set(DataType.name, 18);
+
+               } else if (property.name().equals("FONT_FLAGS")) {
+                  row.set(DataType.name, 3);
+
+               } else {
+                  row.set(DataType.name, property.getDatatype().xmlaOrdinal());
+               }
+               // row.set(PropertyOrigin.name, "6");
+               // row.set(PropertyIsVisible.name, true);
+               if (property.name().equals("VALUE"))
+                  tmpRow.set(0, row);
+               else if (property.name().equals("FORMAT_STRING"))
+                  tmpRow.set(1, row);
+               else if (property.name().equals("BACK_COLOR"))
+                  tmpRow.set(2, row);
+               else if (property.name().equals("FORE_COLOR"))
+                  tmpRow.set(3, row);
+               else if (property.name().equals("FONT_NAME"))
+                  tmpRow.set(4, row);
+               else if (property.name().equals("FONT_SIZE"))
+                  tmpRow.set(5, row);
+               else if (property.name().equals("FONT_FLAGS"))
+                  tmpRow.set(6, row);
+               else if (property.name().equals("LANGUAGE"))
+                  tmpRow.set(7, row);
+               else if (property.name().equals("CELL_ORDINAL"))
+                  tmpRow.set(8, row);
+               else if (property.name().equals("FORMATTED_VALUE"))
+                  tmpRow.set(9, row);
+               else if (property.name().equals("ACTION_TYPE"))
+                  tmpRow.set(10, row);
+               else if (property.name().equals("UPDATEABLE"))
+                  tmpRow.set(11, row);
+
             }
 
          }
-         for(Row r: tmpRow){
+         for (Row r : tmpRow) {
             addRow(r, rows);
 
          }
-   }
+      }
 
       private void populateMember(List<Row> rows) throws SQLException {
          OlapConnection connection = handler.getConnection(request, Collections.<String, String> emptyMap());
@@ -3858,16 +5011,15 @@ static class DiscoverDatasourcesRowset extends Rowset {
                return;
             }
             Level level = lookupLevel(cube, levelUniqueName);
-            if(!levelUniqueName.contains("].[") && levelUniqueName.startsWith("[") && levelUniqueName.endsWith("]")){
+            if (!levelUniqueName.contains("].[") && levelUniqueName.startsWith("[") && levelUniqueName.endsWith("]")) {
                hierarchyUnameCond = makeCondition(ELEMENT_UNAME_GETTER, HierarchyUniqueName);
-               
+
                for (Dimension dimension : filter(cube.getDimensions(), dimensionUnameCond)) {
                   populateDimension(catalog, cube, dimension, rows);
-               }   
+               }
                return;
-               
-            }
-            else if (level == null) {
+
+            } else if (level == null) {
                return;
             }
             populateLevel(catalog, cube, level, rows);
@@ -3921,14 +5073,14 @@ static class DiscoverDatasourcesRowset extends Rowset {
          row.set(PropertyContentType.name, Property.ContentType.REGULAR.xmlaOrdinal());
          XmlaConstants.DBType dbType = getDBTypeFromProperty(property);
          row.set(DataType.name, 0);
-         
+
          row.set(PropertyOrigin.name, 1);
 
          String desc = cube.getName() + " Cube - " + getHierarchyName(hierarchy) + " Hierarchy - " + level.getName() + " Level - " + property.getName() + " Property";
          row.set(Description.name, desc);
          row.set(PropertyCardinality.name, "MANY");
          row.set(PropertyAttributeHierarchyName.name, propertyName);
-         row.set(PropertyIsVisible.name, true);
+         row.set(PropertyVisibility.name, 1);
          addRow(row, rows);
       }
 
@@ -4080,39 +5232,38 @@ static class DiscoverDatasourcesRowset extends Rowset {
          }
       };
    }
-   
+
    public static Iterable<Catalog> catIter(final OlapConnection connection) {
-	      return new Iterable<Catalog>() {
-	         public Iterator<Catalog> iterator() {
-	            try {
-	               return new Iterator<Catalog>() {
-	                  final Iterator<Catalog> catalogIter = Util.filter(connection.getOlapCatalogs()).iterator();
+      return new Iterable<Catalog>() {
+         public Iterator<Catalog> iterator() {
+            try {
+               return new Iterator<Catalog>() {
+                  final Iterator<Catalog> catalogIter = Util.filter(connection.getOlapCatalogs()).iterator();
 
-                     public boolean hasNext() {
-                        return catalogIter.hasNext();
-                     }
+                  public boolean hasNext() {
+                     return catalogIter.hasNext();
+                  }
 
-                     public Catalog next() {
-                        Catalog catalog = catalogIter.next();
-                        try {
-                           connection.setCatalog(catalog.getName());
-                        } catch (SQLException e) {
-                           throw new RuntimeException(e);
-                        }
-                        return catalog;
+                  public Catalog next() {
+                     Catalog catalog = catalogIter.next();
+                     try {
+                        connection.setCatalog(catalog.getName());
+                     } catch (SQLException e) {
+                        throw new RuntimeException(e);
                      }
+                     return catalog;
+                  }
 
-                     public void remove() {
-                        throw new UnsupportedOperationException();
-                     }
-                  };
-               } catch (OlapException e) {
-                  throw new RuntimeException("Failed to obtain a list of catalogs form the connection object.", e);
-               }
+                  public void remove() {
+                     throw new UnsupportedOperationException();
+                  }
+               };
+            } catch (OlapException e) {
+               throw new RuntimeException("Failed to obtain a list of catalogs form the connection object.", e);
             }
-         };
-      }
-   
+         }
+      };
+   }
 
    private static class DelegatingXmlaRequest implements XmlaRequest {
       protected final XmlaRequest request;
@@ -4246,6 +5397,5 @@ static class DiscoverDatasourcesRowset extends Rowset {
       }
    }
 }
-
 
 // End RowsetDefinition.java

@@ -16,9 +16,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -410,30 +412,103 @@ public abstract class Rowset implements XmlaConstants {
 
         writer.endElement();
     }
+ 
     
+    // contains data
 
+    public static Map<String, List<String>> fillLiteralSchema() {
+
+       Map<String, List<String>> data = new LinkedHashMap<String, List<String>>();
+
+ 
+       List<String> row = Arrays.asList("", ".", "0123456789", "24", "2");
+       data.put("DBLITERAL_CATALOG_NAME", row);
+       
+       row = Arrays.asList(".", "", "", "1", "3");
+       data.put("DBLITERAL_CATALOG_SEPARATOR", row);
+       
+       row = Arrays.asList("", "\'\"[]", "0123456789", "255", "5");
+       data.put("DBLITERAL_COLUMN_ALIAS", row);
+
+       row = Arrays.asList("", ".", "0123456789", "14", "6");
+       data.put("DBLITERAL_COLUMN_NAME", row);
+
+       row = Arrays.asList("", "\'\"[]", "0123456789", "255", "7");
+       data.put("DBLITERAL_CORRELATION_NAME", row);
+       
+       row = Arrays.asList("", ".", "0123456789", "255", "14");
+       data.put("DBLITERAL_PROCEDURE_NAME", row);
+       
+       row = Arrays.asList("", ".", "0123456789", "24", "17");
+       data.put("DBLITERAL_TABLE_NAME", row);
+       
+       row = Arrays.asList("", "", "", "0", "18");
+       data.put("DBLITERAL_TEXT_COMMAND", row);
+       
+       row = Arrays.asList("", "", "", "0", "19");
+       data.put("DBLITERAL_USER_NAME", row);
+       
+       row = Arrays.asList("[", "", "", "1", "15");
+       data.put("DBLITERAL_QUOTE_PREFIX", row);
+       
+       row = Arrays.asList("", ".", "0123456789", "24", "21");
+       data.put("DBLITERAL_CUBE_NAME", row);
+       
+       
+       row = Arrays.asList("", ".", "0123456789", "14", "22");
+       data.put("DBLITERAL_DIMENSION_NAME", row);
+              
+       row = Arrays.asList("", ".", "0123456789", "10", "23");
+       data.put("DBLITERAL_HIERARCHY_NAME", row);
+       
+       row = Arrays.asList("", ".", "0123456789", "255", "24");
+       data.put("DBLITERAL_LEVEL_NAME", row);
+
+       row = Arrays.asList("", ".", "0123456789", "255", "25");
+       data.put("DBLITERAL_MEMBER_NAME", row);
+       
+       row = Arrays.asList("", ".", "0123456789", "255", "26");
+       data.put("DBLITERAL_PROPERTY_NAME", row);
+       
+       row = Arrays.asList("]", "", "", "1", "28");
+       data.put("DBLITERAL_QUOTE_SUFFIX", row);
+
+       
+       row = Arrays.asList("", ".", "0123456789", "24", "16");
+       data.put("DBLITERAL_SCHEMA_NAME", row);
+       
+       row = Arrays.asList(".", "", "0123456789", "1", "27");
+       data.put("DBLITERAL_SCHEMA_SEPARATOR", row);
+
+       return data;
+    }
 
     protected <E> void populate(
         Class<E> clazz, List<Row> rows,
         final Comparator<E> comparator)
         throws XmlaException
     {
-       
+       Map<String, List<String>> map =  fillLiteralSchema();
 
-        final E[] enumsSortedByName = clazz.getEnumConstants().clone();
-        Arrays.sort(enumsSortedByName, comparator);
-        for (E anEnum : enumsSortedByName) {
+       // final E[] enumsSortedByName = clazz.getEnumConstants().clone();
+       // Arrays.sort(enumsSortedByName, comparator);
+       String[] dataLabel = {"LiteralValue", "LiteralInvalidChars", "LiteralInvalidStartingChars" ,"LiteralMaxLength", "LiteralNameEnumValue"};
+        for (Map.Entry entry : map.entrySet()) {
             Row row = new Row();
-            for (RowsetDefinition.Column column
-                : rowsetDefinition.columnDefinitions)
+            row.names.add("LiteralName");
+            row.values.add(entry.getKey());
+
+            int index = 0;
+            for (String label: dataLabel)
             {
-                row.names.add(column.name);
-                row.values.add(column.get(anEnum));
+                row.names.add(label);
+                row.values.add(((List)entry.getValue()).get(index));
+                index ++;
+     
             }
             rows.add(row);
         }
     }
-// }
 
     /**
      * Creates a condition functor based on the restrictions on a given metadata
