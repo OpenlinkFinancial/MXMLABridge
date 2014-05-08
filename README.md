@@ -8,4 +8,4 @@ V1.1 update:
 * Removed Obfuscate credentials in OLAP server log 
 * Supported for Unauthenticated mode 
 * Add SQLMode property to PropertyDefinition.java
-
+* Remove redundant log4j warnings about mondrian properties
