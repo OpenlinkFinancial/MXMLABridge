@@ -1093,6 +1093,10 @@ public class CustomXmlaHandler extends mondrian.xmla.XmlaHandler {
     * Case 3: We shouldn't display null value on Exce Pivot Table. This required all MDX SELECT statement be SELECT NON EMPTY 
     * example input:  SELECT ..... ,[Deal_Dates_Start].[XL_PT5]} ON 0 FROM [Sales] CELL PROPERTIES VALUE
     * example output:  SELECT NON EMPTY ..... ,[Deal_Dates_Start].[XL_PT5]} ON 0 FROM [Sales] CELL PROPERTIES VALUE
+    * 
+    * Case 4: Mondrian doesn't support NON EMPTY SELECT on both Row and Column. Only one "NON EMPTY" key word is allowed in each mdx statement. 
+    * example input:  SELECT NON EMPTY { [Measures].[Store_Cost] } ON COLUMNS, NON EMPTY { ([Promotions].[Promotion_Name].ALLMEMBERS * [Gender].[Gender].ALLMEMBERS ) } ...FROM [Sales] CELL ...
+    * example output:  SELECT NON EMPTY { [Measures].[Store_Cost] } ON COLUMNS, { ([Promotions].[Promotion_Name].ALLMEMBERS * [Gender].[Gender].ALLMEMBERS ) } ...FROM [Sales] CELL ...
     */
    
    
@@ -1126,7 +1130,12 @@ public class CustomXmlaHandler extends mondrian.xmla.XmlaHandler {
 	      //enforce NON EMPTY in MDX statement
 	      if(mdxStr.startsWith("SELECT")&& (!mdxStr.startsWith("SELECTFROM") && !mdxStr.startsWith("SELECTNONEMPTY"))) {
 	         mdx = mdx.replace("SELECT", "SELECT NON EMPTY");
-	      }      
+	      }
+	      
+	      //remove the second NON EMPTY key word in mdx statement
+	      
+	      if(mdxStr.contains(",NONEMPTY"))
+	         mdx = mdx.replace(", NON EMPTY", ", ");
 	      
 	      //replace the non escaped double quotes
 	      mdx = mdx.replace("(\"[", "([");
@@ -1141,7 +1150,7 @@ public class CustomXmlaHandler extends mondrian.xmla.XmlaHandler {
    
 private QueryResult executeQuery(XmlaRequest request) throws XmlaException {
       String mdx = preProcessMdx(request.getStatement());
-
+      //String mdx= request.getStatement();
       //if mdx statement contains CELL_ORDINAL properties, change the MDDataSet.cellPropLongs, and MDDataSet.cellPropLongs accordingly
       
       if(mdx.contains("CELL_ORDINAL")){
@@ -1212,8 +1221,39 @@ private QueryResult executeQuery(XmlaRequest request) throws XmlaException {
 
                this.factCacheControl.flushSchemaCache();
             }
+            
+            /*Log time: MDX Request start
+            boolean logTime = true;
+            if (logTime) {
+               String fPath = "c:/temp/ads/test-local/logs/timestamp.txt";
+               File file = new File(fPath);
+               if (!file.exists()) {
+                  file.createNewFile();
+               }
+               FileWriter fWriter = new FileWriter(file,true);
+               fWriter.append("MDX Request Start: " + System.currentTimeMillis() + "\n");
+               fWriter.flush();
+            }
+            
+            */
+            
+            
             cellSet = statement.executeQuery();
-           
+            
+            
+            /*Log time: MDX Request end
+            
+            if (logTime) {
+               String fPath = "c:/temp/ads/test-local/logs/timestamp.txt";
+               File file = new File(fPath);
+               if (!file.exists()) {
+                  file.createNewFile();
+               }
+               FileWriter fWriter = new FileWriter(file, true);
+               fWriter.append("MDX Request End: " + System.currentTimeMillis() + "\n");
+               fWriter.flush();
+            }
+            */
             
             final Format format = getFormat(request, null);
             final Content content = getContent(request);
