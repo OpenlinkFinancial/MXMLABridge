@@ -160,10 +160,10 @@ public enum RowsetDefinition {
    MDSCHEMA_CUBES(12, null, new Column[] { MdschemaCubesRowset.CatalogName, MdschemaCubesRowset.SchemaName, MdschemaCubesRowset.CubeName, MdschemaCubesRowset.CubeType,
             MdschemaCubesRowset.CubeGuid, MdschemaCubesRowset.CreatedOn, MdschemaCubesRowset.LastSchemaUpdate, MdschemaCubesRowset.SchemaUpdatedBy,
             MdschemaCubesRowset.LastDataUpdate, MdschemaCubesRowset.DataUpdatedBy, MdschemaCubesRowset.IsDrillthroughEnabled, MdschemaCubesRowset.IsWriteEnabled,
-            MdschemaCubesRowset.IsLinkable, MdschemaCubesRowset.IsSqlEnabled, MdschemaCubesRowset.CubeCaption, MdschemaCubesRowset.BaseCubeName, MdschemaCubesRowset.CubeSource,
+            MdschemaCubesRowset.IsLinkable, MdschemaCubesRowset.IsSqlEnabled, MdschemaCubesRowset.CubeCaption, MdschemaCubesRowset.CubeSource, MdschemaCubesRowset.BaseCubeName, 
             MdschemaCubesRowset.PreferedQueryPatterns, MdschemaCubesRowset.Description, MdschemaCubesRowset.Dimensions, MdschemaCubesRowset.Sets, MdschemaCubesRowset.Measures },
-            new Column[] { MdschemaCubesRowset.CatalogName, MdschemaCubesRowset.SchemaName, MdschemaCubesRowset.CubeName, MdschemaCubesRowset.BaseCubeName,
-                     MdschemaCubesRowset.CubeSource, MdschemaCubesRowset.PreferedQueryPatterns, }) {
+            new Column[] { MdschemaCubesRowset.CatalogName, MdschemaCubesRowset.SchemaName, MdschemaCubesRowset.CubeName,
+                     MdschemaCubesRowset.CubeSource,  MdschemaCubesRowset.BaseCubeName, MdschemaCubesRowset.PreferedQueryPatterns, }) {
       public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
          return new MdschemaCubesRowset(request, handler);
       }
@@ -186,7 +186,7 @@ public enum RowsetDefinition {
             MdschemaDimensionsRowset.DimensionCaption, MdschemaDimensionsRowset.DimensionOrdinal, MdschemaDimensionsRowset.DimensionType,
             MdschemaDimensionsRowset.DimensionCardinality, MdschemaDimensionsRowset.DefaultHierarchy, MdschemaDimensionsRowset.Description, MdschemaDimensionsRowset.IsVirtual,
             MdschemaDimensionsRowset.IsReadWrite, MdschemaDimensionsRowset.DimensionUniqueSettings, MdschemaDimensionsRowset.DimensionMasterUniqueName,
-            MdschemaDimensionsRowset.DimensionIsVisible, MdschemaDimensionsRowset.Hierarchies, MdschemaDimensionsRowset.CubeSource,
+            MdschemaDimensionsRowset.CubeSource, MdschemaDimensionsRowset.DimensionIsVisible, MdschemaDimensionsRowset.Hierarchies,
 
    }, new Column[] { MdschemaDimensionsRowset.CatalogName, MdschemaDimensionsRowset.SchemaName, MdschemaDimensionsRowset.CubeName, MdschemaDimensionsRowset.DimensionName,
             MdschemaDimensionsRowset.CubeSource, }) {
@@ -217,9 +217,8 @@ public enum RowsetDefinition {
             MdschemaHierarchiesRowset.DimensionMasterUniqueName,
             MdschemaHierarchiesRowset.DimensionIsVisible, MdschemaHierarchiesRowset.HierarchyOrdinal,
             MdschemaHierarchiesRowset.DimensionIsShared, MdschemaHierarchiesRowset.HierarchyIsVisible,
-            MdschemaHierarchiesRowset.HierarchyVisibility,MdschemaHierarchiesRowset.CubeSource,
-
-            MdschemaHierarchiesRowset.HierarchyOrigin, MdschemaHierarchiesRowset.HierarchyDisplayFolder, MdschemaHierarchiesRowset.InstanceSelection, MdschemaHierarchiesRowset.GroupingBehaviors,
+            MdschemaHierarchiesRowset.HierarchyOrigin,  MdschemaHierarchiesRowset.CubeSource,
+            MdschemaHierarchiesRowset.HierarchyVisibility, MdschemaHierarchiesRowset.HierarchyDisplayFolder, MdschemaHierarchiesRowset.InstanceSelection, MdschemaHierarchiesRowset.GroupingBehaviors,
             MdschemaHierarchiesRowset.StructureType, }, new Column[] { MdschemaHierarchiesRowset.CatalogName, MdschemaHierarchiesRowset.SchemaName,
             MdschemaHierarchiesRowset.CubeName, MdschemaHierarchiesRowset.DimensionUniqueName, MdschemaHierarchiesRowset.HierarchyName,            
             MdschemaHierarchiesRowset.HierarchyVisibility,MdschemaHierarchiesRowset.CubeSource}) {
@@ -263,11 +262,14 @@ public enum RowsetDefinition {
              MdschemaLevelsRowset.LevelUniqueNameSqlColumnName,
              MdschemaLevelsRowset.LevelAttributeHierarchyName,
              MdschemaLevelsRowset.LevelOrderingProperty,
-             MdschemaLevelsRowset.CubeSource
+             MdschemaLevelsRowset.CubeSource,
+             //MdschemaLevelsRowset.LevelVisibility
              
 
             }, new Column[] { MdschemaLevelsRowset.CatalogName, MdschemaLevelsRowset.SchemaName, MdschemaLevelsRowset.CubeName, MdschemaLevelsRowset.DimensionUniqueName,
-                     MdschemaLevelsRowset.HierarchyUniqueName, MdschemaLevelsRowset.LevelNumber, MdschemaLevelsRowset.CubeSource            }) {
+                     MdschemaLevelsRowset.HierarchyUniqueName, MdschemaLevelsRowset.LevelNumber, MdschemaLevelsRowset.CubeSource, 
+                    // MdschemaLevelsRowset.LevelVisibility            
+                     }) {
       
       public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
          return new MdschemaLevelsRowset(request, handler);
@@ -401,9 +403,9 @@ public enum RowsetDefinition {
     */
    MDSCHEMA_MEMBERS(18, null, new Column[] { MdschemaMembersRowset.CatalogName, MdschemaMembersRowset.SchemaName, MdschemaMembersRowset.CubeName,
             MdschemaMembersRowset.DimensionUniqueName, MdschemaMembersRowset.HierarchyUniqueName, MdschemaMembersRowset.LevelUniqueName, MdschemaMembersRowset.LevelNumber,
-            MdschemaMembersRowset.MemberOrdinal, MdschemaMembersRowset.MemberName, MdschemaMembersRowset.MemberUniqueName, MdschemaMembersRowset.MemberType,
-            MdschemaMembersRowset.MemberGuid, MdschemaMembersRowset.MemberCaption, MdschemaMembersRowset.ChildrenCardinality, MdschemaMembersRowset.ParentLevel,
-            MdschemaMembersRowset.ParentUniqueName, MdschemaMembersRowset.ParentCount, MdschemaMembersRowset.TreeOp_, MdschemaMembersRowset.CubeSource,
+            MdschemaMembersRowset.MemberOrdinal, MdschemaMembersRowset.MemberName, MdschemaMembersRowset.MemberUniqueName, MdschemaMembersRowset.MemberCaption, MdschemaMembersRowset.MemberType,
+            MdschemaMembersRowset.MemberGuid,  MdschemaMembersRowset.ChildrenCardinality, MdschemaMembersRowset.ParentLevel,
+            MdschemaMembersRowset.ParentUniqueName, MdschemaMembersRowset.ParentCount, MdschemaMembersRowset.TreeOp_, MdschemaMembersRowset.CubeSource, MdschemaMembersRowset.Scope,
             MdschemaMembersRowset.Depth, MdschemaMembersRowset.MemberKey, MdschemaMembersRowset.IsPlaceHolderMember, MdschemaMembersRowset.IsDatamember, }, new Column[] {
             MdschemaMembersRowset.CatalogName, MdschemaMembersRowset.SchemaName, MdschemaMembersRowset.CubeName, MdschemaMembersRowset.DimensionUniqueName,
             MdschemaMembersRowset.HierarchyUniqueName, MdschemaMembersRowset.LevelUniqueName, MdschemaMembersRowset.LevelNumber, MdschemaMembersRowset.MemberOrdinal,
@@ -512,11 +514,11 @@ public enum RowsetDefinition {
    MDSCHEMA_MEASUREGROUPS(20, null, new Column[] { MdschemaMeasureGroupRowset.CatalogName, MdschemaMeasureGroupRowset.SchemaName, MdschemaMeasureGroupRowset.CubeName,
             MdschemaMeasureGroupRowset.MeasureGroupName,
 
-            MdschemaMeasureGroupRowset.Description, MdschemaMeasureGroupRowset.IsWriteEnabled, MdschemaMeasureGroupRowset.MeasureGroupCaption,
+            MdschemaMeasureGroupRowset.Description, MdschemaMeasureGroupRowset.IsWriteEnabled, MdschemaMeasureGroupRowset.MeasureGroupName,
             MdschemaMeasureGroupRowset.CubeSource },
 
    new Column[] { MdschemaMeasureGroupRowset.CatalogName, MdschemaMeasureGroupRowset.SchemaName, MdschemaMeasureGroupRowset.CubeName,
-            MdschemaMeasureGroupRowset.MeasureGroupCaption, MdschemaMeasureGroupRowset.CubeSource }) {
+            MdschemaMeasureGroupRowset.MeasureGroupName, MdschemaMeasureGroupRowset.CubeSource }) {
 
       public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
          return new MdschemaMeasureGroupRowset(request, handler);
@@ -765,14 +767,14 @@ public enum RowsetDefinition {
       }
    },
 
-   DISCOVER_XML_METADATA(20, null, new Column[] { DiscoverXmlMetaData.DatabaseID, DiscoverXmlMetaData.DimensionPermissionID, DiscoverXmlMetaData.CubeID,
+   DISCOVER_XML_METADATA(20, null, new Column[] { DiscoverXmlMetaData.DatabaseID, DiscoverXmlMetaData.DimensionID, DiscoverXmlMetaData.CubeID,
             DiscoverXmlMetaData.MeasureGroupID, DiscoverXmlMetaData.PartitionID, DiscoverXmlMetaData.PerspectiveID, DiscoverXmlMetaData.DimensionPermissionID,
             DiscoverXmlMetaData.RoleID, DiscoverXmlMetaData.DatabasePermissionID, DiscoverXmlMetaData.MiningModelID, DiscoverXmlMetaData.MiningModelPermissionID,
             DiscoverXmlMetaData.DataSourceID, DiscoverXmlMetaData.MiningStructureID, DiscoverXmlMetaData.AggregationDesignID, DiscoverXmlMetaData.TraceID,
             DiscoverXmlMetaData.MiningStructurePermissionID, DiscoverXmlMetaData.CubePermissionID, DiscoverXmlMetaData.AssemblyID, DiscoverXmlMetaData.MdxScriptID,
             DiscoverXmlMetaData.DataSourceViewID, DiscoverXmlMetaData.DataSourcePermissionID, DiscoverXmlMetaData.CalculatedColumns, DiscoverXmlMetaData.ObjectExpansion, },
 
-   new Column[] { DiscoverXmlMetaData.DatabaseID, DiscoverXmlMetaData.DimensionPermissionID, DiscoverXmlMetaData.CubeID, DiscoverXmlMetaData.MeasureGroupID,
+   new Column[] { DiscoverXmlMetaData.DatabaseID, DiscoverXmlMetaData.DimensionID, DiscoverXmlMetaData.CubeID, DiscoverXmlMetaData.MeasureGroupID,
             DiscoverXmlMetaData.PartitionID, DiscoverXmlMetaData.PerspectiveID, DiscoverXmlMetaData.DimensionPermissionID, DiscoverXmlMetaData.RoleID,
             DiscoverXmlMetaData.DatabasePermissionID, DiscoverXmlMetaData.MiningModelID, DiscoverXmlMetaData.MiningModelPermissionID, DiscoverXmlMetaData.DataSourceID,
             DiscoverXmlMetaData.MiningStructureID, DiscoverXmlMetaData.AggregationDesignID, DiscoverXmlMetaData.TraceID, DiscoverXmlMetaData.MiningStructurePermissionID,
@@ -2647,7 +2649,7 @@ public enum RowsetDefinition {
       private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "The name of the schema to which this cube belongs.");
       private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED, "Name of the cube.");
-      private static final Column CubeType = new Column("CUBE_TYPE", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "Cube type.");
+      private static final Column CubeType = new Column("CUBE_TYPE", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Cube type.");
       private static final Column CubeGuid = new Column("CUBE_GUID", Type.UUID, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Cube type.");
       private static final Column CreatedOn = new Column("CREATED_ON", Type.DateTime, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Date and time of cube creation.");
       private static final Column LastSchemaUpdate = new Column("LAST_SCHEMA_UPDATE", Type.DateTime, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
@@ -3034,7 +3036,7 @@ public enum RowsetDefinition {
       private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "The name of the cube to which this hierarchy belongs.");
       
-      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedInteger, null, Column.RESTRICTION, Column.OPTIONAL,
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL,
                "");
       private static final Column DimensionUniqueName = new Column("DIMENSION_UNIQUE_NAME", Type.String, null, Column.OPTIONAL, Column.OPTIONAL,
                "The unique name of the dimension to which this hierarchy " + "belongs.");
@@ -3355,10 +3357,12 @@ public enum RowsetDefinition {
                "A bitmap that specifies which columns contain unique values, " + "if the level only has members with unique names or keys.");
       private static final Column LevelIsVisible = new Column("LEVEL_IS_VISIBLE", Type.Boolean, null, Column.NOT_RESTRICTION, Column.REQUIRED,
                "A Boolean that indicates whether the level is visible.");
+      private static final Column LevelVisibility = new Column("LEVEL_VISIBILITY", Type.UnsignedShort, null, Column.RESTRICTION, Column.REQUIRED,
+               "A Boolean that indicates whether the level is visible.");
       private static final Column Description = new Column("DESCRIPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A human-readable description of the level. NULL if no " + "description exists.");
       private static final Column LevelKeyCardinality = new Column("LEVEL_KEY_CARDINALITY", Type.Short, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
-      private static final Column LevelOrigin = new Column("LEVEL_ORIGIN", Type.Short, null, Column.RESTRICTION, Column.OPTIONAL, "");
+      private static final Column LevelOrigin = new Column("LEVEL_ORIGIN", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, "");
       
       private static final Column LevelDbtype = new Column("LEVEL_DBTYPE", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
       private static final Column LevelOrderingProperty = new Column("LEVEL_ORDERING_PROPERTY", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
@@ -3774,8 +3778,9 @@ public enum RowsetDefinition {
       private static final Column ParentCount = new Column("PARENT_COUNT", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.REQUIRED,
                "Number of parents that this member has.");
       private static final Column TreeOp_ = new Column("TREE_OP", Type.Enumeration, Enumeration.TREE_OP, Column.RESTRICTION, Column.OPTIONAL, "Tree Operation");
-
-      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
+      private static final Column Scope= new Column("SCOPE", Type.Integer, null, Column.RESTRICTION, Column.OPTIONAL,"");
+      
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL,
                "A bitmask with one of the following valid values: Cube, Dimension");
       /* Mondrian specified member properties. */
       private static final Column Depth = new Column("DEPTH", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "depth");
@@ -4138,7 +4143,7 @@ public enum RowsetDefinition {
       private static final Column CatalogName = new Column("CATALOG_NAME", Type.String, null, true, true, null);
       private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String, null, true, true, null);
       private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, true, false, null);
-      private static final Column MeasureGroupName = new Column("MEASUREGROUP_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      private static final Column MeasureGroupName = new Column("MEASUREGROUP_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
       private static final Column Description = new Column("DESCRIPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A human-readable description of the measure.");
       private static final Column IsWriteEnabled = new Column("IS_WRITE_ENABLED", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "The unique name of the dimension.");
@@ -4896,7 +4901,7 @@ public enum RowsetDefinition {
       private static final Column Description = new Column("DESCRIPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A human-readable description of the measure.");
       private static final Column PropertyIsVisible = new Column("PROPERTY_IS_VISIBLE", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
-      private static final Column PropertyVisibility = new Column("PROPERTY_VISIBILITY", Type.Boolean, null, Column.RESTRICTION, Column.OPTIONAL, "");
+      private static final Column PropertyVisibility = new Column("PROPERTY_VISIBILITY", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, "");
 
       private static final Column LevelOrderingProperty = new Column("LEVEL_ORDERING_PROPERTY", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
       private static final Column LevelDbtype = new Column("LEVEL_DBTYPE", Type.Integer,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
