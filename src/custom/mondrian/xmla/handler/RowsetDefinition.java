@@ -514,11 +514,10 @@ public enum RowsetDefinition {
    MDSCHEMA_MEASUREGROUPS(20, null, new Column[] { MdschemaMeasureGroupRowset.CatalogName, MdschemaMeasureGroupRowset.SchemaName, MdschemaMeasureGroupRowset.CubeName,
             MdschemaMeasureGroupRowset.MeasureGroupName,
 
-            MdschemaMeasureGroupRowset.Description, MdschemaMeasureGroupRowset.IsWriteEnabled, MdschemaMeasureGroupRowset.MeasureGroupName,
-            MdschemaMeasureGroupRowset.CubeSource },
+            MdschemaMeasureGroupRowset.Description, MdschemaMeasureGroupRowset.IsWriteEnabled, MdschemaMeasureGroupRowset.MeasureGroupCaption },
 
    new Column[] { MdschemaMeasureGroupRowset.CatalogName, MdschemaMeasureGroupRowset.SchemaName, MdschemaMeasureGroupRowset.CubeName,
-            MdschemaMeasureGroupRowset.MeasureGroupName, MdschemaMeasureGroupRowset.CubeSource }) {
+            MdschemaMeasureGroupRowset.MeasureGroupCaption }) {
 
       public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
          return new MdschemaMeasureGroupRowset(request, handler);

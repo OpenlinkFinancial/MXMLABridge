@@ -142,11 +142,9 @@ public abstract class DefaultXmlaServlet extends XmlaServlet {
 
             while (tmp1Str != null) {
                modifiedReqStr.append(tmp1Str);
-               System.out.println(tmp1Str);
                tmp1Str = reader.readLine();
                modifiedReqStr.append("\n");
             }
-            System.out.println(modifiedReqStr.toString());
             InputStream outputStream = new ByteArrayInputStream(modifiedReqStr.toString().getBytes(StandardCharsets.UTF_8));
 
             soapDoc = domBuilder.parse(outputStream);
