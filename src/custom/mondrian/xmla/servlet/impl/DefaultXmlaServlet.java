@@ -26,11 +26,11 @@ import custom.mondrian.xmla.writer.SaxWriter;
 
 import mondrian.olap.MondrianException;
 import org.w3c.dom.*;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,8 +42,6 @@ import javax.xml.parsers.*;
 
 /**
  * Default implementation of XML/A servlet.
- * 
- * @author Gang Chen
  */
 public abstract class DefaultXmlaServlet extends XmlaServlet {
 
@@ -94,14 +92,16 @@ public abstract class DefaultXmlaServlet extends XmlaServlet {
    protected void unmarshallSoapMessage(HttpServletRequest request, Element[] requestSoapParts) throws XmlaException {
       try {
          InputStream inputStream;
+         InputStream tmpStream;
+         
          DocumentBuilder domBuilder;
-         Document soapDoc;
+         Document soapDoc = null;
 
          
          //init inputStream
          try {
             inputStream = request.getInputStream();
-            
+            tmpStream = request.getInputStream();
          } catch (IllegalStateException ex) {
             throw new XmlaException(SERVER_FAULT_FC, USM_REQUEST_STATE_CODE, USM_REQUEST_STATE_FAULT_FS, ex);
          } catch (IOException ex) {
@@ -118,15 +118,47 @@ public abstract class DefaultXmlaServlet extends XmlaServlet {
 
          // init soapDoc
          try {
-            Reader reader = new InputStreamReader(inputStream,this.charEncoding);
-            InputSource is = new InputSource(reader);            
-            soapDoc = domBuilder.parse(is);
+            
+            //clone inputstream to byteArrayOutputStream 
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int len;
+            while ((len = inputStream.read(buffer)) > -1) {
+               stream.write(buffer, 0, len);
+            }
+            stream.flush();
+            
+            InputStream modified = new ByteArrayInputStream(stream.toByteArray());
+            InputStream original = new ByteArrayInputStream(stream.toByteArray());
+          
+            BufferedReader reader = new BufferedReader(new InputStreamReader(modified, "UTF8"));
+            String tmp1Str = reader.readLine();
+            StringBuilder modifiedReqStr = new StringBuilder();
+
+            if (tmp1Str != null && !tmp1Str.startsWith("<Envelope") && !tmp1Str.startsWith("<")) {
+               tmp1Str = tmp1Str.split("<Envelope")[1];
+               modifiedReqStr.append("<Envelope ");
+            
+
+            while (tmp1Str != null) {
+               modifiedReqStr.append(tmp1Str);
+               System.out.println(tmp1Str);
+               tmp1Str = reader.readLine();
+               modifiedReqStr.append("\n");
+            }
+            System.out.println(modifiedReqStr.toString());
+            InputStream outputStream = new ByteArrayInputStream(modifiedReqStr.toString().getBytes(StandardCharsets.UTF_8));
+
+            soapDoc = domBuilder.parse(outputStream);
+            }
+            else
+               soapDoc = domBuilder.parse(original);
          } catch (IOException ex) {
             // This is either Client or Server
             throw new XmlaException(SERVER_FAULT_FC, USM_DOM_PARSE_IO_CODE, USM_DOM_PARSE_IO_FAULT_FS, ex);
          } catch (SAXException ex) {
-            // Assume client passed bad xml
-            throw new XmlaException(CLIENT_FAULT_FC, USM_DOM_PARSE_CODE, USM_DOM_PARSE_FAULT_FS, ex);
+             throw new XmlaException(CLIENT_FAULT_FC, USM_DOM_PARSE_CODE,
+             USM_DOM_PARSE_FAULT_FS, ex);
          }
 
          /* Validate incoming XMLA request */
