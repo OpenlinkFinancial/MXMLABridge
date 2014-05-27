@@ -403,8 +403,8 @@ public enum RowsetDefinition {
     */
    MDSCHEMA_MEMBERS(18, null, new Column[] { MdschemaMembersRowset.CatalogName, MdschemaMembersRowset.SchemaName, MdschemaMembersRowset.CubeName,
             MdschemaMembersRowset.DimensionUniqueName, MdschemaMembersRowset.HierarchyUniqueName, MdschemaMembersRowset.LevelUniqueName, MdschemaMembersRowset.LevelNumber,
-            MdschemaMembersRowset.MemberOrdinal, MdschemaMembersRowset.MemberName, MdschemaMembersRowset.MemberUniqueName, MdschemaMembersRowset.MemberCaption, MdschemaMembersRowset.MemberType,
-            MdschemaMembersRowset.MemberGuid,  MdschemaMembersRowset.ChildrenCardinality, MdschemaMembersRowset.ParentLevel,
+            MdschemaMembersRowset.MemberOrdinal, MdschemaMembersRowset.MemberName, MdschemaMembersRowset.MemberUniqueName,  MdschemaMembersRowset.MemberType,MdschemaMembersRowset.MemberCaption,
+            MdschemaMembersRowset.ChildrenCardinality, MdschemaMembersRowset.ParentLevel,
             MdschemaMembersRowset.ParentUniqueName, MdschemaMembersRowset.ParentCount, MdschemaMembersRowset.TreeOp_, MdschemaMembersRowset.CubeSource, MdschemaMembersRowset.Scope,
             MdschemaMembersRowset.Depth, MdschemaMembersRowset.MemberKey, MdschemaMembersRowset.IsPlaceHolderMember, MdschemaMembersRowset.IsDatamember, }, new Column[] {
             MdschemaMembersRowset.CatalogName, MdschemaMembersRowset.SchemaName, MdschemaMembersRowset.CubeName, MdschemaMembersRowset.DimensionUniqueName,
@@ -4003,8 +4003,7 @@ public enum RowsetDefinition {
          row.set(MemberOrdinal.name, member.getOrdinal());
          row.set(MemberName.name, member.getName());
          row.set(MemberUniqueName.name, member.getUniqueName());
-         row.set(MemberType.name, member.getMemberType().ordinal());
-         // row.set(MemberGuid.name, "");
+         row.set(MemberGuid.name, "");
          row.set(MemberCaption.name, member.getCaption());
          row.set(ChildrenCardinality.name, member.getPropertyValue(Property.StandardMemberProperty.CHILDREN_CARDINALITY));
          row.set(ChildrenCardinality.name, 100);
