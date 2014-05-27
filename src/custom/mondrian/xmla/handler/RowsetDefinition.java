@@ -403,9 +403,9 @@ public enum RowsetDefinition {
     */
    MDSCHEMA_MEMBERS(18, null, new Column[] { MdschemaMembersRowset.CatalogName, MdschemaMembersRowset.SchemaName, MdschemaMembersRowset.CubeName,
             MdschemaMembersRowset.DimensionUniqueName, MdschemaMembersRowset.HierarchyUniqueName, MdschemaMembersRowset.LevelUniqueName, MdschemaMembersRowset.LevelNumber,
-            MdschemaMembersRowset.MemberOrdinal, MdschemaMembersRowset.MemberName, MdschemaMembersRowset.MemberUniqueName,  MdschemaMembersRowset.MemberType,MdschemaMembersRowset.MemberCaption,
+            MdschemaMembersRowset.MemberOrdinal, MdschemaMembersRowset.MemberName, MdschemaMembersRowset.MemberUniqueName,  MdschemaMembersRowset.MemberType, MdschemaMembersRowset.MemberGuid,MdschemaMembersRowset.MemberCaption,
             MdschemaMembersRowset.ChildrenCardinality, MdschemaMembersRowset.ParentLevel,
-            MdschemaMembersRowset.ParentUniqueName, MdschemaMembersRowset.ParentCount, MdschemaMembersRowset.TreeOp_, MdschemaMembersRowset.CubeSource, MdschemaMembersRowset.Scope,
+            MdschemaMembersRowset.ParentUniqueName, MdschemaMembersRowset.ParentCount, MdschemaMembersRowset.TreeOp_, MdschemaMembersRowset.CubeSource,
             MdschemaMembersRowset.Depth, MdschemaMembersRowset.MemberKey, MdschemaMembersRowset.IsPlaceHolderMember, MdschemaMembersRowset.IsDatamember, }, new Column[] {
             MdschemaMembersRowset.CatalogName, MdschemaMembersRowset.SchemaName, MdschemaMembersRowset.CubeName, MdschemaMembersRowset.DimensionUniqueName,
             MdschemaMembersRowset.HierarchyUniqueName, MdschemaMembersRowset.LevelUniqueName, MdschemaMembersRowset.LevelNumber, MdschemaMembersRowset.MemberOrdinal,
@@ -3765,7 +3765,7 @@ public enum RowsetDefinition {
       private static final Column MemberUniqueName = new Column("MEMBER_UNIQUE_NAME", Type.StringSometimesArray, null, Column.RESTRICTION, Column.REQUIRED,
                " Unique name of the member.");
       private static final Column MemberType = new Column("MEMBER_TYPE", Type.Integer, null, Column.RESTRICTION, Column.REQUIRED, "Type of the member.");
-      private static final Column MemberGuid = new Column("MEMBER_GUID", Type.UUID, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Memeber GUID.");
+      private static final Column MemberGuid = new Column("MEMBER_GUID", Type.UUID, null, Column.RESTRICTION, Column.REQUIRED, "Memeber GUID.");
       private static final Column MemberCaption = new Column("MEMBER_CAPTION", Type.String, null, Column.RESTRICTION, Column.REQUIRED,
                "A label or caption associated with the member.");
       private static final Column ChildrenCardinality = new Column("CHILDREN_CARDINALITY", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.REQUIRED,
@@ -3777,7 +3777,7 @@ public enum RowsetDefinition {
       private static final Column ParentCount = new Column("PARENT_COUNT", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.REQUIRED,
                "Number of parents that this member has.");
       private static final Column TreeOp_ = new Column("TREE_OP", Type.Enumeration, Enumeration.TREE_OP, Column.RESTRICTION, Column.OPTIONAL, "Tree Operation");
-      private static final Column Scope= new Column("SCOPE", Type.Integer, null, Column.RESTRICTION, Column.OPTIONAL,"");
+      private static final Column Scope= new Column("SCOPE", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL,"");
       
       private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL,
                "A bitmask with one of the following valid values: Cube, Dimension");
@@ -4003,7 +4003,8 @@ public enum RowsetDefinition {
          row.set(MemberOrdinal.name, member.getOrdinal());
          row.set(MemberName.name, member.getName());
          row.set(MemberUniqueName.name, member.getUniqueName());
-         row.set(MemberGuid.name, "");
+         row.set(MemberType.name, member.getMemberType().ordinal());
+         //row.set(MemberGuid.name, "");
          row.set(MemberCaption.name, member.getCaption());
          row.set(ChildrenCardinality.name, member.getPropertyValue(Property.StandardMemberProperty.CHILDREN_CARDINALITY));
          row.set(ChildrenCardinality.name, 100);
