@@ -159,11 +159,10 @@ public enum RowsetDefinition {
     */
    MDSCHEMA_CUBES(12, null, new Column[] { MdschemaCubesRowset.CatalogName, MdschemaCubesRowset.SchemaName, MdschemaCubesRowset.CubeName, MdschemaCubesRowset.CubeType,
             MdschemaCubesRowset.CubeGuid, MdschemaCubesRowset.CreatedOn, MdschemaCubesRowset.LastSchemaUpdate, MdschemaCubesRowset.SchemaUpdatedBy,
-            MdschemaCubesRowset.LastDataUpdate, MdschemaCubesRowset.DataUpdatedBy, MdschemaCubesRowset.IsDrillthroughEnabled, MdschemaCubesRowset.IsWriteEnabled,
-            MdschemaCubesRowset.IsLinkable, MdschemaCubesRowset.IsSqlEnabled, MdschemaCubesRowset.CubeCaption, MdschemaCubesRowset.CubeSource, MdschemaCubesRowset.BaseCubeName, 
-            MdschemaCubesRowset.PreferedQueryPatterns, MdschemaCubesRowset.Description, MdschemaCubesRowset.Dimensions, MdschemaCubesRowset.Sets, MdschemaCubesRowset.Measures },
-            new Column[] { MdschemaCubesRowset.CatalogName, MdschemaCubesRowset.SchemaName, MdschemaCubesRowset.CubeName,
-                     MdschemaCubesRowset.CubeSource,  MdschemaCubesRowset.BaseCubeName, MdschemaCubesRowset.PreferedQueryPatterns, }) {
+            MdschemaCubesRowset.LastDataUpdate, MdschemaCubesRowset.DataUpdatedBy, MdschemaCubesRowset.Description, MdschemaCubesRowset.IsDrillthroughEnabled,
+            MdschemaCubesRowset.IsLinkable,  MdschemaCubesRowset.IsWriteEnabled, MdschemaCubesRowset.IsSqlEnabled, MdschemaCubesRowset.CubeCaption, MdschemaCubesRowset.BaseCubeName,MdschemaCubesRowset.CubeSource,  
+            MdschemaCubesRowset.PreferedQueryPatterns},
+            new Column[] { }) {
       public Rowset getRowset(XmlaRequest request, CustomXmlaHandler handler) {
          return new MdschemaCubesRowset(request, handler);
       }
@@ -2704,9 +2703,9 @@ public enum RowsetDefinition {
 
       private static final Column Description = new Column("DESCRIPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A user-friendly description of the dimension.");
-      private static final Column Dimensions = new Column("DIMENSIONS", Type.Rowset, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Dimensions in this cube.");
-      private static final Column Sets = new Column("SETS", Type.Rowset, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Sets in this cube.");
-      private static final Column Measures = new Column("MEASURES", Type.Rowset, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Measures in this cube.");
+//      private static final Column Dimensions = new Column("DIMENSIONS", Type.Rowset, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Dimensions in this cube.");
+//      private static final Column Sets = new Column("SETS", Type.Rowset, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Sets in this cube.");
+//      private static final Column Measures = new Column("MEASURES", Type.Rowset, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Measures in this cube.");
 
       public void populateImpl(XmlaResponse response, OlapConnection connection, List<Row> rows) throws XmlaException, SQLException {
          for (Catalog catalog : catIter(connection, catNameCond(), catalogNameCond)) {
@@ -2732,17 +2731,17 @@ public enum RowsetDefinition {
                   String formattedDate = formatter.format(extra.getSchemaLoadDate(schema));
                   row.set(LastSchemaUpdate.name, formattedDate);
                   row.set(LastDataUpdate.name, formattedDate);
-                  if (deep) {
-                     row.set(Dimensions.name,
-                              new MdschemaDimensionsRowset(wrapRequest(request, Olap4jUtil.mapOf(MdschemaDimensionsRowset.CatalogName, catalog.getName(),
-                                       MdschemaDimensionsRowset.SchemaName, schema.getName(), MdschemaDimensionsRowset.CubeName, cube.getName())), handler));
-                     row.set(Sets.name,
-                              new MdschemaSetsRowset(wrapRequest(request, Olap4jUtil.mapOf(MdschemaSetsRowset.CatalogName, catalog.getName(), MdschemaSetsRowset.SchemaName,
-                                       schema.getName(), MdschemaSetsRowset.CubeName, cube.getName())), handler));
-                     row.set(Measures.name,
-                              new MdschemaMeasuresRowset(wrapRequest(request, Olap4jUtil.mapOf(MdschemaMeasuresRowset.CatalogName, catalog.getName(),
-                                       MdschemaMeasuresRowset.SchemaName, schema.getName(), MdschemaMeasuresRowset.CubeName, cube.getName())), handler));
-                  }
+//                  if (deep) {
+//                     row.set(Dimensions.name,
+//                              new MdschemaDimensionsRowset(wrapRequest(request, Olap4jUtil.mapOf(MdschemaDimensionsRowset.CatalogName, catalog.getName(),
+//                                       MdschemaDimensionsRowset.SchemaName, schema.getName(), MdschemaDimensionsRowset.CubeName, cube.getName())), handler));
+//                     row.set(Sets.name,
+//                              new MdschemaSetsRowset(wrapRequest(request, Olap4jUtil.mapOf(MdschemaSetsRowset.CatalogName, catalog.getName(), MdschemaSetsRowset.SchemaName,
+//                                       schema.getName(), MdschemaSetsRowset.CubeName, cube.getName())), handler));
+//                     row.set(Measures.name,
+//                              new MdschemaMeasuresRowset(wrapRequest(request, Olap4jUtil.mapOf(MdschemaMeasuresRowset.CatalogName, catalog.getName(),
+//                                       MdschemaMeasuresRowset.SchemaName, schema.getName(), MdschemaMeasuresRowset.CubeName, cube.getName())), handler));
+//                  }
 //                  if(cube.getName().equals("Store")){
                      row.set(CubeSource.name, "1");
 //                  }else{
