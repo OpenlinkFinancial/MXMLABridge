@@ -186,7 +186,7 @@ public enum RowsetDefinition {
             MdschemaDimensionsRowset.DimensionCaption, MdschemaDimensionsRowset.DimensionOrdinal, MdschemaDimensionsRowset.DimensionType,
             MdschemaDimensionsRowset.DimensionCardinality, MdschemaDimensionsRowset.DefaultHierarchy, MdschemaDimensionsRowset.Description, MdschemaDimensionsRowset.IsVirtual,
             MdschemaDimensionsRowset.IsReadWrite, MdschemaDimensionsRowset.DimensionUniqueSettings, MdschemaDimensionsRowset.DimensionMasterUniqueName,
-            MdschemaDimensionsRowset.CubeSource, MdschemaDimensionsRowset.DimensionIsVisible, MdschemaDimensionsRowset.Hierarchies,
+            MdschemaDimensionsRowset.CubeSource, MdschemaDimensionsRowset.DimensionIsVisible,MdschemaDimensionsRowset.DimensionVisibility, 
 
    }, new Column[] { MdschemaDimensionsRowset.CatalogName, MdschemaDimensionsRowset.SchemaName, MdschemaDimensionsRowset.CubeName, MdschemaDimensionsRowset.DimensionName,
             MdschemaDimensionsRowset.CubeSource, }) {
@@ -251,20 +251,21 @@ public enum RowsetDefinition {
    MDSCHEMA_LEVELS(16, null, new Column[] { MdschemaLevelsRowset.CatalogName, MdschemaLevelsRowset.SchemaName, MdschemaLevelsRowset.CubeName,
             MdschemaLevelsRowset.DimensionUniqueName, MdschemaLevelsRowset.HierarchyUniqueName, MdschemaLevelsRowset.LevelName, MdschemaLevelsRowset.LevelUniqueName,
             MdschemaLevelsRowset.LevelGuid, MdschemaLevelsRowset.LevelCaption, MdschemaLevelsRowset.LevelNumber, MdschemaLevelsRowset.LevelCardinality,
-            MdschemaLevelsRowset.LevelType, MdschemaLevelsRowset.CustomRollupSettings, MdschemaLevelsRowset.LevelUniqueSettings, MdschemaLevelsRowset.LevelIsVisible,
-            MdschemaLevelsRowset.Description,
+            MdschemaLevelsRowset.LevelType,  MdschemaLevelsRowset.Description, MdschemaLevelsRowset.CustomRollupSettings, MdschemaLevelsRowset.LevelUniqueSettings, 
            
-             MdschemaLevelsRowset.LevelDbtype,
-             MdschemaLevelsRowset.LevelKeyCardinality,
+           
+//             MdschemaLevelsRowset.LevelDbtype,
+//             MdschemaLevelsRowset.LevelKeyCardinality,
              MdschemaLevelsRowset.LevelOrigin,
-             MdschemaLevelsRowset.LevelNameSqlColumnName,
-             MdschemaLevelsRowset.LevelKeySqlColumnName,
-             MdschemaLevelsRowset.LevelUniqueNameSqlColumnName,
-             MdschemaLevelsRowset.LevelAttributeHierarchyName,
-             MdschemaLevelsRowset.LevelOrderingProperty,
+//             MdschemaLevelsRowset.LevelNameSqlColumnName,
+//             MdschemaLevelsRowset.LevelKeySqlColumnName,
+//             MdschemaLevelsRowset.LevelUniqueNameSqlColumnName,
+//             MdschemaLevelsRowset.LevelAttributeHierarchyName,
              MdschemaLevelsRowset.CubeSource,
-             //MdschemaLevelsRowset.LevelVisibility
-             
+             MdschemaLevelsRowset.LevelIsVisible,
+             MdschemaLevelsRowset.LevelVisibility,
+             MdschemaLevelsRowset.LevelOrderingProperty,
+
 
             }, new Column[] { MdschemaLevelsRowset.CatalogName, MdschemaLevelsRowset.SchemaName, MdschemaLevelsRowset.CubeName, MdschemaLevelsRowset.DimensionUniqueName,
                      MdschemaLevelsRowset.HierarchyUniqueName, MdschemaLevelsRowset.LevelNumber, MdschemaLevelsRowset.CubeSource, 
@@ -403,10 +404,12 @@ public enum RowsetDefinition {
     */
    MDSCHEMA_MEMBERS(18, null, new Column[] { MdschemaMembersRowset.CatalogName, MdschemaMembersRowset.SchemaName, MdschemaMembersRowset.CubeName,
             MdschemaMembersRowset.DimensionUniqueName, MdschemaMembersRowset.HierarchyUniqueName, MdschemaMembersRowset.LevelUniqueName, MdschemaMembersRowset.LevelNumber,
-            MdschemaMembersRowset.MemberOrdinal, MdschemaMembersRowset.MemberName, MdschemaMembersRowset.MemberUniqueName,  MdschemaMembersRowset.MemberType, MdschemaMembersRowset.MemberGuid,MdschemaMembersRowset.MemberCaption,
+            MdschemaMembersRowset.MemberOrdinal, MdschemaMembersRowset.MemberName, MdschemaMembersRowset.MemberUniqueName,  MdschemaMembersRowset.MemberCaption, MdschemaMembersRowset.MemberGuid,  MdschemaMembersRowset.MemberType,
             MdschemaMembersRowset.ChildrenCardinality, MdschemaMembersRowset.ParentLevel,
-            MdschemaMembersRowset.ParentUniqueName, MdschemaMembersRowset.ParentCount, MdschemaMembersRowset.TreeOp_, MdschemaMembersRowset.CubeSource,
-            MdschemaMembersRowset.Depth, MdschemaMembersRowset.MemberKey, MdschemaMembersRowset.IsPlaceHolderMember, MdschemaMembersRowset.IsDatamember, }, new Column[] {
+            MdschemaMembersRowset.ParentUniqueName, MdschemaMembersRowset.ParentCount, MdschemaMembersRowset.Description, MdschemaMembersRowset.Expression,  MdschemaMembersRowset.MemberKey, MdschemaMembersRowset.IsPlaceHolderMember, MdschemaMembersRowset.IsDatamember,MdschemaMembersRowset.TreeOp_, MdschemaMembersRowset.CubeSource, 
+            MdschemaMembersRowset.Scope,
+            //MdschemaMembersRowset.Depth,
+            }, new Column[] {
             MdschemaMembersRowset.CatalogName, MdschemaMembersRowset.SchemaName, MdschemaMembersRowset.CubeName, MdschemaMembersRowset.DimensionUniqueName,
             MdschemaMembersRowset.HierarchyUniqueName, MdschemaMembersRowset.LevelUniqueName, MdschemaMembersRowset.LevelNumber, MdschemaMembersRowset.MemberOrdinal,
             MdschemaMembersRowset.IsPlaceHolderMember, MdschemaMembersRowset.IsDatamember, }) {
@@ -1222,6 +1225,15 @@ public enum RowsetDefinition {
 
       writer.endElement(); // xsd:restriction
       writer.endElement(); // xsd:simpleType
+      
+      {
+         //xmlDocument
+         writer.startElement("xsd:complexType", "name", "xmlDocument");
+         writer.startElement("xsd:sequence");
+         writer.element("xsd:any");
+         writer.endElement();
+         writer.endElement();
+      }
    }
 
    protected void writeRowsetXmlSchemaRowDef(SaxWriter writer) {
@@ -1229,6 +1241,10 @@ public enum RowsetDefinition {
       Map<String, Object[]> tmpMap = new HashMap<String, Object[]>();
       List<Object[]> tmpList = new ArrayList<Object[]>();
       for (Column column : columnDefinitions) {
+        //column is not added into schemas as xsd:element
+         if(!column.availableInSchema)
+            continue;
+         
          final String name = XmlaUtil.ElementNameEncoder.INSTANCE.encode(column.name);
          final String xsdType = column.type.columnType;
 
@@ -1356,6 +1372,7 @@ public enum RowsetDefinition {
       final boolean restriction;
       final boolean nullable;
       final boolean unbounded;
+      boolean availableInSchema;
 
       /**
        * Creates a column.
@@ -1378,10 +1395,13 @@ public enum RowsetDefinition {
        * @pre description == null || description.indexOf('\r') == -1
        */
       Column(String name, Type type, Enumeration enumeratedType, boolean restriction, boolean nullable, String description) {
-         this(name, type, enumeratedType, restriction, nullable, ONE_MAX, description);
+         this(name, type, enumeratedType, restriction, nullable, true,  ONE_MAX, description);
+      }
+      Column(String name, Type type, Enumeration enumeratedType, boolean restriction, boolean nullable, boolean availableInSchema, String description) {
+         this(name, type, enumeratedType, restriction, nullable, availableInSchema, ONE_MAX, description);
       }
 
-      Column(String name, Type type, Enumeration enumeratedType, boolean restriction, boolean nullable, boolean unbounded, String description) {
+      Column(String name, Type type, Enumeration enumeratedType, boolean restriction, boolean nullable, boolean availableInSchema, boolean unbounded, String description) {
          assert type != null;
          assert (type == Type.Enumeration || type == Type.EnumerationArray || type == Type.EnumString) == (enumeratedType != null);
          // Line endings must be UNIX style (LF) not Windows style (LF+CR).
@@ -1394,6 +1414,7 @@ public enum RowsetDefinition {
          this.description = description;
          this.restriction = restriction;
          this.nullable = nullable;
+         this.availableInSchema = availableInSchema;
          this.unbounded = unbounded;
       }
 
@@ -1502,6 +1523,8 @@ public enum RowsetDefinition {
          // }
          // });
          for (RowsetDefinition rowsetDefinition : rowsetDefinitions) {
+//            if(rowsetDefinition.name().equalsIgnoreCase("DISCOVER_DATASOURCES"))
+//               continue;
             if (restrictedSchemas == null || (restrictedSchemas != null && restrictedSchemas.contains(rowsetDefinition.name()))) {
                Row row = new Row();
 
@@ -1829,14 +1852,14 @@ public enum RowsetDefinition {
       }
 
       private static final Column PropertyName = new Column("PropertyName", Type.StringSometimesArray, null, Column.RESTRICTION, Column.REQUIRED, "The name of the property.");
-      private static final Column PropertyDescription = new Column("PropertyDescription", Type.String, null, Column.NOT_RESTRICTION, Column.REQUIRED,
+      private static final Column PropertyDescription = new Column("PropertyDescription", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A localizable text description of the property.");
-      private static final Column PropertyType = new Column("PropertyType", Type.String, null, Column.NOT_RESTRICTION, Column.REQUIRED, "The XML data type of the property.");
+      private static final Column PropertyType = new Column("PropertyType", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "The XML data type of the property.");
       private static final Column PropertyAccessType = new Column("PropertyAccessType", Type.EnumString, Enumeration.ACCESS, Column.NOT_RESTRICTION, Column.REQUIRED,
                "Access for the property. The value can be Read, Write, or " + "ReadWrite.");
-      private static final Column IsRequired = new Column("IsRequired", Type.Boolean, null, Column.NOT_RESTRICTION, Column.REQUIRED,
+      private static final Column IsRequired = new Column("IsRequired", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "True if a property is required, false if it is not required.");
-      private static final Column Value = new Column("Value", Type.String, null, Column.NOT_RESTRICTION, Column.REQUIRED, "The current value of the property.");
+      private static final Column Value = new Column("Value", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "The current value of the property.");
 
       protected boolean needConnection() {
          return false;
@@ -2054,6 +2077,8 @@ public enum RowsetDefinition {
                Row row = new Row();
                row.set(CatalogName.name, catalog.getName());
                row.set(Description.name, "No description available");
+               row.set(Roles.name, "anonymous");
+               row.set(DateModified.name, "2008-02-08T02:47:54");
                addRow(row, rows);
             }
          }
@@ -2643,11 +2668,11 @@ public enum RowsetDefinition {
       public static final String MD_CUBTYPE_CUBE = "CUBE";
       public static final String MD_CUBTYPE_VIRTUAL_CUBE = "VIRTUAL CUBE";
 
-      private static final Column CatalogName = new Column("CATALOG_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
+      private static final Column CatalogName = new Column("CATALOG_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED,
                "The name of the catalog to which this cube belongs.");
       private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "The name of the schema to which this cube belongs.");
-      private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED, "Name of the cube.");
+      private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "Name of the cube.");
       private static final Column CubeType = new Column("CUBE_TYPE", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Cube type.");
       private static final Column CubeGuid = new Column("CUBE_GUID", Type.UUID, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Cube type.");
       private static final Column CreatedOn = new Column("CREATED_ON", Type.DateTime, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Date and time of cube creation.");
@@ -2661,7 +2686,7 @@ public enum RowsetDefinition {
                "User ID of the person who last updated the data.");
       private static final Column IsDrillthroughEnabled = new Column("IS_DRILLTHROUGH_ENABLED", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "Describes whether DRILLTHROUGH can be performed on the " + "members of a cube");
-      private static final Column IsWriteEnabled = new Column("IS_WRITE_ENABLED", Type.Boolean, null, Column.NOT_RESTRICTION, Column.REQUIRED,
+      private static final Column IsWriteEnabled = new Column("IS_WRITE_ENABLED", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "Describes whether a cube is write-enabled");
       private static final Column IsLinkable = new Column("IS_LINKABLE", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "Describes whether a cube can be used in a linked cube");
@@ -2669,10 +2694,10 @@ public enum RowsetDefinition {
                "Describes whether or not SQL can be used on the cube");
       private static final Column CubeCaption = new Column("CUBE_CAPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "The caption of the cube.");
 
-      private static final Column BaseCubeName = new Column("BASE_CUBE_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED,
+      private static final Column BaseCubeName = new Column("BASE_CUBE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "The name of the source cube if this cube is a perspective cube");
 
-      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.REQUIRED,
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL,
                "A bitmask with one of these valid values: 0x01-Cube 0x02-Dimension");
       private static final Column PreferedQueryPatterns = new Column("PREFERRED_QUERY_PATTERNS", Type.UnsignedShort, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "describes query pattern client applications can utilize for higher performance");
@@ -2718,8 +2743,11 @@ public enum RowsetDefinition {
                               new MdschemaMeasuresRowset(wrapRequest(request, Olap4jUtil.mapOf(MdschemaMeasuresRowset.CatalogName, catalog.getName(),
                                        MdschemaMeasuresRowset.SchemaName, schema.getName(), MdschemaMeasuresRowset.CubeName, cube.getName())), handler));
                   }
-                  row.set(CubeSource.name, "1");
-                  // row.set(BaseCubeName.name, cube.getName());
+//                  if(cube.getName().equals("Store")){
+                     row.set(CubeSource.name, "1");
+//                  }else{
+//                     row.set(CubeSource.name, "2");
+//                  }
                   row.set(PreferedQueryPatterns.name, 0);
                   addRow(row, rows);
                }
@@ -2787,12 +2815,12 @@ public enum RowsetDefinition {
       private static final Column DimensionUniqueSettings = new Column("DIMENSION_UNIQUE_SETTINGS", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A bitmap that specifies which columns contain unique values " + "if the dimension contains only members with unique names.");
       private static final Column DimensionMasterUniqueName = new Column("DIMENSION_MASTER_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Always NULL.");
-      private static final Column DimensionVisibility = new Column("DIMENSION_VISIBILITY", Type.UnsignedShort, null, Column.NOT_RESTRICTION, Column.REQUIRED, "Always TRUE.");
-      private static final Column DimensionIsVisible = new Column("DIMENSION_IS_VISIBLE", Type.Boolean, null, Column.RESTRICTION, Column.REQUIRED, "Always TRUE.");
+      private static final Column DimensionVisibility = new Column("DIMENSION_VISIBILITY", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, false, "Always TRUE.");
+      private static final Column DimensionIsVisible = new Column("DIMENSION_IS_VISIBLE", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Always TRUE.");
 
       private static final Column Hierarchies = new Column("HIERARCHIES", Type.Rowset, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Hierarchies in this dimension.");
 
-      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL,
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL,false,
                "A bitmask with one of these valid values:0x01 - Cube 0x02 - Dimension");
 
       public void populateImpl(XmlaResponse response, OlapConnection connection, List<Row> rows) throws XmlaException, SQLException {
@@ -3236,7 +3264,7 @@ public enum RowsetDefinition {
                Column.UNBOUNDED, "The types of data supported by the provider. May include one " + "or more of the following types. Example follows this " + "table.\n"
                         + "TDP: tabular data provider.\n" + "MDP: multidimensional data provider.\n" + "DMP: data mining provider. A DMP provider implements the "
                         + "OLE DB for Data Mining specification.");
-      private static final Column AuthenticationMode = new Column("AuthenticationMode", Type.EnumString, Enumeration.AUTHENTICATION_MODE, Column.RESTRICTION, Column.REQUIRED,
+      private static final Column AuthenticationMode = new Column("AuthenticationMode", Type.EnumString, Enumeration.AUTHENTICATION_MODE, Column.RESTRICTION, Column.OPTIONAL,
                "Specification of what type of security mode the data source " + "uses. Values can be one of the following:\n"
                         + "Unauthenticated: no user ID or password needs to be sent.\n" + "Authenticated: User ID and Password must be included in the "
                         + "information required for the connection.\n" + "Integrated: the data source uses the underlying security to "
@@ -3250,7 +3278,7 @@ public enum RowsetDefinition {
          this(DISCOVER_DATASOURCES, request, handler);
       }
 
-      private static final Column[] columns = { DataSourceName, DataSourceDescription, URL, DataSourceInfo, ProviderName, ProviderType, AuthenticationMode, };
+      private static final Column[] columns = { DataSourceName, DataSourceDescription, URL, DataSourceInfo, ProviderName, ProviderType,  AuthenticationMode, };
 
       @Override
       protected void populateImpl(XmlaResponse response, OlapConnection connection, List<Row> rows) throws XmlaException, SQLException {
@@ -3258,10 +3286,18 @@ public enum RowsetDefinition {
             final CustomXmlaHandler.XmlaExtra extra = getExtra(connection);
             for (Map<String, Object> ds : extra.getDataSources(connection)) {
                Row row = new Row();
-               for (Column column : columns) {
-                  Object val = ds.get(column.name);
-                  row.set(column.name, val);
-               }
+//               for (Column column : columns) {
+//                  Object val = ds.get(column.name);
+//                  row.set(column.name, val);
+//               }
+               row.set("DataSourceName", "Provider=Mondrian;DataSource=MondrianFoodMart;");
+               row.set("DataSourceDescription", "");
+               row.set("URL", "");
+               row.set("DataSourceInfo", "Provider=Mondrian;DataSource=MondrianFoodMart;");
+               row.set("ProviderName", "Mondrian");
+               row.set("ProviderType", "MDP");
+               row.set("AuthenticationMode", "Authenticated");
+
                addRow(row, rows);
             }
          } else {
@@ -3271,6 +3307,7 @@ public enum RowsetDefinition {
             for (Column column : columns) {
                row.set(column.name, map.get(column.name));
             }
+
             addRow(row, rows);
          }
       }
@@ -3356,8 +3393,7 @@ public enum RowsetDefinition {
                "A bitmap that specifies which columns contain unique values, " + "if the level only has members with unique names or keys.");
       private static final Column LevelIsVisible = new Column("LEVEL_IS_VISIBLE", Type.Boolean, null, Column.NOT_RESTRICTION, Column.REQUIRED,
                "A Boolean that indicates whether the level is visible.");
-      private static final Column LevelVisibility = new Column("LEVEL_VISIBILITY", Type.UnsignedShort, null, Column.RESTRICTION, Column.REQUIRED,
-               "A Boolean that indicates whether the level is visible.");
+      private static final Column LevelVisibility = new Column("LEVEL_VISIBILITY", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL,false, "A Boolean that indicates whether the level is visible.");
       private static final Column Description = new Column("DESCRIPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A human-readable description of the level. NULL if no " + "description exists.");
       private static final Column LevelKeyCardinality = new Column("LEVEL_KEY_CARDINALITY", Type.Short, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
@@ -3369,8 +3405,7 @@ public enum RowsetDefinition {
       private static final Column LevelKeySqlColumnName = new Column("LEVEL_KEY_SQL_COLUMN_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
       private static final Column LevelUniqueNameSqlColumnName = new Column("LEVEL_UNIQUE_NAME_SQL_COLUMN_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
       private static final Column LevelAttributeHierarchyName = new Column("LEVEL_ATTRIBUTE_HIERARCHY_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
-      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL,
-               "A bitmask with one of the following valid values: Cube, Dimension");
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, false, "A bitmask with one of the following valid values: Cube, Dimension");
       
       public void populateImpl(XmlaResponse response, OlapConnection connection, List<Row> rows) throws XmlaException, SQLException {
          for (Catalog catalog : catIter(connection, catNameCond(), catalogCond)) {
@@ -3750,39 +3785,46 @@ public enum RowsetDefinition {
       private static final Column SchemaName = new Column("SCHEMA_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "The name of the schema to which this member belongs.");
       private static final Column CubeName = new Column("CUBE_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED, "Name of the cube to which this member belongs.");
-      private static final Column DimensionUniqueName = new Column("DIMENSION_UNIQUE_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED,
+      private static final Column DimensionUniqueName = new Column("DIMENSION_UNIQUE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "Unique name of the dimension to which this member belongs.");
-      private static final Column HierarchyUniqueName = new Column("HIERARCHY_UNIQUE_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED,
+      private static final Column HierarchyUniqueName = new Column("HIERARCHY_UNIQUE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                "Unique name of the hierarchy. If the member belongs to more " + "than one hierarchy, there is one row for each hierarchy to " + "which it belongs.");
-      private static final Column LevelUniqueName = new Column("LEVEL_UNIQUE_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED,
+      private static final Column LevelUniqueName = new Column("LEVEL_UNIQUE_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL,
                " Unique name of the level to which the member belongs.");
-      private static final Column LevelNumber = new Column("LEVEL_NUMBER", Type.UnsignedInteger, null, Column.RESTRICTION, Column.REQUIRED,
+      private static final Column LevelNumber = new Column("LEVEL_NUMBER", Type.UnsignedInteger, null, Column.RESTRICTION, Column.OPTIONAL,
                "The distance of the member from the root of the hierarchy.");
-      private static final Column MemberOrdinal = new Column("MEMBER_ORDINAL", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.REQUIRED,
+      private static final Column MemberOrdinal = new Column("MEMBER_ORDINAL", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "Ordinal number of the member. Sort rank of the member when " + "members of this dimension are sorted in their natural sort "
                         + "order. If providers do not have the concept of natural " + "ordering, this should be the rank when sorted by " + "MEMBER_NAME.");
-      private static final Column MemberName = new Column("MEMBER_NAME", Type.String, null, Column.RESTRICTION, Column.REQUIRED, "Name of the member.");
-      private static final Column MemberUniqueName = new Column("MEMBER_UNIQUE_NAME", Type.StringSometimesArray, null, Column.RESTRICTION, Column.REQUIRED,
+      private static final Column MemberName = new Column("MEMBER_NAME", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "Name of the member.");
+      private static final Column MemberUniqueName = new Column("MEMBER_UNIQUE_NAME", Type.StringSometimesArray, null, Column.RESTRICTION, Column.OPTIONAL,
                " Unique name of the member.");
-      private static final Column MemberType = new Column("MEMBER_TYPE", Type.Integer, null, Column.RESTRICTION, Column.REQUIRED, "Type of the member.");
-      private static final Column MemberGuid = new Column("MEMBER_GUID", Type.UUID, null, Column.RESTRICTION, Column.REQUIRED, "Memeber GUID.");
-      private static final Column MemberCaption = new Column("MEMBER_CAPTION", Type.String, null, Column.RESTRICTION, Column.REQUIRED,
+      private static final Column MemberType = new Column("MEMBER_TYPE", Type.Integer, null, Column.RESTRICTION, Column.OPTIONAL, "Type of the member.");
+//      private static final Column PropertyType = new Column("PROPERTY_TYPE", Type.Short, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+//      private static final Column PropertyName = new Column("PROPERTY_NAME", Type.Short, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+
+      private static final Column MemberGuid = new Column("MEMBER_GUID", Type.UUID, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "Memeber GUID.");
+      private static final Column MemberCaption = new Column("MEMBER_CAPTION", Type.String, null, Column.OPTIONAL, Column.OPTIONAL,
                "A label or caption associated with the member.");
-      private static final Column ChildrenCardinality = new Column("CHILDREN_CARDINALITY", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.REQUIRED,
+      private static final Column ChildrenCardinality = new Column("CHILDREN_CARDINALITY", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "Number of children that the member has.");
-      private static final Column ParentLevel = new Column("PARENT_LEVEL", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.REQUIRED,
+      private static final Column ParentLevel = new Column("PARENT_LEVEL", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "The distance of the member's parent from the root level of " + "the hierarchy.");
       private static final Column ParentUniqueName = new Column("PARENT_UNIQUE_NAME", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "Unique name of the member's parent.");
-      private static final Column ParentCount = new Column("PARENT_COUNT", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.REQUIRED,
+      private static final Column ParentCount = new Column("PARENT_COUNT", Type.UnsignedInteger, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "Number of parents that this member has.");
-      private static final Column TreeOp_ = new Column("TREE_OP", Type.Enumeration, Enumeration.TREE_OP, Column.RESTRICTION, Column.OPTIONAL, "Tree Operation");
-      private static final Column Scope= new Column("SCOPE", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL,"");
+      private static final Column TreeOp_ = new Column("TREE_OP", Type.Enumeration, Enumeration.TREE_OP, Column.RESTRICTION, Column.OPTIONAL, false, "Tree Operation");
+      private static final Column Scope= new Column("SCOPE", Type.Integer, null, Column.RESTRICTION, Column.OPTIONAL,"");
       
-      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL,
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, false, 
                "A bitmask with one of the following valid values: Cube, Dimension");
       /* Mondrian specified member properties. */
-      private static final Column Depth = new Column("DEPTH", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "depth");
+      private static final Column Description = new Column("DESCRIPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+      
+      private static final Column Expression = new Column("EXPRESSION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
+
+//      private static final Column Depth = new Column("DEPTH", Type.Integer, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "depth");
       private static final Column MemberKey = new Column("MEMBER_KEY", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
       private static final Column IsPlaceHolderMember = new Column("IS_PLACEHOLDERMEMBER", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
       private static final Column IsDatamember = new Column("IS_DATAMEMBER", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
@@ -3994,7 +4036,6 @@ public enum RowsetDefinition {
 
          Row row = new Row();
          row.set(CatalogName.name, catalog.getName());
-         row.set(SchemaName.name, cube.getSchema().getName());
          row.set(CubeName.name, cube.getName());
          row.set(DimensionUniqueName.name, dimension.getUniqueName());
          row.set(HierarchyUniqueName.name, hierarchy.getUniqueName());
@@ -4020,9 +4061,10 @@ public enum RowsetDefinition {
 
          row.set(ParentCount.name, member.getParentMember() == null ? 0 : 1);
 
-         row.set(Depth.name, member.getDepth());
+//         row.set(Depth.name, member.getDepth());
          row.set(MemberKey.name, member.getCaption());// Member_Key =
-                                                      // Member_Caption?
+//         row.set(Scope.name, 1);
+                                 // Member_Caption?
          row.set(IsPlaceHolderMember.name, false);
          row.set(IsDatamember.name, false);
          addRow(row, rows);
@@ -4145,7 +4187,7 @@ public enum RowsetDefinition {
       private static final Column Description = new Column("DESCRIPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A human-readable description of the measure.");
       private static final Column IsWriteEnabled = new Column("IS_WRITE_ENABLED", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "The unique name of the dimension.");
-      private static final Column MeasureGroupCaption = new Column("MEASURE_GROUPCAPTION", Type.String, null, Column.RESTRICTION, Column.OPTIONAL, "");
+      private static final Column MeasureGroupCaption = new Column("MEASURE_GROUPCAPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
       private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
 
       @Override
@@ -4222,7 +4264,7 @@ public enum RowsetDefinition {
 
       }
 
-      private static final Column Key = new Column("Key", Type.String, null, true, false, null);
+      private static final Column Key = new Column("KEY", Type.String, null, true, false, null);
 
       @Override
       protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
@@ -4790,7 +4832,7 @@ public enum RowsetDefinition {
 
       private static final Column DatabaseName = new Column("DATABASE_NAME", Type.String, null, true, false, null);
       private static final Column ObjectType = new Column("OBJECT_TYPE", Type.String, null, true, false, null);
-      private static final Column Query = new Column("Query", Type.String, null, true, false, null);
+      private static final Column Query = new Column("QUERY", Type.String, null, true, false, null);
 
       @Override
       protected void populateImpl(XmlaResponse response, OlapConnection connection, List rows) throws XmlaException, SQLException {
@@ -4899,17 +4941,17 @@ public enum RowsetDefinition {
       private static final Column Description = new Column("DESCRIPTION", Type.String, null, Column.NOT_RESTRICTION, Column.OPTIONAL,
                "A human-readable description of the measure.");
       private static final Column PropertyIsVisible = new Column("PROPERTY_IS_VISIBLE", Type.Boolean, null, Column.NOT_RESTRICTION, Column.OPTIONAL, "");
-      private static final Column PropertyVisibility = new Column("PROPERTY_VISIBILITY", Type.UnsignedShort, null, Column.RESTRICTION, Column.OPTIONAL, "");
+      private static final Column PropertyVisibility = new Column("PROPERTY_VISIBILITY", Type.UnsignedShort, null, Column.RESTRICTION, false, Column.OPTIONAL, "");
 
-      private static final Column LevelOrderingProperty = new Column("LEVEL_ORDERING_PROPERTY", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column LevelDbtype = new Column("LEVEL_DBTYPE", Type.Integer,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column LevelNameSqlColumnName = new Column("LEVEL_NAME_SQL_COLUMN_NAME", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column LevelKeySqlColumnName = new Column("LEVEL_KEY_SQL_COLUMN_NAME", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column LevelUniqueNameSqlColumnName = new Column("LEVEL_UNIQUE_NAME_SQL_COLUMN_NAME", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column LevelAttributeHierarchyName = new Column("LEVEL_ATTRIBUTE_HIERARCHY_NAME", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column LevelKeyCardinality = new Column("LEVEL_KEY_CARDINALITY", Type.UnsignedShort,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column LevelOrign = new Column("LEVEL_ORIGIN", Type.UnsignedShort,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
-      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort,null, Column.RESTRICTION, Column.OPTIONAL,""); 
+//      private static final Column LevelOrderingProperty = new Column("LEVEL_ORDERING_PROPERTY", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
+//      private static final Column LevelDbtype = new Column("LEVEL_DBTYPE", Type.Integer,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
+//      private static final Column LevelNameSqlColumnName = new Column("LEVEL_NAME_SQL_COLUMN_NAME", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
+//      private static final Column LevelKeySqlColumnName = new Column("LEVEL_KEY_SQL_COLUMN_NAME", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
+//      private static final Column LevelUniqueNameSqlColumnName = new Column("LEVEL_UNIQUE_NAME_SQL_COLUMN_NAME", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
+//      private static final Column LevelAttributeHierarchyName = new Column("LEVEL_ATTRIBUTE_HIERARCHY_NAME", Type.String,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
+//      private static final Column LevelKeyCardinality = new Column("LEVEL_KEY_CARDINALITY", Type.UnsignedShort,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
+//      private static final Column LevelOrign = new Column("LEVEL_ORIGIN", Type.UnsignedShort,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
+      private static final Column CubeSource = new Column("CUBE_SOURCE", Type.UnsignedShort,null, Column.RESTRICTION, Column.OPTIONAL, false, ""); 
       private static final Column CharacterMaximumLength = new Column("CHARACTER_MAXIMUM_LENGTH", Type.UnsignedInteger,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
       private static final Column CharacterOctetLength = new Column("CHARACTER_OCTET_LENGTH", Type.UnsignedInteger,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
       private static final Column NumericPrecision = new Column("NUMERIC_PRECISION", Type.UnsignedShort,null, Column.NOT_RESTRICTION, Column.OPTIONAL,""); 
