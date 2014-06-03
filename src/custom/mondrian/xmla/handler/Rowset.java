@@ -332,6 +332,7 @@ public abstract class Rowset implements XmlaConstants {
         int propertyNameIndex = 0;
         int propertyTypeIndex = 0;
         newColumns = rowsetDefinition.columnDefinitions;
+        int tmpCount = 0;
         for(int i=0;i<rowsetDefinition.columnDefinitions.length; i++){
            if(newColumns[i].name.equals("PROPERTY_NAME")){
               propertyNameIndex = i;
@@ -346,7 +347,6 @@ public abstract class Rowset implements XmlaConstants {
            newColumns[propertyNameIndex] = newColumns[propertyTypeIndex];
            newColumns[propertyTypeIndex] =  replaceCol;
         }
-        
         writer.startElement("row");
         for (RowsetDefinition.Column column
             : newColumns)
@@ -388,7 +388,13 @@ public abstract class Rowset implements XmlaConstants {
                 }
                 writer.endSequence();
             } else {
+               
                 writer.textElement(column.name, value);
+                if(value.equals("MDP")){
+                   writer.textElement(column.name, "TDP");
+                   writer.textElement(column.name, "DMP");
+                }
+
             }
         }
         writer.endElement();

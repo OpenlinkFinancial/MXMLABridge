@@ -684,11 +684,21 @@ public class CustomXmlaHandler extends mondrian.xmla.XmlaHandler {
          }
 
          SaxWriter writer = response.getWriter();
-
+//         PrintWriter pw;
+//         try {
+//            pw = new PrintWriter("D:\\worktrees\\mxbridge\\branches\\fix_pp_designer\\MXMLABridge.git\\branches\\fix_power_pivot_designer\\src\\custom\\mondrian\\xmla\\handler\\executeResponse.xml");
+//            pw.
+//
+//         } catch (FileNotFoundException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//         }
          writer.startDocument();
+         
 
          writer.startElement("ExecuteResponse", "xmlns", NS_XMLA);
          writer.startElement("return");
+         
          boolean rowset = false;
          if (request.getProperties().containsKey("Format") && request.getProperties().get("Format").equals("Multidimensional")) {
             rowset = false;
@@ -696,10 +706,11 @@ public class CustomXmlaHandler extends mondrian.xmla.XmlaHandler {
             rowset = request.isDrillThrough()
                      || (Format.Tabular.name().equals(request.getProperties().get(PropertyDefinition.Format.name())) || Format.Tabular.name().equalsIgnoreCase("TABULAR"));
          }
-         writer.startElement("root", "xmlns",
-                  result == null ? NS_XMLA_EMPTY : rowset ? NS_XMLA_ROWSET : NS_XMLA_MDDATASET,
-
-                  "xmlns:xsi", NS_XSI, "xmlns:xsd", NS_XSD, "xmlns:msxmla", MS_XMLA);
+         if(result == null)
+            writer.startElement("root", "xmlns" , NS_XMLA_EMPTY);
+         else{
+            writer.startElement("root", "xmlns" , rowset ? NS_XMLA_ROWSET : NS_XMLA_MDDATASET, "xmlns:xsi", NS_XSI, "xmlns:xsd", NS_XSD, "xmlns:msxmla", MS_XMLA);
+         }
 
          switch (content) {
          case Schema:
@@ -759,11 +770,10 @@ public class CustomXmlaHandler extends mondrian.xmla.XmlaHandler {
       // ? NS_XMLA_ROWSET
       // : NS_XMLA_MDDATASET;
       String setNsXmla = NS_XMLA_MDDATASET;
-
+      // <xs:schema targetNamespace="urn:schemas-microsoft-com:xml-analysis:mddataset" elementFormDefault="qualified" xmlns="urn:schemas-microsoft-com:xml-analysis:mddataset" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msxmla="http://schemas.microsoft.com/analysisservices/2003/xmla">
       writer.startElement(
                // "xsd:schema",
-               "xs:schema", "xmlns:xs", NS_XSD, "targetNamespace", setNsXmla, "xmlns", setNsXmla, "xmlns:xsi", NS_XSI, "xmlns:sql", NS_XML_SQL, "elementFormDefault", "qualified",
-               "xmlns:msxmla", MS_XMLA);
+               "xs:schema", "targetNamespace", setNsXmla, "elementFormDefault", "qualified", "xmlns", setNsXmla,  "xmlns:xs", NS_XSD,"xmlns:msxmla", MS_XMLA);
       writer.element("xs:import", "namespace", "http://schemas.microsoft.com/analysisservices/2003/xmla");
 
       // MemberType
@@ -795,7 +805,7 @@ public class CustomXmlaHandler extends mondrian.xmla.XmlaHandler {
 
       writer.startElement("xs:complexType", "name", "TupleType");
       writer.startElement("xs:sequence");
-      writer.element("xs:element", "name", "Member", "type", "MemberType", "maxOccurs", "unbounded");
+      writer.element("xs:element", "name", "Member", "type", "MemberType", "minOccurs", "0",  "maxOccurs", "unbounded");
       writer.endElement(); // xsd:sequence
       writer.endElement(); // xsd:complexType name="TupleType"
 
@@ -826,7 +836,7 @@ public class CustomXmlaHandler extends mondrian.xmla.XmlaHandler {
       writer.element("xs:element", "ref", "msxmla:NormTupleSet");
       writer.startElement("xs:element", "name", "Union");
       writer.startElement("xs:complexType");
-      writer.element("xs:group", "ref", "SetType", "minOccurs", "0", "maxOccurs", "ubbounded");
+      writer.element("xs:group", "ref", "SetType", "minOccurs", "0", "maxOccurs", "unbounded");
       writer.endElement(); // xs:complexType
       writer.endElement(); // xs:element
       writer.endElement(); // xs:choice
@@ -1101,48 +1111,48 @@ public class CustomXmlaHandler extends mondrian.xmla.XmlaHandler {
    
    
    private  String preProcessMdx(String mdx) {
-	      String mdxStr = mdx.replaceAll("\\s+","");
-	      
-	      //popuate the current cube if possible
-	      if(mdxStr.contains("FROM[")){
-	         int start = mdxStr.indexOf("FROM[");
-	         String subMdxStr = mdxStr.substring(start);
-	         int end = subMdxStr.indexOf("]") + start+1;
-	         
-	         currentCube = mdxStr.substring(start+5, end-1);
-	         
-	      }
-	      
-	      
-	      //replace FROM CELL with FROM [Current_Cube] CELL
-	      //Only process the last occurance, if more than one "FROMCELL" exists in the mdx
-	      int fromCell=mdx.lastIndexOf("FROM  CELL");
-	      if (fromCell>0){
-	      String mdxP2 = mdx.substring(fromCell);
-	      String mdxP1 = mdx.substring(0, fromCell-1);
-	      
-	      if(mdxP2.contains("FROM  CELL")){
-	         mdxP2 = mdxP2.replace("FROM", "FROM " + currentCube);
-	      }
-	      mdx = mdxP1.concat(mdxP2);
-	     }
-	      
-	      //enforce NON EMPTY in MDX statement
-	      if(mdxStr.startsWith("SELECT")&& (!mdxStr.startsWith("SELECTFROM") && !mdxStr.startsWith("SELECTNONEMPTY"))) {
-	         mdx = mdx.replace("SELECT", "SELECT NON EMPTY");
-	      }
-	      
-	      //remove the second NON EMPTY key word in mdx statement
-	      
-	      if(mdxStr.contains(",NONEMPTY"))
-	         mdx = mdx.replace(", NON EMPTY", ", ");
-	      
-	      //replace the non escaped double quotes
-	      mdx = mdx.replace("(\"[", "([");
-	      mdx = mdx.replace("]\")", "])");
-	      return mdx;
-	      
-	   }
+         String mdxStr = mdx.replaceAll("\\s+","");
+         
+         //popuate the current cube if possible
+         if(mdxStr.contains("FROM[")){
+            int start = mdxStr.indexOf("FROM[");
+            String subMdxStr = mdxStr.substring(start);
+            int end = subMdxStr.indexOf("]") + start+1;
+            
+            currentCube = mdxStr.substring(start+5, end-1);
+            
+         }
+         
+         
+         //replace FROM CELL with FROM [Current_Cube] CELL
+         //Only process the last occurance, if more than one "FROMCELL" exists in the mdx
+         int fromCell=mdx.lastIndexOf("FROM  CELL");
+         if (fromCell>0){
+         String mdxP2 = mdx.substring(fromCell);
+         String mdxP1 = mdx.substring(0, fromCell-1);
+         
+         if(mdxP2.contains("FROM  CELL")){
+            mdxP2 = mdxP2.replace("FROM", "FROM " + currentCube);
+         }
+         mdx = mdxP1.concat(mdxP2);
+        }
+         
+         //enforce NON EMPTY in MDX statement
+         if(mdxStr.startsWith("SELECT")&& (!mdxStr.startsWith("SELECTFROM") && !mdxStr.startsWith("SELECTNONEMPTY"))) {
+            mdx = mdx.replace("SELECT", "SELECT NON EMPTY");
+         }
+         
+         //remove the second NON EMPTY key word in mdx statement
+         
+         if(mdxStr.contains(",NONEMPTY"))
+            mdx = mdx.replace(", NON EMPTY", ", ");
+         
+         //replace the non escaped double quotes
+         mdx = mdx.replace("(\"[", "([");
+         mdx = mdx.replace("]\")", "])");
+         return mdx;
+         
+      }
    
    
 
@@ -1153,9 +1163,36 @@ private QueryResult executeQuery(XmlaRequest request) throws XmlaException {
       //String mdx= request.getStatement();
       //if mdx statement contains CELL_ORDINAL properties, change the MDDataSet.cellPropLongs, and MDDataSet.cellPropLongs accordingly
       
+      if(mdx == null || mdx.length() < 1)
+         return null;
+      String props = mdx.split("PROPERTIES")[1];
+      
+      
       if(mdx.contains("CELL_ORDINAL")){
          MDDataSet.cellProps = Arrays.asList(MDDataSet.rename(StandardCellProperty.FORMAT_STRING, "FormatString")) ;
          MDDataSet.cellPropLongs = Arrays.asList(StandardCellProperty.CELL_ORDINAL) ;
+      }
+      
+      else if(props != null && props.length()>1){
+         MDDataSet.cellProps = new ArrayList<Property>();
+         MDDataSet.cellPropLongs = new ArrayList<StandardCellProperty>();
+         
+         
+         if(mdx.contains("VALUE")){
+            MDDataSet.cellProps.add(MDDataSet.rename(StandardCellProperty.VALUE, "Value"));
+            MDDataSet.cellPropLongs.add(StandardCellProperty.VALUE);
+         }
+         if(mdx.contains("FORMAT_STRING")){
+            MDDataSet.cellProps.add(MDDataSet.rename(StandardCellProperty.FORMAT_STRING, "FormatString"));
+            MDDataSet.cellPropLongs.add(StandardCellProperty.VALUE);
+         }
+         
+         if(mdx.contains("LANGUAGE")) {
+            MDDataSet.cellProps.add(MDDataSet.rename(StandardCellProperty.LANGUAGE, "Language"));
+            MDDataSet.cellPropLongs.add(StandardCellProperty.LANGUAGE);
+         }
+         
+         
       }
       else if (mdx.contains("VALUE") && mdx.contains("FORMAT_STRING") && mdx.contains("LANGUAGE")){
          MDDataSet.cellProps = Arrays.asList(MDDataSet.rename(StandardCellProperty.VALUE, "Value"), 
