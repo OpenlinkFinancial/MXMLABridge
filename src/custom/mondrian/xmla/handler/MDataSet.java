@@ -129,7 +129,7 @@ class MDDataSet_Multidimensional extends MDDataSet {
    private static final Logger LOGGER = Logger.getLogger(MDDataSet_Multidimensional.class);
 
    private List<Hierarchy> slicerAxisHierarchies;
-   private final boolean omitDefaultSlicerInfo;
+   private boolean omitDefaultSlicerInfo ;
    private final boolean json;
    private XmlaUtil.ElementNameEncoder encoder = XmlaUtil.ElementNameEncoder.INSTANCE;
    private XmlaExtra extra;
@@ -197,6 +197,7 @@ class MDDataSet_Multidimensional extends MDDataSet {
 //      List<Member> members = positions.get(0).getMembers();
       List<Hierarchy> hierarchies;
       CellSetAxis slicerAxis = cellSet.getFilterAxis();
+      omitDefaultSlicerInfo = false;
       if (omitDefaultSlicerInfo) {
          hierarchies = axisInfo(writer, slicerAxis, "SlicerAxis");
       } else {
@@ -246,13 +247,13 @@ class MDDataSet_Multidimensional extends MDDataSet {
       // properties to XMLA clients.
       // to make Mondrian compatible with MSOLAP driver, we need have to add
       // them here
-      if (elementName.equalsIgnoreCase("formatstring")) {
+      if (elementName.equalsIgnoreCase("formatstring") && extra.shouldReturnCellProperty(cellSet, cellProperty, evenEmpty)) {
          type = Datatype.STRING;
          writer.element(elementName, "name", "FORMAT_STRING", "type", getXsdTypeByDatatype(type));
-      } else if (elementName.equalsIgnoreCase("language")) {
+      } else if (elementName.equalsIgnoreCase("language") && extra.shouldReturnCellProperty(cellSet, cellProperty, evenEmpty)) {
          type = Datatype.UNSIGNED_INTEGER;
          writer.element(elementName, "name", "LANGUAGE", "type", getXsdTypeByDatatype(type));
-      } else if (elementName.equalsIgnoreCase("cellordinal")){
+      } else if (elementName.equalsIgnoreCase("cellordinal") && extra.shouldReturnCellProperty(cellSet, cellProperty, evenEmpty)){
          type = Datatype.STRING;
          writer.element(elementName, "name", "CellOrdinal", "type", getXsdTypeByDatatype(type));
       }
@@ -329,6 +330,10 @@ class MDDataSet_Multidimensional extends MDDataSet {
    }
 
    private String getXsdType(Property property) {
+      //type of LEVEL_NUMBER is different from that defined in org.olap4j.metadata.Property
+      if(property.getName().equals("LEVEL_NUMBER")){
+         return "xsd:int";
+      }
       Datatype datatype = property.getDatatype();
       return getXsdTypeByDatatype(datatype);
 
@@ -360,6 +365,7 @@ class MDDataSet_Multidimensional extends MDDataSet {
       // //////////////////////////////////////////
       // now generate SlicerAxis information
       //
+      omitDefaultSlicerInfo = false;
       if (omitDefaultSlicerInfo) {
          CellSetAxis slicerAxis = cellSet.getFilterAxis();
          // We always write a slicer axis. There are two 'empty' cases:
@@ -460,6 +466,7 @@ class MDDataSet_Multidimensional extends MDDataSet {
 
    private void writeMember(SaxWriter writer, Member member, Position prevPosition, Position nextPosition, int k, List<Property> props) throws OlapException {
       writer.startElement("Member", "Hierarchy", "[" + member.getHierarchy().getName() + "]");
+      
       int levelNo = 0;
       for (Property prop : props) {
          if (!prop.getName().equals("PARENT_UNIQUE_NAME") && !prop.getName().equals("HIERARCHY_UNIQUE_NAME")) {
@@ -476,7 +483,7 @@ class MDDataSet_Multidimensional extends MDDataSet {
 
                // LNum is relevant to Excel drill - down behavior. The value is
                if (levelNo == 0)
-                  value = 1000;
+                  value = 0;//value = 1000;
                else if (levelNo == 1)
                   value = 197608;
                else if (levelNo == 2)
@@ -499,7 +506,9 @@ class MDDataSet_Multidimensional extends MDDataSet {
    }
 
    private void slicerAxis(SaxWriter writer, Member member, List<Property> props) throws OlapException {
-      writer.startElement("Member", "Hierarchy", member.getHierarchy().getName());
+      writer.startElement("Member", "Hierarchy", "[" + member.getHierarchy().getName()+"]");
+     // writer.startElement("Member", "Hierarchy",  member.getHierarchy().getName());
+
       for (Property prop : props) {
          Object value;
          Property longProp = longProps.get(prop.getName());
@@ -517,6 +526,10 @@ class MDDataSet_Multidimensional extends MDDataSet {
             value = member.getPropertyValue(longProp);
          }
          if (value != null) {
+//            if(value.toString().contains("[All")){
+//               String tmp = value.toString().split("All")[0];
+//               value = tmp+ "All]";
+//            }
             writer.textElement(encoder.encode(prop.getName()), value);
          }
       }
@@ -594,17 +607,17 @@ class MDDataSet_Multidimensional extends MDDataSet {
             }
 
             if (vi.isDecimal) {
-            	//handle exception mondrian.olap.fun.MondrianEvaluationException: Expected value of type STRING; got value '1.566345018E8' (NUMERIC)
-            	//This exceptions doesn't happen often (hard to reproduce). It's due to Mondrian not able to cnovert String like '1.566345018E8' to Double because of 
-            	//single quote. Here fetch fetch the numeric value within single quote, and assign the value to VALUE Cell.
-            	
-            	//input valueStr: mondrian.olap.fun.MondrianEvaluationException: Expected value of type STRING; got value '1.566345018E8' (NUMERIC)
-            	//output valueStr: 1.566345018E8
-            	if(valueStr.contains("mondrian.olap.fun.MondrianEvaluationException")){
-             	   int index1 = valueStr.indexOf("\'") + 1;
-             	   valueStr = valueStr.substring(index1);
-             	   index1 = valueStr.indexOf("\'");
-             	   valueStr = valueStr.substring(0, index1);
+               //handle exception mondrian.olap.fun.MondrianEvaluationException: Expected value of type STRING; got value '1.566345018E8' (NUMERIC)
+               //This exceptions doesn't happen often (hard to reproduce). It's due to Mondrian not able to cnovert String like '1.566345018E8' to Double because of 
+               //single quote. Here fetch fetch the numeric value within single quote, and assign the value to VALUE Cell.
+               
+               //input valueStr: mondrian.olap.fun.MondrianEvaluationException: Expected value of type STRING; got value '1.566345018E8' (NUMERIC)
+               //output valueStr: 1.566345018E8
+               if(valueStr.contains("mondrian.olap.fun.MondrianEvaluationException")){
+                  int index1 = valueStr.indexOf("\'") + 1;
+                  valueStr = valueStr.substring(index1);
+                  index1 = valueStr.indexOf("\'");
+                  valueStr = valueStr.substring(0, index1);
                 }
                 if (valueStr.contains("E")) {
                   valueType = "xsd:double";
@@ -761,6 +774,8 @@ class MDDataSet_Multidimensional extends MDDataSet {
           writer.endElement(); // xsd:restriction
           writer.endElement(); // xsd:simpleType
        }
+       
+
 
        { // xsd:complexType name="row"
           writer.startElement("xs:complexType", "name", "row");
