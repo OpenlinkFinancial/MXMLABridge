@@ -20,9 +20,11 @@ import custom.mondrian.xmla.handler.Enumeration;
 import custom.mondrian.xmla.handler.PropertyDefinition;
 import custom.mondrian.xmla.handler.CustomXmlaHandler;
 import custom.mondrian.xmla.request.XmlaRequestCallback;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,26 +81,9 @@ public class MondrianXmlaServlet extends DefaultXmlaServlet {
 
    @Override
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      /* function used to track time used for each request
-       * 
-      boolean logTime= true;
-      
-      if (logTime) {
-         String fPath = "c:/temp/ads/test-local/logs/timestamp.txt";
-         File file = new File(fPath);
-         if (!file.exists()) {
-            file.createNewFile();
-         }
-         FileWriter fWriter = new FileWriter(file,true);
-         fWriter.append("Request: " + System.currentTimeMillis() + "\n");
-         fWriter.flush();
-      }
-         
-      */
-         
+
       /*
-       * 
-       * This makes Mondrian potentially support for multiple data sources, which are
+       * This makes Mondrian supports for multiple data sources, which are
        * identified by URI e.g.: "http:\\localhost\xmla\ads\foodmart" for data
        * source foodmart "http:\\localhost\xmla\ads\cashflow" for data source
        * cashflow
