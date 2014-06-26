@@ -39,6 +39,8 @@ import java.math.BigInteger;
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
+import java.util.regex.Pattern;
+
 import mondrian.rolap.RolapConnection;
 import mondrian.server.Statement;
 import static custom.mondrian.xmla.handler.XmlaConstants.*;
@@ -1111,48 +1113,37 @@ public class CustomXmlaHandler extends mondrian.xmla.XmlaHandler {
    
    
    private  String preProcessMdx(String mdx) {
-         String mdxStr = mdx.replaceAll("\\s+","");
-         
-         //popuate the current cube if possible
-         if(mdxStr.contains("FROM[")){
-            int start = mdxStr.indexOf("FROM[");
-            String subMdxStr = mdxStr.substring(start);
-            int end = subMdxStr.indexOf("]") + start+1;
-            
-            currentCube = mdxStr.substring(start+5, end-1);
-            
-         }
-         
-         
-         //replace FROM CELL with FROM [Current_Cube] CELL
-         //Only process the last occurance, if more than one "FROMCELL" exists in the mdx
-         int fromCell=mdx.lastIndexOf("FROM  CELL");
-         if (fromCell>0){
-         String mdxP2 = mdx.substring(fromCell);
-         String mdxP1 = mdx.substring(0, fromCell-1);
-         
-         if(mdxP2.contains("FROM  CELL")){
-            mdxP2 = mdxP2.replace("FROM", "FROM " + currentCube);
-         }
-         mdx = mdxP1.concat(mdxP2);
-        }
-         
-         //enforce NON EMPTY in MDX statement
-         if(mdxStr.startsWith("SELECT")&& (!mdxStr.startsWith("SELECTFROM") && !mdxStr.startsWith("SELECTNONEMPTY"))) {
-            mdx = mdx.replace("SELECT", "SELECT NON EMPTY");
-         }
-         
-         //remove the second NON EMPTY key word in mdx statement
-         
-         if(mdxStr.contains(",NONEMPTY"))
-            mdx = mdx.replace(", NON EMPTY", ", ");
-         
-         //replace the non escaped double quotes
-         mdx = mdx.replace("(\"[", "([");
-         mdx = mdx.replace("]\")", "])");
-         return mdx;
-         
-      }
+	      // Get the current cube if the cube name exist
+	      String mdxStr = mdx.replaceAll("\\s+", "");
+	      if (mdxStr.contains("FROM[") || mdxStr.contains("from[")) {
+	         int start = Math.max(mdxStr.indexOf("FROM["), mdxStr.indexOf("from["));
+	         String subMdxStr = mdxStr.substring(start);
+	         int end = subMdxStr.indexOf("]") + start + 1;
+
+	         currentCube = mdxStr.substring(start + 5, end - 1);
+
+	      }
+
+	      // Replace FROM CELL with FROM [Current_Cube] CELL
+	      mdx = mdx.replaceFirst("FROME\\s+CELL", "FROM " + currentCube + " CELL");
+
+	      // Remove all NON EMPTY keywords from mdx
+	      mdx = mdx.replaceAll("NON\\s+EMPTY", " ");
+
+	      // Add the NON EMPTY keyword after SELECT if the mdx doesn't start with
+	      // SELECT FROM
+	      String patStr = "SELECT\\s+FROM";
+	      Pattern p1 = Pattern.compile(patStr, Pattern.CASE_INSENSITIVE);
+
+	      if (!p1.matcher(mdx).find())
+	         mdx = mdx.replace("SELECT", "SELECT NON EMPTY");
+	      
+	      
+	      // replace the non escaped double quotes
+	      mdx = mdx.replace("(\"[", "([");
+	      mdx = mdx.replace("]\")", "])");
+	      return mdx;
+	   }
    
    
 
