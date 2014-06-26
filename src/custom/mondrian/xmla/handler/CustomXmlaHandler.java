@@ -1126,7 +1126,7 @@ public class CustomXmlaHandler extends mondrian.xmla.XmlaHandler {
 	      Pattern p1 = Pattern.compile(patStr, Pattern.CASE_INSENSITIVE);
 
 	      if (!p1.matcher(mdx).find())
-	         mdx = mdx.replace("SELECT", "SELECT NON EMPTY");
+	         mdx = mdx.replaceFirst("SELECT|select", "SELECT NON EMPTY");
 	      
 	      
 	      // replace the non escaped double quotes
